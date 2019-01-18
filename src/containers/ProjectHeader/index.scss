@@ -1,0 +1,43 @@
+.apartment-header {
+  height: auto;
+  line-height: inherit;
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: row;
+  background-color: #ffffff;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+
+  span {
+    @media only screen and (max-width: 420px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  .button-group {
+    &__single {
+      margin-right: 1rem;
+    }
+  }
+
+  @media only screen and (max-width: 480px) {
+    padding: 20px;
+  }
+
+  @media only screen and (max-width: 400px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .button-group {
+      margin-top: 1rem;
+
+      &__single {
+        margin-right: 1rem;
+      }
+    }
+  }
+}
