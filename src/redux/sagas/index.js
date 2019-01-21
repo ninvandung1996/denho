@@ -7,6 +7,7 @@ import FeedBack from './FeedBack';
 import FAQ from './FAQ';
 import Booking from './Booking';
 import Calendar from './Calendar';
+import Service from './Service';
 const rootSaga = function* () {
   yield all([
     ...auth.map(watcher => fork(watcher)),
@@ -16,7 +17,8 @@ const rootSaga = function* () {
     ...FeedBack.map(watcher => fork(watcher)),
     ...FAQ.map(watcher => fork(watcher)),
     ...Booking.map(watcher => fork(watcher)),
-    ...Calendar.map(watcher => fork(watcher))
+    ...Calendar.map(watcher => fork(watcher)),
+    ...Service.map(watcher => fork(watcher))
   ]);
 };
 export default rootSaga;

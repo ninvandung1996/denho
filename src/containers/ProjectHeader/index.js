@@ -44,15 +44,26 @@ class ProjectHeader extends Component {
     const { selectedProject, deleteProject } = this.props;
     const { type } = this.state;
     return (
-      <Header className="isoHeader apartment-header">
+      <Header className="isoHeader projectHeader">
         {
           selectedProject && (
-            <span>
-              Thông tin dự án: <span style={{ "fontWeight": "700" }}>Tên {selectedProject.name}</span>
-            </span>
+            <div className="projectHeader-info" span={20}>
+              <div className="projectHeader-info-item">
+                <span>Tên dự án:</span>
+                <span>{selectedProject.name}</span>
+              </div>
+              <div className="projectHeader-info-item">
+                <span>Vị trí:</span>
+                <span>{selectedProject.location}</span>
+              </div>
+              <div className="projectHeader-info-item">
+                <span>Địa chỉ:</span>
+                <span>{selectedProject.address}</span>
+              </div>
+            </div>
           )
         }
-        <div className="button-group">
+        <div className="projectHeader-btns" span={4}>
           <Tooltip placement="top" title="Thêm dự án mới">
             <Button icon="plus" className="button-group__single" onClick={this.showModal("add")} />
           </Tooltip>

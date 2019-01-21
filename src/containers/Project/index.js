@@ -44,6 +44,9 @@ class Project extends Component {
   }
   render() {
     const { projectList, selectedProject } = this.props;
+    let data = projectList.map(value=>(
+      {...value, avatar: value.thumbnail}
+    ))
     return (
       <ContactsWrapper
         className="isomorphicContacts"
@@ -51,7 +54,7 @@ class Project extends Component {
       >
         <div className="isoContactListBar">
           <ContactList
-            contacts={projectList}
+            contacts={data}
             selectedId={selectedProject !== null ? selectedProject._id : ""}
             changeContact={this.changeProject}
             deleteContact={this.deleteProject}

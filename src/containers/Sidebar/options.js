@@ -33,6 +33,11 @@ const options = [
     key: "calendar",
     label: "Căn hộ",
     leftIcon: "ion-document"
-  }
+  },
+  {
+    key: "service",
+    label: "Dịch vụ",
+    leftIcon: "ion-document"
+  },
 ];
 export default options;

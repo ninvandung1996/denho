@@ -50,6 +50,10 @@ const routes = [
   {
     path: "calendar",
     component: asyncComponent(() => import("../Calendar/"))
+  },
+  {
+    path: "service",
+    component: asyncComponent(() => import("../Service"))
   }
 ];
 
