@@ -39,5 +39,25 @@ const options = [
     label: "Dịch vụ",
     leftIcon: "ion-document"
   },
+  {
+    key: "user",
+    label: "Người dùng",
+    leftIcon: "ion-document"
+  },
+  {
+    key: "news",
+    label: "Tin tức",
+    leftIcon: "ion-document"
+  },
+  {
+    key: "notify",
+    label: "Thông báo",
+    leftIcon: "ion-document"
+  },
+  {
+    key: "configs",
+    label: "Cấu hình",
+    leftIcon: "ion-document"
+  },
 ];
 export default options;

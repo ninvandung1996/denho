@@ -38,7 +38,6 @@ function beforeUpload(file) {
 class Popup extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = props.type === "add" ? initState : {
             ...props.data,
             project: props.data.project._id
@@ -82,7 +81,6 @@ class Popup extends React.Component {
         this.props.handleCancel();
     }
     render() {
-        console.log(this.state)
         let { thumbnail, detail, dateAndTime, project, projectList } = this.state;
         if (this.props.type === "view") {
             return (

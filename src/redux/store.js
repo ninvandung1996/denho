@@ -21,7 +21,7 @@ const persistConfig = {
   storage,
   // debounce: 500,
   blacklist: [
-    "Project", "Promotion", "Supplier", "FeedBack", "FAQ", "Booking", "Calendar", "Service"
+    "Project", "Promotion", "Supplier", "FeedBack", "FAQ", "Booking", "Calendar", "Service", "News", "Notifications"
   ]
 };
 

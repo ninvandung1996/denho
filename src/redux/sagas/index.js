@@ -8,6 +8,10 @@ import FAQ from './FAQ';
 import Booking from './Booking';
 import Calendar from './Calendar';
 import Service from './Service';
+import User from './User';
+import News from './News';
+import Notifications from "./notification";
+import Config from "./Config";
 const rootSaga = function* () {
   yield all([
     ...auth.map(watcher => fork(watcher)),
@@ -18,7 +22,11 @@ const rootSaga = function* () {
     ...FAQ.map(watcher => fork(watcher)),
     ...Booking.map(watcher => fork(watcher)),
     ...Calendar.map(watcher => fork(watcher)),
-    ...Service.map(watcher => fork(watcher))
+    ...Service.map(watcher => fork(watcher)),
+    ...User.map(watcher => fork(watcher)),
+    ...News.map(watcher => fork(watcher)),
+    ...Notifications.map(watcher => fork(watcher)),
+    ...Config.map(watcher => fork(watcher)),
   ]);
 };
 export default rootSaga;

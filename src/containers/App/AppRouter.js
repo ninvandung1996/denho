@@ -54,7 +54,47 @@ const routes = [
   {
     path: "service",
     component: asyncComponent(() => import("../Service"))
-  }
+  },
+  {
+    path: "User",
+    component: asyncComponent(() => import("../User"))
+  },
+  {
+    path: "news",
+    component: asyncComponent(() => import("../News"))
+  },
+  {
+    path: "news/edit/:idNews",
+    component: asyncComponent(() => import("../News/CreateNewPage"))
+  },
+  {
+    path: "news/view/:idNews",
+    component: asyncComponent(() => import("../News/ShowPage"))
+  },
+  {
+    path: "news/create",
+    component: asyncComponent(() => import("../News/CreateNewPage"))
+  },
+  {
+    path: "notify",
+    component: asyncComponent(() => import(".././Notification"))
+  },
+  {
+    path: "notify/edit/:idNotification",
+    component: asyncComponent(() => import(".././Notification/CreateNewPage"))
+  },
+  {
+    path: "notify/view/:idNotification",
+    component: asyncComponent(() => import(".././Notification/ShowPage"))
+  },
+  {
+    path: "notify/createnotification",
+    component: asyncComponent(() => import(".././Notification/CreateNewPage"))
+  },
+  {
+    path: "configs",
+    component: asyncComponent(() => import("../ManageConfiguration"))
+  },
 ];
 
 class AppRouter extends Component {

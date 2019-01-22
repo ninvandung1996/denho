@@ -8,13 +8,16 @@ import FAQ from './FAQ';
 import Booking from './Booking';
 import Calendar from './Calendar';
 import Service from './Service';
+import User from './User';
+import News from './News';
+import Notifications from './notification';
 import { requests, toast, modal } from './common';
 import { combineReducers } from 'redux'
 
 export default {
   Auth,
   requests,
-  App, Project, Promotion, Supplier, FeedBack, FAQ, Booking, Calendar, Service,
+  App, Project, Promotion, Supplier, FeedBack, FAQ, Booking, Calendar, Service, User, News, Notifications,
   ui: combineReducers({
     toast,
     modal
