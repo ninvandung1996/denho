@@ -2,14 +2,41 @@
     &__new {
       display: flex;
       justify-content: space-between;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid lightgray;
-  
+      margin-bottom: 1rem;
       @media only screen and (max-width: 530px) {
         flex-direction: column;
       }
     }
-  
+    &-status-info{
+      width: 100%;
+      height: auto;
+      padding: 1rem 4rem;
+      border-bottom: 1px solid lightgray;
+      border-top: 1px solid lightgray;
+      display: flex;
+      &-item{
+        width: 100px;
+        position: relative;
+        line-height: 1rem;
+        margin: 0 auto;
+        &:before{
+          content: "";
+          width: 1rem;
+          height: 1rem;
+          position: absolute;
+          left: -2rem;
+        }
+        &:nth-child(1)::before{
+          background-color: lightgrey;
+        }
+        &:nth-child(2)::before{
+          background-color: lightgreen;
+        }
+        &:nth-child(3)::before{
+          background-color: lightcoral;
+        }
+      }
+    }
     &__search {
       width: 30rem;
       border-top-right-radius: 4px;

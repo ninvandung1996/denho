@@ -10,38 +10,32 @@ export const columns = [
   {
     title: "Người dùng",
     dataIndex: "user",
-    width: "15vw"
+    width: "10vw"
   },
   {
     title: "Căn hộ",
     dataIndex: "apartment",
-    width: "15vw"
+    width: "10vw"
   },
   {
     title: "Bắt đầu",
     dataIndex: "dateStart",
-    width: "10vw"
+    width: "15vw"
   },
   {
     title: "Kết thúc",
     dataIndex: "dateEnd",
+    width: "15vw"
+  },
+  {
+    title: "Trạng thái",
+    render: (text, record) => {
+      return <span style={{
+        width: "1rem", height: "1rem", display: "inline-block",
+        backgroundColor: record.checkin ? (record.checkout ? "lightcoral" : "lightgreen") : "lightgrey"
+      }}></span>
+    },
     width: "10vw"
-  },
-  {
-    title: "Check in",
-    dataIndex: "checkin",
-    render: (text, record) => {
-      return record.checkin ? "yes" : "no"
-    },
-    width: "5vw"
-  },
-  {
-    title: "Check out",
-    dataIndex: "checkout",
-    render: (text, record) => {
-      return record.checkout ? "yes" : "no"
-    },
-    width: "5vw"
   },
   {
     title: "Thao tác",

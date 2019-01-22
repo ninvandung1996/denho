@@ -18,20 +18,12 @@ export const columns = [
   {
     title: "Tiêu đề",
     dataIndex: "title",
-    width: "15vw"
-  },
-  {
-    title: "Nội dung",
-    dataIndex: "content",
-    render: (text, record) => {
-      return <div dangerouslySetInnerHTML={{ __html: record.content }} />
-    },
-    width: "20vw"
+    width: "30vw"
   },
   {
     title: "Thời gian",
     dataIndex: "date",
-    width: "10vw"
+    width: "15vw"
   },
   {
     title: "Thao tác",

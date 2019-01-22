@@ -94,6 +94,11 @@ class Calendar extends Component {
                             </Tooltip>
                         </Popconfirm>
                     </div>
+                    <div className="calendarHeader-status-info" >
+                        <div className="calendarHeader-status-info-item">Chưa check-in</div>
+                        <div className="calendarHeader-status-info-item">Chưa check-out</div>
+                        <div className="calendarHeader-status-info-item">Đã check-out</div>
+                    </div>
                 </CalenderHeaderWrapper>
                 <FullCalendar />
                 {

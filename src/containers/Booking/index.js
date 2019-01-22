@@ -57,6 +57,11 @@ class Booking extends React.Component {
                                 </Button>
                             </div>
                         </div>
+                        <div className="notify-status-info" >
+                            <div className="notify-status-info-item">Chưa check-in</div>
+                            <div className="notify-status-info-item">Chưa check-out</div>
+                            <div className="notify-status-info-item">Đã check-out</div>
+                        </div>
                         <TableBooking
                             bookingList={filterNotif(
                                 this.props.bookingList,

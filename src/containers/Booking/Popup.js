@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Form, Input, Select, DatePicker } from 'antd';
+import { Modal, Form, Select, DatePicker, Switch } from 'antd';
 import "moment/locale/vi";
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -21,7 +21,7 @@ const title = {
 }
 
 const initState = {
-    add: { user: "", apartment: "", dateStart: Date.now(), dateEnd: Date.now() },
+    add: { user: "", apartment: "", dateStart: moment(), dateEnd: moment().add("days", 1) },
     edit: { checkin: "", checkout: "", dateStart: "", dateEnd: "" },
     apartmentList: [], userList: [], timeBookedList: []
 }
@@ -41,28 +41,31 @@ class Popup extends React.Component {
     componentDidMount() {
         let { type } = this.props;
         if (type === "add" || type === "edit") {
-            let { token, getAllApartment, getAllUser, selectedBooking } = this.props;
-            getAllApartment(...type === "add" ? ["", ""] : [selectedBooking.apartment, selectedBooking.key], token,
-                (err, res) => {
-                    if (!err) {
-                        if (type === "add") {
-                            this.setState({ apartmentList: res.data })
-                        } else this.setState({ timeBookedList: res.data.timeBooked })
-                    }
-                });
+            let { token, getAllApartment, getAllUser } = this.props;
+            getAllApartment(token, (err, res) => {
+                if (!err) this.setState({ apartmentList: res.data })
+            })
             if (type === "add") getAllUser(token, (err, res) => {
-                if (!err) {
-                    this.setState({ userList: res.data })
-                }
+                if (!err) this.setState({ userList: res.data })
             })
         }
     }
     onDateChange = (dates, dateStrings) => {
         let [dateStart, dateEnd] = dates;
+        if (moment(dateStart).format("DD/MM/YYYY") === moment(dateEnd).format("DD/MM/YYYY")) {
+            dateEnd = moment(dateEnd).add("days", 1);
+        }
         let { type } = this.props;
         this.setState((prevState, props) => ({
             [type]: { ...prevState[type], dateStart: moment(dateStart), dateEnd: moment(dateEnd) }
         }))
+    }
+    onSwitchChange = (name) => {
+        return value => {
+            let data = this.state.edit;
+            data[name] = value;
+            this.setState({ edit: data });
+        }
     }
     onChange = (name) => {
         return (value) => {
@@ -78,28 +81,35 @@ class Popup extends React.Component {
         }
     }
     handleOk = () => {
-        this.props.handleOk(this.state[this.props.type]);
+        let { type } = this.props;
+        if (type === "add") {
+            let { dateStart, dateEnd, apartment, user } = this.state.add;
+            this.props.handleOk({ dateStart, dateEnd, apartment, user });
+        } else if (type = "edit") {
+            let { checkin, checkout, dateStart, dateEnd } = this.state.edit;
+            this.props.handleOk({ dateStart, dateEnd, checkin, checkout });
+        }
     }
     handleCancel = () => {
         this.props.handleCancel();
     }
-    disabledDate = (current) => {
-        let { type } = this.props;
-        let timeBooked = type === "add" ? [] : this.state.timeBookedList;
-        if (type === "add") {
-            let { apartmentList } = this.state;
-            let apartment = this.state[this.props.type].apartment;
-            apartmentList.forEach(value => {
-                if (value._id === apartment) {
-                    timeBooked = value.timeBooked;
-                }
-            });
-        }
-        return (
-            current &&
-            timeBooked.map(value => moment(value).format(dateFormat)).indexOf(current.format(dateFormat)) !== -1
-        )
-    }
+    // disabledDate = (current) => {
+    //     let { type } = this.props;
+    //     let timeBooked = type === "add" ? [] : this.state.timeBookedList;
+    //     if (type === "add") {
+    //         let { apartmentList } = this.state;
+    //         let apartment = this.state[this.props.type].apartment;
+    //         apartmentList.forEach(value => {
+    //             if (value._id === apartment) {
+    //                 timeBooked = value.timeBooked;
+    //             }
+    //         });
+    //     }
+    //     return (
+    //         current &&
+    //         timeBooked.map(value => moment(value).format(dateFormat)).indexOf(current.format(dateFormat)) !== -1
+    //     )
+    // }
     render() {
         let { type, selectedBooking } = this.props;
         let { add, edit, apartmentList, userList } = this.state;
@@ -125,10 +135,10 @@ class Popup extends React.Component {
                             <span>{selectedBooking.dateEnd}</span>
                         </Form.Item>
                         <Form.Item label="Check in" {...formItemStyle} className="form-item">
-                            <span>{selectedBooking.checkin ? "yes" : "no"}</span>
+                            <Switch disabled={true} defaultChecked={selectedBooking.checkin} />
                         </Form.Item>
                         <Form.Item label="Check out" {...formItemStyle} className="form-item">
-                            <span>{selectedBooking.checkout ? "yes" : "no"}</span>
+                            <Switch disabled={true} defaultChecked={selectedBooking.checkout} />
                         </Form.Item>
                     </Form>
                 </Modal>
@@ -144,16 +154,10 @@ class Popup extends React.Component {
                 >
                     <Form>
                         <Form.Item label="Check in" {...formItemStyle} className="form-item">
-                            <Select defaultValue={edit.checkin} style={{ width: "150px" }} onChange={this.onChange("checkin")} >
-                                <Option value={true}>yes</Option>
-                                <Option value={false}>no</Option>
-                            </Select>
+                            <Switch checked={edit.checkin} onChange={this.onSwitchChange('checkin')} />
                         </Form.Item>
-                        <Form.Item label="Check out" {...formItemStyle} className="form-item" onChange={this.onChange("checkout")}>
-                            <Select defaultValue={edit.checkout} style={{ width: "150px" }} >
-                                <Option value={true}>yes</Option>
-                                <Option value={false}>no</Option>
-                            </Select>
+                        <Form.Item label="Check out" {...formItemStyle} className="form-item" >
+                            <Switch checked={edit.checkout} onChange={this.onSwitchChange('checkout')} />
                         </Form.Item>
                         <Form.Item label="Thời gian" {...formItemStyle} className="form-item">
                             <RangePicker
@@ -161,7 +165,7 @@ class Popup extends React.Component {
                                 defaultValue={[edit.dateStart, edit.dateEnd]}
                                 value={[edit.dateStart, edit.dateEnd]}
                                 format={dateFormat} placeholder={['Bắt đầu', 'Kết thúc']}
-                                disabledDate={this.disabledDate}
+                            // disabledDate={this.disabledDate}
                             />
                         </Form.Item>
                     </Form>
@@ -197,10 +201,11 @@ class Popup extends React.Component {
                     <Form.Item label="Thời gian" {...formItemStyle} className="form-item">
                         <RangePicker
                             onChange={this.onDateChange}
-                            defaultValue={[moment(), moment()]}
+                            style={{ width: "100%" }}
+                            defaultValue={[moment(), moment().add("days", 1)]}
                             value={[moment(add.dateStart), moment(add.dateEnd)]}
                             format={dateFormat} placeholder={['Bắt đầu', 'Kết thúc']}
-                            disabledDate={this.disabledDate}
+                        // disabledDate={this.disabledDate}
                         />
                     </Form.Item>
                 </Form>

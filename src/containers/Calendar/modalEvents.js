@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import Input from '../../components/uielements/input';
 import { DateRangepicker } from '../../components/uielements/datePicker';
 import Modal from '../../components/feedback/modal';
 import { CalendarModalBody } from './calendar.style';
@@ -57,7 +56,11 @@ const localeDatePicker = {
 class ModalEvents extends Component {
   constructor(props) {
     super(props);
-    this.state = { listUser: [], selectedData: { ...props.selectedData } };
+    let { start, end } = props.selectedData;
+    if (moment(start).format("DD/MM/YYYY") === moment(end).format("DD/MM/YYYY")) {
+      end = moment(end).add("days", 1);
+    }
+    this.state = { listUser: [], selectedData: { ...props.selectedData, start, end } };
   }
   componentDidMount() {
     let { getUser, token } = this.props;
@@ -89,8 +92,11 @@ class ModalEvents extends Component {
   }
   onChangeFromTimePicker = value => {
     let { selectedData } = this.state;
+    if (value[0].format("DD/MM/YYYY") === value[1].format("DD/MM/YYYY")) {
+      value[1].add("days", 1);
+    }
     try {
-      selectedData.start = value[0].toDate();
+      selectedData.start = value[0].hours(12).toDate();
       selectedData.end = value[1].hours(10).toDate();
     } catch (e) { }
     this.setState({ selectedData })

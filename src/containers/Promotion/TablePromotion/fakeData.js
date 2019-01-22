@@ -10,25 +10,20 @@ export const columns = [
   {
     title: "Thumbnail",
     dataIndex: "thumbnail",
-    width: "10vw"
+    render: (text, record) => {
+      return <img style={{ width: "102px", objectFit: "cover" }} src={record.thumbnail} />
+    },
+    width: "15vw"
   },
   {
     title: "Tiêu đề",
     dataIndex: "title",
-    width: "15vw"
-  },
-  {
-    title: "Nội dung",
-    dataIndex: "content",
-    render: (text, record) => {
-      return <div dangerouslySetInnerHTML={{ __html: record.content }} />
-    },
-    width: "25vw"
+    width: "30vw"
   },
   {
     title: "Thời gian",
     dataIndex: "date",
-    width: "10vw"
+    width: "15vw"
   },
   {
     title: "Thao tác",

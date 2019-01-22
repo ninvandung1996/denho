@@ -85,6 +85,10 @@ class FullCalender extends Component {
     } else {
       let { start, end, user, checkin, checkout } = selectedData;
       let { selectedApartment } = this.props;
+      if (moment(start).format("DD/MM/YYYY") === moment(end).format("DD/MM/YYYY")) {
+        end = moment(end).add("days", 1);
+        selectedData.end = end;
+      }
       if (modalVisible === "new") {
         addBooking({ dateStart: moment(start).hours(12).toDate(), dateEnd: moment(end).hours(10).toDate(), user, apartment: selectedApartment._id }, token);
       } else {
@@ -109,7 +113,7 @@ class FullCalender extends Component {
   }
   eventStyleGetter = (event) => {
     var style = {
-      backgroundColor: event.checkin ? (event.checkout ? "lightred" : "lightgreen") : "lightgrey",
+      backgroundColor: event.checkin ? (event.checkout ? "lightcoral" : "lightgreen") : "lightgrey",
       textAlign: "center"
     }
     return { style }

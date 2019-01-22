@@ -13,6 +13,7 @@ const calendarHeader = styled.div`
     border: 1px solid ${palette("border", 0)};
     margin-top: 35px;
     display: flex;
+    flex-wrap: wrap;
     padding: 20px;
     @media (max-width: 767px) {
       width:  100%;

@@ -17,12 +17,13 @@ class TableBooking extends Component {
       data.push({
         key: booking._id,
         id: index + 1,
-        user: booking.user,
-        apartment: booking.apartment,
+        user: booking.user.email,
+        apartment: booking.apartment.name,
         dateStart: new Date(booking.dateStart).toLocaleDateString(),
         dateEnd: new Date(booking.dateEnd).toLocaleDateString(),
         checkin: booking.checkin,
         checkout: booking.checkout,
+        data: booking
       });
     });
     return (

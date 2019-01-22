@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import LayoutContentWrapper from "../../../components/utility/layoutWrapper";
 import LayoutContent from "../../../components/utility/layoutContent";
-import { Form, Input, DatePicker } from "antd";
+import { Form, Input, DatePicker,Upload, Icon, message } from "antd";
 import { connect } from "react-redux";
 import {
   getPromotion,
@@ -12,6 +12,7 @@ import Editor from "../../../components/editor";
 import moment from "moment";
 import "moment/locale/vi";
 import "./index.scss";
+import configs from '../../../redux/constants/configs';
 
 const FormItem = Form.Item;
 
@@ -19,8 +20,21 @@ const initState = {
   title: "",
   content: "",
   date: new Date(),
-  thumbnail: ""
+  thumbnail: "",
+  loading: false
 };
+
+function beforeUpload(file) {
+  const isJPG = file.type === 'image/jpeg';
+  if (!isJPG) {
+    message.error('Chỉ có thể upload file JPG!');
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error('Dung lượng ảnh phải nhỏ hơn 2MB!');
+  }
+  return isJPG && isLt2M;
+}
 
 class CreateNewPage extends Component {
   constructor(props) {
@@ -52,6 +66,18 @@ class CreateNewPage extends Component {
       title: e.target.value
     });
   }
+  thumbnailChange = (info) => {
+    if (info.file.status === 'uploading') {
+      this.setState({ loading: true });
+      return;
+    }
+    if (info.file.status === 'done') {
+      this.setState({
+        loading: false,
+        thumbnail: `${configs.endPointImage}/uploads/files/${info.file.response.data.name}`
+      })
+    }
+  }
   onDateChange = (value) => {
     value && this.setState({ pushTime: value });
     !value && this.setState({ pushTime: new Date() });
@@ -81,6 +107,13 @@ class CreateNewPage extends Component {
     }
   }
   render() {
+    let { thumbnail } = this.state;
+    const uploadButton = (
+      <div>
+        <Icon type={this.state.loading ? 'loading' : 'plus'} />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
     return (
       <LayoutContentWrapper>
         <LayoutContent>
@@ -92,6 +125,20 @@ class CreateNewPage extends Component {
                   value={this.state.title}
                   onChange={this.onChangeTitle}
                 />
+              </FormItem>
+              <FormItem label="Thumbnail">
+                <Upload
+                  name="file"
+                  listType="picture-card"
+                  className="avatar-uploader"
+                  showUploadList={false}
+                  action={`${configs.endPointImage}/uploads/files`}
+                  headers={{ Authorization: `access_token ${this.props.token}` }}
+                  beforeUpload={beforeUpload}
+                  onChange={this.thumbnailChange}
+                >
+                  {thumbnail ? <img style={{ width: "100%" }} src={thumbnail} alt="thumbnail" /> : uploadButton}
+                </Upload>
               </FormItem>
               <FormItem label="Nội dung">
                 <div className="new-notify__editor">

@@ -20,7 +20,7 @@ class ButtonGroup extends Component {
       return this.setState({ type: "" })
     }
     let { token, booking, editBooking } = this.props;
-    editBooking(booking.key, { ...booking, checkin, checkout, dateStart, dateEnd }, token, (err, res) => {
+    editBooking(booking.key, { checkin, checkout, dateStart, dateEnd, apartment: booking.data.apartment._id }, token, (err, res) => {
       if (!err) this.setState({ type: "" })
     })
   }

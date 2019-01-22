@@ -6,8 +6,8 @@ export default {
     getAllBooking: (token) => {
         return API.get('/cms/bookings', {}, getHeader(token))
     },
-    getAllApartment: (idApartment, idBooking, token) => {
-        return API.get(`/cms/apartments/${idApartment}?booking=${idBooking}`, {}, getHeader(token))
+    getAllApartment: (token) => {
+        return API.get('/cms/apartments/', {}, getHeader(token))
     },
     getAllUser: (token) => {
         return API.get('/cms/users/get', {}, getHeader(token))
