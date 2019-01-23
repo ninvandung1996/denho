@@ -13,15 +13,17 @@ import moment from "moment";
 import "moment/locale/vi";
 import "./index.scss";
 import configs from '../../../redux/constants/configs';
+import { checkChanged, validateState } from "../../../helpers/validateState";
 
 const FormItem = Form.Item;
 
 const initState = {
   title: "",
   content: "",
-  date: new Date(),
+  date: moment(),
   thumbnail: "",
-  loading: false
+  loading: false,
+  error: ""
 };
 
 function beforeUpload(file) {
@@ -54,7 +56,7 @@ class CreateNewPage extends Component {
           this.setState({
             title: res.data.title,
             content: res.data.content,
-            date: res.data.date,
+            date: moment(res.data.date),
             thumbnail: res.data.thumbnail
           })
         }
@@ -63,12 +65,12 @@ class CreateNewPage extends Component {
   }
   onChangeTitle = e => {
     this.setState({
-      title: e.target.value
+      title: e.target.value, error: ""
     });
   }
   onDateChange = (value) => {
-    value && this.setState({ pushTime: value });
-    !value && this.setState({ pushTime: new Date() });
+    value && this.setState({ pushTime: value, error: "" });
+    !value && this.setState({ pushTime: new Date(), error: "" });
   }
   thumbnailChange = (info) => {
     if (info.file.status === 'uploading') {
@@ -78,7 +80,7 @@ class CreateNewPage extends Component {
     if (info.file.status === 'done') {
       this.setState({
         loading: false,
-        thumbnail: `${configs.endPointImage}/uploads/files/${info.file.response.data.name}`
+        thumbnail: `${configs.endPointImage}/uploads/files/${info.file.response.data.name}`, error: ""
       })
     }
   }
@@ -88,7 +90,7 @@ class CreateNewPage extends Component {
     },
     value: this.state.content,
     onChange: e => {
-      this.setState({ content: e.target.getContent() });
+      this.setState({ content: e.target.getContent(), error: "" });
     }
   })
   onSubmit = async () => {
@@ -97,6 +99,10 @@ class CreateNewPage extends Component {
     let res = null;
     let { state } = this;
     delete state.loading;
+    delete state.error;
+    let checkNullState = validateState(this.state, ["title", "content", "date", "thumbnail"]);
+    if (checkNullState.error)
+      return this.setState({ error: checkNullState.error });
     if (_id) {
       res = await editNews(_id, state, token);
     } else {
@@ -109,7 +115,7 @@ class CreateNewPage extends Component {
     }
   }
   render() {
-    let { thumbnail } = this.state;
+    let { thumbnail, error } = this.state;
     const uploadButton = (
       <div>
         <Icon type={this.state.loading ? 'loading' : 'plus'} />
@@ -163,6 +169,7 @@ class CreateNewPage extends Component {
                   {this.props.match.params.idNews ? "Cập nhật" : "Tạo mới"}
                 </button>
               </FormItem>
+              <span className="form__error">{error}</span>
             </Form>
           </div>
         </LayoutContent>

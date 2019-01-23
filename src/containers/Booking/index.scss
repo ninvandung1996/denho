@@ -1,8 +1,9 @@
 .notify {
-    &__new {
+    &_new {
       display: flex;
       justify-content: space-between;
       margin-bottom: 1rem;
+      border-bottom: 1px solid lightgray;
       @media only screen and (max-width: 530px) {
         flex-direction: column;
       }
@@ -10,9 +11,8 @@
     &-status-info{
       width: 100%;
       height: auto;
-      padding: 1rem 4rem;
+      padding: 0 4rem 1rem 4rem;
       border-bottom: 1px solid lightgray;
-      border-top: 1px solid lightgray;
       display: flex;
       &-item{
         width: 100px;
@@ -100,4 +100,7 @@
     .ant-form-item-label{
       text-align: left;
     }
+  }
+  .form__error {
+    color: red;
   }

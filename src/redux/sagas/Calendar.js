@@ -12,7 +12,8 @@ import {
     CALENDAR_ADD_BOOKING,
     SAVE_CALENDAR_ADD_BOOKING,
     CALENDAR_EDIT_BOOKING,
-    CALENDAR_DELETE_BOOKING
+    CALENDAR_DELETE_BOOKING,
+    SAVE_CALENDAR_DELETE_BOOKING
 } from '../actions/types'
 import { createRequestSaga } from './common';
 import { message } from "antd";
@@ -78,7 +79,7 @@ const editBooking = createRequestSaga({
 const deleteBooking = createRequestSaga({
     request: Api.deleteBooking,
     key: "calendarDeleteBooking",
-    success: [res => ({})],
+    success: [res => ({ type: SAVE_CALENDAR_DELETE_BOOKING, payload: res.data })],
     failure: [],
     functionSuccess: [() => message.success("Xóa thành công!")],
     functionFailure: [() => message.error("Xóa thất bại!")]

@@ -4,6 +4,7 @@ import "moment/locale/vi";
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { getAllApartment, getAllUser } from '../../redux/actions/Booking';
+import { checkChanged, validateState } from "../../helpers/validateState";
 
 const formItemStyle = {
     labelCol: { span: 5 },
@@ -23,7 +24,7 @@ const title = {
 const initState = {
     add: { user: "", apartment: "", dateStart: moment(), dateEnd: moment().add("days", 1) },
     edit: { checkin: "", checkout: "", dateStart: "", dateEnd: "" },
-    apartmentList: [], userList: [], timeBookedList: []
+    apartmentList: [], userList: [], timeBookedList: [], error: ""
 }
 
 class Popup extends React.Component {
@@ -35,7 +36,8 @@ class Popup extends React.Component {
                 checkout: props.selectedBooking.checkout,
                 dateStart: moment(props.selectedBooking.dateStart, dateFormat),
                 dateEnd: moment(props.selectedBooking.dateEnd, dateFormat)
-            }
+            },
+            error: ""
         };
     }
     componentDidMount() {
@@ -53,7 +55,7 @@ class Popup extends React.Component {
     onDateChange = (dates, dateStrings) => {
         let [dateStart, dateEnd] = dates;
         if (moment(dateStart).format("DD/MM/YYYY") === moment(dateEnd).format("DD/MM/YYYY")) {
-            dateEnd = moment(dateEnd).add("days", 1);
+            dateEnd = moment(dateStart).add("days", 1);
         }
         let { type } = this.props;
         this.setState((prevState, props) => ({
@@ -72,11 +74,11 @@ class Popup extends React.Component {
             let { type } = this.props;
             if (name === "apartment") {
                 this.setState((prevState, props) => ({
-                    [type]: { ...prevState[type], apartment: value, dateStart: moment(), dateEnd: moment() }
+                    [type]: { ...prevState[type], apartment: value }, error: ""
                 }))
             }
             else this.setState((prevState, props) => ({
-                [type]: { ...prevState[type], [name]: value }
+                [type]: { ...prevState[type], [name]: value }, error: ""
             }))
         }
     }
@@ -84,9 +86,16 @@ class Popup extends React.Component {
         let { type } = this.props;
         if (type === "add") {
             let { dateStart, dateEnd, apartment, user } = this.state.add;
+            const checkNullState = validateState(this.state.add, ["apartment", "user"]);
+            if (checkNullState.error)
+                return this.setState({ error: checkNullState.error });
             this.props.handleOk({ dateStart, dateEnd, apartment, user });
-        } else if (type = "edit") {
+        } else if (type === "edit") {
             let { checkin, checkout, dateStart, dateEnd } = this.state.edit;
+            let { selectedBooking } = this.props;
+            const checkChangedState = checkChanged(selectedBooking, this.state.edit, ["dateStart", "dateEnd", "checkin", "checkout"]);
+            if (checkChangedState.error)
+                return this.setState({ error: checkChangedState.error });
             this.props.handleOk({ dateStart, dateEnd, checkin, checkout });
         }
     }
@@ -112,7 +121,7 @@ class Popup extends React.Component {
     // }
     render() {
         let { type, selectedBooking } = this.props;
-        let { add, edit, apartmentList, userList } = this.state;
+        let { add, edit, apartmentList, userList, error } = this.state;
         if (type === "view") {
             return (
                 <Modal
@@ -154,10 +163,10 @@ class Popup extends React.Component {
                 >
                     <Form>
                         <Form.Item label="Check in" {...formItemStyle} className="form-item">
-                            <Switch checked={edit.checkin} onChange={this.onSwitchChange('checkin')} />
+                            <Switch checked={edit.checkin} onChange={this.onSwitchChange('checkin')} disabled={edit.checkout} />
                         </Form.Item>
                         <Form.Item label="Check out" {...formItemStyle} className="form-item" >
-                            <Switch checked={edit.checkout} onChange={this.onSwitchChange('checkout')} />
+                            <Switch checked={edit.checkout} onChange={this.onSwitchChange('checkout')} disabled={!edit.checkin} />
                         </Form.Item>
                         <Form.Item label="Thời gian" {...formItemStyle} className="form-item">
                             <RangePicker
@@ -169,6 +178,7 @@ class Popup extends React.Component {
                             />
                         </Form.Item>
                     </Form>
+                    <span className="form__error">{error}</span>
                 </Modal>
             )
         }
@@ -209,6 +219,7 @@ class Popup extends React.Component {
                         />
                     </Form.Item>
                 </Form>
+                <span className="form__error">{error}</span>
             </Modal>
         )
     }

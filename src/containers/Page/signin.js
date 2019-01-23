@@ -11,8 +11,8 @@ import vinCityImg from "../../image/logo-vincity.png";
 
 class SignIn extends Component {
   state = {
-    email: "",
-    password: "",
+    email: "admin@twinger.co",
+    password: "Vinhome@1218",
     redirectToReferrer: false,
     errorText: ""
   };

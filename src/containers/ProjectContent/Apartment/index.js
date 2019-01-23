@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Icon, Button, Tooltip, Popconfirm } from 'antd';
+import { Card, Icon, Button, Tooltip, Popconfirm, Modal } from 'antd';
 import Popup from './Popup';
 import { getApartment, editApartment, deleteApartment } from '../../../redux/actions/Project';
 import { connect } from 'react-redux';
@@ -9,7 +9,7 @@ const { Meta } = Card;
 class Apartment extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { type: "", apartment: this.props.data }
+        this.state = { type: "", apartment: this.props.data, showDelete: false }
     }
     showModal = (type) => {
         return () => {
@@ -29,6 +29,11 @@ class Apartment extends React.Component {
             if (!err) this.setState({ type: "" });
         })
     }
+    toggleDelete = () => {
+        this.setState((preState, props) => {
+            return { showDelete: !preState.showDelete }
+        })
+    }
     onConfirmDelete = () => {
         let { token, data, deleteApartment } = this.props;
         deleteApartment(data._id, token, (err, res) => {
@@ -40,6 +45,7 @@ class Apartment extends React.Component {
     }
     render() {
         let { type, apartment } = this.state;
+        let { data } = this.props;
         return (
             <React.Fragment>
                 <Card
@@ -51,11 +57,19 @@ class Apartment extends React.Component {
                             <Tooltip placement="top" title="Chỉnh sửa căn hộ">
                                 <Button className="button-group__single single-apartment-btn" icon="edit" onClick={this.showModal("edit")} />
                             </Tooltip>
-                            <Popconfirm placement="top" title="Bạn có chắc chắn muốn xóa?" onConfirm={this.onConfirmDelete} okText="Có" cancelText="Không">
-                                <Tooltip placement="top" title="Xóa căn hộ">
-                                    <Button className="button-group__single single-apartment-btn" icon="close" />
-                                </Tooltip>
-                            </Popconfirm>
+                            {
+                                data.bookings.length > 0 ? (
+                                    <Tooltip placement="top" title="Xóa dự án hiện tại">
+                                        <Button className="button-group__single single-apartment-btn" icon="close" onClick={this.toggleDelete} />
+                                    </Tooltip>
+                                ) : (
+                                        <Popconfirm placement="top" title="Bạn có chắc chắn muốn xóa?" onConfirm={this.onConfirmDelete} okText="Có" cancelText="Không">
+                                            <Tooltip placement="top" title="Xóa dự án hiện tại">
+                                                <Button className="button-group__single single-apartment-btn" icon="close" />
+                                            </Tooltip>
+                                        </Popconfirm>
+                                    )
+                            }
                         </div>
                     ]}
                 >
@@ -66,6 +80,16 @@ class Apartment extends React.Component {
                 </Card>
                 {
                     type !== "" && <Popup type={type} apartment={apartment} handleOk={this.handleOk} handleCancel={this.handleCancel} />
+                }
+                {
+                    this.state.showDelete && <Modal
+                        title={"Xóa căn hộ"}
+                        visible={true}
+                        onCancel={this.toggleDelete}
+                        footer={null}
+                    >
+                        <span>Không thể xóa căn hộ khi chưa xóa hết các booking của căn hộ đó!</span>
+                    </Modal>
                 }
             </React.Fragment>
         )

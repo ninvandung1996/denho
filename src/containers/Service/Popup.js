@@ -4,6 +4,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { getAllProject } from '../../redux/actions/Service';
 import configs from '../../redux/constants/configs';
+import { checkChanged, validateState } from "../../helpers/validateState";
 const timeFormat = "DD/MM/YYYY MM:HH";
 
 const formItemStyle = {
@@ -20,7 +21,7 @@ const title = {
 const Option = Select.Option;
 
 const initState = {
-    thumbnail: "", detail: "", dateAndTime: moment(), project: "", projectList: [], loading: false
+    thumbnail: "", detail: "", dateAndTime: moment(), project: "", projectList: [], loading: false, error: ""
 }
 
 function beforeUpload(file) {
@@ -41,7 +42,7 @@ class Popup extends React.Component {
         this.state = props.type === "add" ? initState : {
             ...props.data,
             project: props.data.project._id
-            , projectList: []
+            , projectList: [], error: ""
         }
     }
     componentDidMount() {
@@ -53,13 +54,13 @@ class Popup extends React.Component {
         })
     }
     detailChange = (e) => {
-        this.setState({ detail: e.target.value });
+        this.setState({ detail: e.target.value, error: "" });
     }
     projectChange = (project) => {
-        this.setState({ project })
+        this.setState({ project, error: "" })
     }
     timeChange = (dateAndTime) => {
-        this.setState({ dateAndTime })
+        this.setState({ dateAndTime, error: "" })
     }
     thumbnailChange = (info) => {
         if (info.file.status === 'uploading') {
@@ -69,19 +70,27 @@ class Popup extends React.Component {
         if (info.file.status === 'done') {
             this.setState({
                 loading: false,
-                thumbnail: `${configs.endPointImage}/uploads/files/${info.file.response.data.name}`
+                thumbnail: `${configs.endPointImage}/uploads/files/${info.file.response.data.name}`,
+                error: ""
             })
         }
     }
     handleOk = () => {
         let { thumbnail, detail, dateAndTime, project } = this.state;
+        let { type, data } = this.props;
+        const checkNullState = validateState(this.state, ["thumbnail", "detail", "dateAndTime", "project"]);
+        const checkChangedState = type === "edit" ? checkChanged({ ...data, project: data.project._id }, this.state, ["thumbnail", "detail", "dateAndTime", "project"]) : { error: false };
+        if (checkChangedState.error)
+            return this.setState({ error: checkChangedState.error });
+        if (checkNullState.error)
+            return this.setState({ error: checkNullState.error });
         this.props.handleOk({ thumbnail, detail, dateAndTime, project });
     }
     handleCancel = () => {
         this.props.handleCancel();
     }
     render() {
-        let { thumbnail, detail, dateAndTime, project, projectList } = this.state;
+        let { thumbnail, detail, dateAndTime, project, projectList, error } = this.state;
         if (this.props.type === "view") {
             return (
                 <Modal
@@ -121,7 +130,7 @@ class Popup extends React.Component {
                 onCancel={this.handleCancel}
             >
                 <Form>
-                    <Form.Item label="Thumbnail" {...formItemStyle} className="form-item">
+                    <Form.Item label="Thumbnail" {...formItemStyle} className="form-item" required={true}>
                         <Upload
                             name="file"
                             listType="picture-card"
@@ -135,18 +144,18 @@ class Popup extends React.Component {
                             {thumbnail ? <img style={{ width: "100%" }} src={thumbnail} alt="thumbnail" /> : uploadButton}
                         </Upload>
                     </Form.Item>
-                    <Form.Item label="Chi tiết" {...formItemStyle} className="form-item">
+                    <Form.Item label="Chi tiết" {...formItemStyle} className="form-item" required={true}>
                         <Input value={detail} onChange={this.detailChange} />
                     </Form.Item>
-                    <Form.Item label="Thời gian" {...formItemStyle} className="form-item">
+                    <Form.Item label="Thời gian" {...formItemStyle} className="form-item" required={true}>
                         <DatePicker
                             showTime
                             value={moment(dateAndTime)}
                             format={timeFormat} placeholder="Chọn thời gian" onChange={this.timeChange} onOk={this.timeChange}
                         />
                     </Form.Item>
-                    <Form.Item label="Dự án" {...formItemStyle} className="form-item">
-                        <Select value={project} placeholder={"Chọn dự án"} style={{ width: "100%" }} onChange={this.projectChange}>
+                    <Form.Item label="Dự án" {...formItemStyle} className="form-item" required={true}>
+                        <Select defaultValue={project} value={project} placeholder={"Chọn dự án"} style={{ width: "100%" }} onChange={this.projectChange}>
                             {
                                 projectList.map(value => (
                                     <Option key={value._id} value={value._id}>{value.name}</Option>
@@ -155,6 +164,7 @@ class Popup extends React.Component {
                         </Select>
                     </Form.Item>
                 </Form>
+                <span className="form__error">{error}</span>
             </Modal>
         )
     }

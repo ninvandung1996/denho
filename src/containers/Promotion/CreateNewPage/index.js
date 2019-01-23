@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import LayoutContentWrapper from "../../../components/utility/layoutWrapper";
 import LayoutContent from "../../../components/utility/layoutContent";
-import { Form, Input, DatePicker,Upload, Icon, message } from "antd";
+import { Form, Input, DatePicker, Upload, Icon, message } from "antd";
 import { connect } from "react-redux";
 import {
   getPromotion,
@@ -13,15 +13,17 @@ import moment from "moment";
 import "moment/locale/vi";
 import "./index.scss";
 import configs from '../../../redux/constants/configs';
+import { validateState } from "../../../helpers/validateState";
 
 const FormItem = Form.Item;
 
 const initState = {
   title: "",
   content: "",
-  date: new Date(),
+  date: moment(),
   thumbnail: "",
-  loading: false
+  loading: false,
+  error: ""
 };
 
 function beforeUpload(file) {
@@ -63,7 +65,7 @@ class CreateNewPage extends Component {
   }
   onChangeTitle = e => {
     this.setState({
-      title: e.target.value
+      title: e.target.value, error: ""
     });
   }
   thumbnailChange = (info) => {
@@ -74,7 +76,7 @@ class CreateNewPage extends Component {
     if (info.file.status === 'done') {
       this.setState({
         loading: false,
-        thumbnail: `${configs.endPointImage}/uploads/files/${info.file.response.data.name}`
+        thumbnail: `${configs.endPointImage}/uploads/files/${info.file.response.data.name}`, error: ""
       })
     }
   }
@@ -88,17 +90,23 @@ class CreateNewPage extends Component {
     },
     value: this.state.content,
     onChange: e => {
-      this.setState({ content: e.target.getContent() });
+      this.setState({ content: e.target.getContent(), error: "" });
     }
   })
   onSubmit = async () => {
     let _id = this.props.match.params.idPromotion;
     let { token, addPromotion, editPromotion } = this.props;
     let res = null;
+    let { state } = this;
+    delete state.loading;
+    delete state.error;
+    let checkNullState = validateState(this.state, ["title", "content", "date", "thumbnail"]);
+    if (checkNullState.error)
+      return this.setState({ error: checkNullState.error });
     if (_id) {
-      res = await editPromotion(_id, this.state, token);
+      res = await editPromotion(_id, state, token);
     } else {
-      res = await addPromotion(this.state, token);
+      res = await addPromotion(state, token);
     }
     if (res) {
       setTimeout(() => {
@@ -107,7 +115,7 @@ class CreateNewPage extends Component {
     }
   }
   render() {
-    let { thumbnail } = this.state;
+    let { thumbnail, error } = this.state;
     const uploadButton = (
       <div>
         <Icon type={this.state.loading ? 'loading' : 'plus'} />
@@ -161,6 +169,7 @@ class CreateNewPage extends Component {
                   {this.props.match.params.idPromotion ? "Cập nhật" : "Tạo mới"}
                 </button>
               </FormItem>
+              <span className="form__error">{error}</span>
             </Form>
           </div>
         </LayoutContent>

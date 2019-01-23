@@ -3,7 +3,10 @@ export const validateState = (state, args) => {
   let listErrs = [];
 
   args.forEach(arg => {
-    if (_.isEmpty(state[arg])) listErrs.push(arg);
+    if (typeof state[arg] === "number") {
+      if (!(state[arg] >= state[arg] || state[arg] < state[arg])) listErrs.push(arg);
+    }
+    else if (_.isEmpty(state[arg])) listErrs.push(arg);
   });
 
   return {

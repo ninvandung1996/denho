@@ -7,6 +7,7 @@ import DeleteButton from './deleteButton';
 import { getUser } from '../../redux/actions/Calendar';
 import { connect } from 'react-redux';
 import { Select, Switch, Form } from 'antd';
+import { checkChanged, validateState } from "../../helpers/validateState";
 
 const Option = Select.Option;
 
@@ -60,7 +61,7 @@ class ModalEvents extends Component {
     if (moment(start).format("DD/MM/YYYY") === moment(end).format("DD/MM/YYYY")) {
       end = moment(end).add("days", 1);
     }
-    this.state = { listUser: [], selectedData: { ...props.selectedData, start, end } };
+    this.state = { listUser: [], selectedData: { ...props.selectedData, start, end }, error: "" };
   }
   componentDidMount() {
     let { getUser, token } = this.props;
@@ -69,6 +70,17 @@ class ModalEvents extends Component {
     })
   }
   handleOk = () => {
+    let { modalVisible, selectedData } = this.props;
+    if (modalVisible === "new") {
+      let checkNullState = validateState(this.state.selectedData, ['user']);
+      if (checkNullState.error)
+        return this.setState({ error: checkNullState.error });
+    }
+    else if (modalVisible === "update") {
+      const checkChangedState = checkChanged(selectedData, this.state.selectedData, ["checkin", "checkout", "dateStart", "dateEnd"]);
+      if (checkChangedState.error)
+        return this.setState({ error: checkChangedState.error });
+    }
     this.props.setModalData('ok', this.state.selectedData);
   };
   handleCancel = () => {
@@ -81,7 +93,7 @@ class ModalEvents extends Component {
   onChange = (value) => {
     let { selectedData } = this.state;
     selectedData.user = value;
-    this.setState({ selectedData });
+    this.setState({ selectedData, error: "" });
   }
   onSwitchChange = (name) => {
     return value => {
@@ -130,10 +142,10 @@ class ModalEvents extends Component {
                       <span>{selectedData.title}</span>
                     </Form.Item>
                     <Form.Item label="Check in" {...formItemStyle} className="form-item">
-                      <Switch checked={selectedData.checkin} onChange={this.onSwitchChange('checkin')} />
+                      <Switch checked={selectedData.checkin} onChange={this.onSwitchChange('checkin')} disabled={selectedData.checkout} />
                     </Form.Item>
                     <Form.Item label="Checkout" {...formItemStyle} className="form-item">
-                      <Switch checked={selectedData.checkout} onChange={this.onSwitchChange('checkout')} />
+                      <Switch checked={selectedData.checkout} onChange={this.onSwitchChange('checkout')} disabled={!selectedData.checkin} />
                     </Form.Item>
                   </React.Fragment>
                 ) : (
@@ -158,6 +170,7 @@ class ModalEvents extends Component {
               {modalVisible === "update" && <DeleteButton handleDelete={this.handleDelete} />}
             </div>
           </CalendarModalBody>
+          <div className="form__error">{this.state.error}</div>
         </Modal>
       </div>
     );

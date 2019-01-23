@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Tooltip, Select, Popconfirm } from 'antd';
+import { Button, Tooltip, Select, Popconfirm, Modal } from 'antd';
 import './index.scss';
 import FullCalendar from './Calendar';
 import { CalenderHeaderWrapper } from "./calendar.style";
@@ -12,7 +12,7 @@ const Option = Select.Option;
 class Calendar extends Component {
     constructor(props) {
         super(props);
-        this.state = { visible: false, selectApartment: {} }
+        this.state = { visible: false, selectApartment: {}, showDelete: false }
     }
     showModal = () => {
         this.setState({ visible: true })
@@ -27,6 +27,11 @@ class Calendar extends Component {
     }
     handleCancel = () => {
         this.setState({ visible: false });
+    }
+    toggleDelete = () => {
+        this.setState((preState, props) => {
+            return { showDelete: !preState.showDelete }
+        })
     }
     handleChange = (name) => {
         return e => {
@@ -88,11 +93,19 @@ class Calendar extends Component {
                         <Tooltip placement="top" title="Chỉnh sửa thông tin căn hộ">
                             <Button className="button-group__single" icon="edit" onClick={this.showModal} />
                         </Tooltip>
-                        <Popconfirm placement="top" title="Bạn có chắc chắn muốn xóa?" onConfirm={this.onConfirmDelete} okText="Có" cancelText="Không">
-                            <Tooltip placement="top" title="Xóa căn hộ">
-                                <Button className="button-group__single" icon="close" />
-                            </Tooltip>
-                        </Popconfirm>
+                        {
+                            (selectedApartment && selectedApartment.bookings.length > 0) ? (
+                                <Tooltip placement="top" title="Xóa căn hộ">
+                                    <Button className="button-group__single" icon="close" onClick={this.toggleDelete} />
+                                </Tooltip>
+                            ) : (
+                                    <Popconfirm placement="top" title="Bạn có chắc chắn muốn xóa?" onConfirm={this.onConfirmDelete} okText="Có" cancelText="Không">
+                                        <Tooltip placement="top" title="Xóa căn hộ">
+                                            <Button className="button-group__single" icon="close" />
+                                        </Tooltip>
+                                    </Popconfirm>
+                                )
+                        }
                     </div>
                     <div className="calendarHeader-status-info" >
                         <div className="calendarHeader-status-info-item">Chưa check-in</div>
@@ -103,6 +116,16 @@ class Calendar extends Component {
                 <FullCalendar />
                 {
                     visible && <Popup type="edit" apartment={selectedApartment} handleOk={this.handleOk} handleCancel={this.handleCancel} />
+                }
+                {
+                    this.state.showDelete && <Modal
+                        title={"Xóa dự án"}
+                        visible={true}
+                        onCancel={this.toggleDelete}
+                        footer={null}
+                    >
+                        <span>Không thể xóa căn hộ khi chưa xóa hết các booking của căn hộ đó!</span>
+                    </Modal>
                 }
             </React.Fragment>
         )

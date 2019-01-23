@@ -33,7 +33,7 @@ export const columns = [
     title: "Dự án",
     dataIndex: "project",
     render: (text, record) => {
-      return record.project.name
+      return record.project? record.project.name : ""
     },
     width: "15vw"
   },

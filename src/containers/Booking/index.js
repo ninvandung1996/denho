@@ -8,6 +8,7 @@ import { convertToSearchName } from "../../helpers/utils";
 import { connect } from 'react-redux';
 import { addBooking } from '../../redux/actions/Booking';
 import Popup from './Popup';
+import moment from 'moment';
 
 const Search = Input.Search;
 
@@ -28,9 +29,9 @@ class Booking extends React.Component {
     showModal = () => {
         this.setState({ visible: true })
     }
-    handleOk = (data) => {
+    handleOk = ({ dateStart, dateEnd, user, apartment }) => {
         let { token, addBooking } = this.props;
-        addBooking(data, token, (err, res) => {
+        addBooking({ dateStart: dateStart.hours(12), dateEnd: dateEnd.hours(10), user, apartment }, token, (err, res) => {
             if (!err) this.setState({ visible: false })
         })
     }
@@ -42,7 +43,7 @@ class Booking extends React.Component {
             <LayoutContentWrapper>
                 <LayoutContent>
                     <div className="notify">
-                        <div className="notify__new">
+                        <div className="notify_new">
                             <div>
                                 <Search
                                     placeholder="Tìm theo người dùng"

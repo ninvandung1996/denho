@@ -46,11 +46,11 @@ const optionInput = [
 class LeftForm extends Component {
   constructor(props) {
     super(props);
-    this.state = initialState
+    this.state = { ...initialState, ...props.data }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    return { ...nextProps.data }
+  componentWillReceiveProps(nextProps) {
+    this.setState({ ...nextProps.data })
   }
 
   handleSubmit = e => {
@@ -69,6 +69,7 @@ class LeftForm extends Component {
   };
 
   handleChangeInput = e => {
+    console.log(e.target.value);
     const { value, name } = e.target;
     this.setState({ [name]: value, error: "" });
   };

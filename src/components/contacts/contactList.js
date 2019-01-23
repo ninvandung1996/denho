@@ -51,9 +51,7 @@ export default class ContactList extends Component {
     return (
       <ContactListWrapper className="isoContactListWrapper">
         <InputSearch
-          placeholder={this.context.intl.formatMessage({
-            id: 'contactlist.searchContacts',
-          })}
+          placeholder={"Tìm dự án"}
           value={search}
           onChange={this.onChange}
           className="isoSearchBar"

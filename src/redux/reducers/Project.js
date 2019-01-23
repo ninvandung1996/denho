@@ -40,7 +40,7 @@ export default (state = defaultState, { type, payload }) => {
             let selectedProject = { ...state.selectedProject };
             let projectList = [...state.projectList].map(value => {
                 if (value._id === payload.project) {
-                    selectedProject = { ...value, apartments: [payload, ...selectedProject.apartments] };
+                    selectedProject = { ...value, apartments: [{ ...payload, bookings: [] }, ...selectedProject.apartments] };
                     return selectedProject;
                 }
                 return value;

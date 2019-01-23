@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './index.scss';
 import { connect } from "react-redux";
 import { addNewProject, editProject } from '../../redux/actions/Project';
-import { Layout, Button, Tooltip, Popconfirm } from 'antd';
+import { Layout, Button, Tooltip, Popconfirm, Modal } from 'antd';
 import Popup from './Popup';
 
 const { Header } = Layout;
@@ -10,7 +10,7 @@ const { Header } = Layout;
 class ProjectHeader extends Component {
   constructor(props) {
     super(props);
-    this.state = { type: "" };
+    this.state = { type: "", showDelete: false };
   }
   showModal = (type) => {
     return () => {
@@ -34,6 +34,11 @@ class ProjectHeader extends Component {
       editProject(data, token);
     }
     this.setState({ type: "" });
+  }
+  toggleDelete = () => {
+    this.setState((preState, props) => {
+      return { showDelete: !preState.showDelete }
+    })
   }
   handleCancel = () => {
     this.setState({
@@ -77,17 +82,35 @@ class ProjectHeader extends Component {
                     onClick={this.showModal("edit")}
                   />
                 </Tooltip>
-                <Popconfirm placement="top" title="Bạn có chắc chắn muốn xóa?" onConfirm={deleteProject} okText="Có" cancelText="Không">
-                  <Tooltip placement="top" title="Xóa dự án hiện tại">
-                    <Button className="button-group__single" icon="close" />
-                  </Tooltip>
-                </Popconfirm>
+                {
+                  selectedProject.apartments.length > 0 ? (
+                    <Tooltip placement="top" title="Xóa dự án hiện tại">
+                      <Button className="button-group__single" icon="close" onClick={this.toggleDelete} />
+                    </Tooltip>
+                  ) : (
+                      <Popconfirm placement="top" title="Bạn có chắc chắn muốn xóa?" onConfirm={deleteProject} okText="Có" cancelText="Không">
+                        <Tooltip placement="top" title="Xóa dự án hiện tại">
+                          <Button className="button-group__single" icon="close" />
+                        </Tooltip>
+                      </Popconfirm>
+                    )
+                }
               </React.Fragment>
             )
           }
         </div>
         {
           type !== "" && <Popup handleOk={this.handleOk} handleCancel={this.handleCancel} type={type} project={selectedProject} />
+        }
+        {
+          this.state.showDelete && <Modal
+            title={"Xóa dự án"}
+            visible={true}
+            onCancel={this.toggleDelete}
+            footer={null}
+          >
+            <span>Không thể xóa dự án khi chưa xóa hết các căn hộ trong dự án đó!</span>
+          </Modal>
         }
       </Header>
     );

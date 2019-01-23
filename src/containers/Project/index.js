@@ -58,7 +58,6 @@ class Project extends Component {
             selectedId={selectedProject !== null ? selectedProject._id : ""}
             changeContact={this.changeProject}
             deleteContact={this.deleteProject}
-            intl="Chọn dự án"
           />
         </div>
         <Layout className="isoContactBoxWrapper" style={{ width: "calc(100% - 340px)", marginLeft: "20px" }} >

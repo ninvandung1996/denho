@@ -12,6 +12,7 @@ import Editor from "../../../components/editor";
 import moment from "moment";
 // import "moment/locale/vi";
 import "./index.scss";
+import { validateState } from "../../../helpers/validateState";
 
 const FormItem = Form.Item;
 // function range(start, end) {
@@ -39,7 +40,8 @@ const FormItem = Form.Item;
 const initialState = {
   title: "",
   content: "",
-  pushTime: new Date()
+  pushTime: moment(),
+  error: ""
 };
 
 class CreateNewPage extends Component {
@@ -69,21 +71,27 @@ class CreateNewPage extends Component {
 
   onChangeTitle = e => {
     this.setState({
-      title: e.target.value
+      title: e.target.value, error: ""
     });
   };
 
   onDateChange = (value, dateString) => {
     console.log({ value: moment, dateString });
-    value && this.setState({ pushTime: value });
+    value && this.setState({ pushTime: value, error: "" });
     // value && this.setState({ pushTime: value._d });/
-    !value && this.setState({ pushTime: new Date() });
+    !value && this.setState({ pushTime: new Date(), error: "" });
   };
 
   onSubmit = async () => {
     const { token, actCreateNotification, actUpdateNotification } = this.props;
     const { id, title, pushTime, content } = this.state;
     let res = "";
+    let { state } = this;
+    delete state.loading;
+    delete state.error;
+    let checkNullState = validateState(this.state, ["title", "content", "pushTime"]);
+    if (checkNullState.error)
+      return this.setState({ error: checkNullState.error });
     if (id) {
       res = await actUpdateNotification(
         token,
@@ -106,7 +114,7 @@ class CreateNewPage extends Component {
     },
     value: this.state.content,
     onChange: e => {
-      this.setState({ content: e.target.getContent() });
+      this.setState({ content: e.target.getContent(), error: "" });
     }
   });
 
@@ -147,6 +155,7 @@ class CreateNewPage extends Component {
                   {this.state.id ? "Cập nhật" : "Tạo mới"}
                 </button>
               </FormItem>
+              <span className="form__error">{this.state.error}</span>
             </Form>
           </div>
         </LayoutContent>
