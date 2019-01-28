@@ -44,7 +44,7 @@ class ButtonGroup extends Component {
           <button className="button-group--3">Xóa</button>
         </Popconfirm>
         {
-          type !== "" && <Popup type={type} selectedBooking={booking} handleOk={this.handleOk} handleCancel={this.handleCancel} />
+          type !== "" && <Popup type={type} selectedBooking={booking.data} handleOk={this.handleOk} handleCancel={this.handleCancel} />
         }
       </div>
     );

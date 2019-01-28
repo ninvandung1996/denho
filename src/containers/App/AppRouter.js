@@ -5,11 +5,19 @@ import asyncComponent from "../../helpers/AsyncFunc";
 const routes = [
   {
     path: "",
-    component: asyncComponent(() => import("../dashboard"))
+    component: asyncComponent(() => import(".././Notification"))
   },
   {
-    path: "blankPage",
-    component: asyncComponent(() => import("../blankPage"))
+    path: "edit/:idNotification",
+    component: asyncComponent(() => import(".././Notification/CreateNewPage"))
+  },
+  {
+    path: "view/:idNotification",
+    component: asyncComponent(() => import(".././Notification/ShowPage"))
+  },
+  {
+    path: "createnotification",
+    component: asyncComponent(() => import(".././Notification/CreateNewPage"))
   },
   {
     path: "project",
@@ -76,24 +84,12 @@ const routes = [
     component: asyncComponent(() => import("../News/CreateNewPage"))
   },
   {
-    path: "notify",
-    component: asyncComponent(() => import(".././Notification"))
-  },
-  {
-    path: "notify/edit/:idNotification",
-    component: asyncComponent(() => import(".././Notification/CreateNewPage"))
-  },
-  {
-    path: "notify/view/:idNotification",
-    component: asyncComponent(() => import(".././Notification/ShowPage"))
-  },
-  {
-    path: "notify/createnotification",
-    component: asyncComponent(() => import(".././Notification/CreateNewPage"))
-  },
-  {
-    path: "configs",
+    path: "config",
     component: asyncComponent(() => import("../ManageConfiguration"))
+  },
+  {
+    path: "contract",
+    component: asyncComponent(() => import("../Contract"))
   },
 ];
 

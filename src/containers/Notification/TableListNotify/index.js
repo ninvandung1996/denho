@@ -21,9 +21,7 @@ class TableListNotify extends Component {
         key: notification._id,
         id: index + 1,
         title: notification.title,
-        pushtime: `${moment(pushtime.toLocaleDateString()).format(
-          "L"
-        )} - ${pushtime.toLocaleTimeString()}`,
+        pushtime: `${moment(pushtime).format("DD/MM/YYYY hh:mm")}`,
         push: notification.sent ? "Đã gửi" : "Chưa gửi"
       });
     });

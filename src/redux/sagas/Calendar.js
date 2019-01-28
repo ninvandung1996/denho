@@ -12,8 +12,11 @@ import {
     CALENDAR_ADD_BOOKING,
     SAVE_CALENDAR_ADD_BOOKING,
     CALENDAR_EDIT_BOOKING,
+    SAVE_CALENDAR_EDIT_BOOKING,
     CALENDAR_DELETE_BOOKING,
-    SAVE_CALENDAR_DELETE_BOOKING
+    SAVE_CALENDAR_DELETE_BOOKING,
+    CALENDAR_GET_ALL_CONTRACT,
+    CALENDAR_GET_APARTMENT_BY_ID
 } from '../actions/types'
 import { createRequestSaga } from './common';
 import { message } from "antd";
@@ -22,6 +25,13 @@ const getApartment = createRequestSaga({
     request: Api.getApartment,
     key: "calendarGetApartment",
     success: [res => ({ type: SAVE_CALENDAR_GET_APARTMENT, payload: res.data })],
+    failure: []
+})
+
+const getApartmentById = createRequestSaga({
+    request: Api.getApartmentById,
+    key: "calendarGetApartmentById",
+    success: [res => ({})],
     failure: []
 })
 
@@ -70,7 +80,7 @@ const addBooking = createRequestSaga({
 const editBooking = createRequestSaga({
     request: Api.editBooking,
     key: "calendarEditBooking",
-    success: [res => ({})],
+    success: [res => ({ type: SAVE_CALENDAR_EDIT_BOOKING, payload: res.data })],
     failure: [],
     functionSuccess: [() => message.success("Sửa thành công!")],
     functionFailure: [() => message.error("Sửa thất bại!")]
@@ -85,6 +95,13 @@ const deleteBooking = createRequestSaga({
     functionFailure: [() => message.error("Xóa thất bại!")]
 })
 
+const getContract = createRequestSaga({
+    request: Api.getAllContract,
+    key: "calendarGetAllContract",
+    success: [res => ({})],
+    failure: []
+})
+
 export default [
     function* fetchWatcher() {
         yield all([
@@ -95,7 +112,9 @@ export default [
             takeLatest(CALENDAR_GET_BOOKING, getBooking),
             takeLatest(CALENDAR_ADD_BOOKING, addBooking),
             takeLatest(CALENDAR_EDIT_BOOKING, editBooking),
-            takeLatest(CALENDAR_DELETE_BOOKING, deleteBooking)
+            takeLatest(CALENDAR_DELETE_BOOKING, deleteBooking),
+            takeLatest(CALENDAR_GET_ALL_CONTRACT, getContract),
+            takeLatest(CALENDAR_GET_APARTMENT_BY_ID, getApartmentById),
         ]);
     }
 ];

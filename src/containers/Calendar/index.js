@@ -72,10 +72,6 @@ class Calendar extends Component {
                                 <span>{selectedApartment ? selectedApartment.name : ""}</span>
                             </div>
                             <div className="apartment-info-item">
-                                <span>Code:</span>
-                                <span>{selectedApartment ? selectedApartment.code : ""}</span>
-                            </div>
-                            <div className="apartment-info-item">
                                 <span>Vị trí:</span>
                                 <span>{selectedApartment ? selectedApartment.location : ""}</span>
                             </div>

@@ -158,8 +158,8 @@ class CreateNewPage extends Component {
                   style={{ width: "300", marginTop: "1rem" }}
                   onChange={this.onDateChange}
                   format="DD-MM-YYYY HH:mm"
-                  value={moment(this.state.date, "DD-MM-YYYY HH:mm")}
-                  defaultValue={moment(this.state.date, "DD-MM-YYYY HH:mm")}
+                  value={moment(this.state.date)}
+                  defaultValue={moment(this.state.date)}
                   placeholder="Chọn thời gian"
                   showTime={{ defaultValue: moment("00:00:00", "HH:mm") }}
                 />

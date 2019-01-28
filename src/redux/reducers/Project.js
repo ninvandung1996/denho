@@ -55,14 +55,25 @@ export default (state = defaultState, { type, payload }) => {
                 }
                 return value;
             })
-            return { ...state, selectedProject: { ...selectedProject, apartments } }
+            selectedProject = { ...selectedProject, apartments };
+            let projectList = [...projectList];
+            projectList[projectList.indexOf(value => value._id === selectedProject._id)] = selectedProject;
+            return { ...state, selectedProject, projectList }
         }
         case SAVE_DELETE_APARTMENT: {
             let selectedProject = { ...state.selectedProject };
             let apartments = selectedProject.apartments.filter(value => {
                 return value._id !== payload._id
             })
-            return { ...state, selectedProject: { ...selectedProject, apartments } }
+            selectedProject = { ...selectedProject, apartments };
+            let projectList = [...state.projectList];
+            projectList = projectList.map(value => {
+                if (value._id === selectedProject._id) {
+                    return selectedProject;
+                }
+                return value;
+            });
+            return { ...state, selectedProject, projectList }
         }
         default: {
             return state;

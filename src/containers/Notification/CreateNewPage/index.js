@@ -10,7 +10,7 @@ import {
 } from "../../../redux/actions/notification";
 import Editor from "../../../components/editor";
 import moment from "moment";
-// import "moment/locale/vi";
+import "moment/locale/vi";
 import "./index.scss";
 import { validateState } from "../../../helpers/validateState";
 
@@ -143,8 +143,8 @@ class CreateNewPage extends Component {
                   style={{ width: "300", marginTop: "1rem" }}
                   onChange={this.onDateChange}
                   format="DD-MM-YYYY HH:mm"
-                  value={moment(this.state.pushTime, "DD-MM-YYYY HH:mm")}
-                  defaultValue={moment(this.state.pushTime, "DD-MM-YYYY HH:mm")}
+                  value={moment(this.state.pushTime)}
+                  defaultValue={moment(this.state.pushTime)}
                   placeholder="Chọn thời gian"
                   showTime={{ defaultValue: moment("00:00:00", "HH:mm") }}
                 />

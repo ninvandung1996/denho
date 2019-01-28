@@ -1,4 +1,6 @@
 import _ from "lodash";
+import moment from 'moment';
+const timeFormat = "DD/MM/YYYY";
 export const validateState = (state, args) => {
   let listErrs = [];
 
@@ -21,7 +23,12 @@ export const checkChanged = (props, state, args) => {
   let error = "";
 
   args.forEach(arg => {
-    if (!_.isEqual(props[arg], state[arg])) {
+    if (state[arg] instanceof moment) {
+      if (!(moment(props[arg]).format(timeFormat) === state[arg].format(timeFormat))) {
+        checked = true;
+      }
+    }
+    else if (!_.isEqual(props[arg], state[arg])) {
       checked = true;
     }
   });
@@ -29,12 +36,14 @@ export const checkChanged = (props, state, args) => {
   const listErrs = validateState(state, args);
 
   if (!checked) error = "*Bạn chưa thay đổi thông tin trường nào";
-
-  // if (listErrs.listErrs.length !== 0)
-  //   error = "*Bạn cần nhập đầy đủ thông tin các trường";
-
   return { checked, listErrs, error };
 };
+
+export const validateEmail = (email) => {
+  let validate = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  if (email.match(validate)) return true;
+  return false
+}
 
 export const validateYoutube = url => {
   var validate = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;

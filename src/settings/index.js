@@ -3,7 +3,7 @@ export default {
 };
 
 const siteConfig = {
-  siteName: 'ISOMORPHIC',
+  siteName: 'Vin Leasing',
   siteIcon: 'ion-flash',
   footerText: 'Isomorphic ©2017 Created by RedQ, Inc',
 };

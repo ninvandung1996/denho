@@ -58,7 +58,7 @@ class ProjectHeader extends Component {
                 <span>{selectedProject.name}</span>
               </div>
               <div className="projectHeader-info-item">
-                <span>Vị trí:</span>
+                <span>Khu vực:</span>
                 <span>{selectedProject.location}</span>
               </div>
               <div className="projectHeader-info-item">

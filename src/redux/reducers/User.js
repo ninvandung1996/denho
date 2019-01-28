@@ -1,5 +1,6 @@
 import {
     SAVE_GET_ALL_USER,
+    SAVE_CREATE_USER,
     SAVE_DELETE_USER
 } from '../actions/types';
 
@@ -11,6 +12,10 @@ export default (state = defaultState, { type, payload }) => {
     switch (type) {
         case SAVE_GET_ALL_USER: {
             return { ...state, userList: payload }
+        }
+        case SAVE_CREATE_USER: {
+            let userList = [payload, ...state.userList]
+            return { ...state, userList }
         }
         case SAVE_DELETE_USER: {
             let userList = [...state.userList].filter(value => {

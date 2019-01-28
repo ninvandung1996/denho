@@ -4,6 +4,7 @@ import { getPromotion } from "../../../redux/actions/Promotion";
 import LayoutContentWrapper from "../../../components/utility/layoutWrapper";
 import LayoutContent from "../../../components/utility/layoutContent";
 import "./index.scss";
+import moment from 'moment';
 
 const initState = {
   title: "",
@@ -56,7 +57,7 @@ class ShowPage extends Component {
             <div className="notify__item">
               <div className="notify__item--left">Thời gian</div>
               <div className="notify__item--right notify__item--title">
-                {time.toLocaleTimeString()}
+                {moment(time).format("DD/MM/YYYY hh:mm")}
               </div>
             </div>
           </div>

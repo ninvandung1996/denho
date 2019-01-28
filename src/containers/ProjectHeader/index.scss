@@ -18,9 +18,11 @@
           width: 35%;
           min-width: 250px;
           display: inline-block;
-          padding: 5px 20px 0 20px;
+          padding: 5px 10px 0 10px;
+          line-height: 3rem;
           span:nth-child(1){
               width: 100px;
+              line-height: 1rem;
               display: inline-block;
               margin-right: 15px;
           }

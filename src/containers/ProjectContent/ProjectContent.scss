@@ -7,16 +7,14 @@ $btn-color: #1890ff;
     .ant-layout-header{
         background-color: $background-color;
     }
-    .ant-layout-content{
-        background: $background-color;
-        padding: 10px 0;
-    }
     &-header{
         .ant-btn{
             border-radius: 15px;
         }
     }
     &-content{
+        background: $background-color;
+        padding: 0 50px;
         .ant-row-flex{
             div.ant-col-7{
                 height: 50px;
@@ -35,8 +33,9 @@ $btn-color: #1890ff;
 
 .single-aparment{
     width: 150px;
-    margin: 0 auto 15px auto;
+    margin: 0 18px 20px 18px;
     position: relative;
+    float: left;
     &-btn{
         border: 0;
         width: 100%;

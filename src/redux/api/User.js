@@ -6,6 +6,9 @@ export default {
     getAllUser: (token) => {
         return API.get('/cms/users/get', {}, getHeader(token))
     },
+    createUser: (data, token) => {
+        return API.post('/cms/users/create', data, getHeader(token));
+    },
     resetPassword: (data, token) => {
         return API.post('/cms/users/resetpassword', data, getHeader(token));
     },

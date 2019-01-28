@@ -4,7 +4,7 @@ import { DateRangepicker } from '../../components/uielements/datePicker';
 import Modal from '../../components/feedback/modal';
 import { CalendarModalBody } from './calendar.style';
 import DeleteButton from './deleteButton';
-import { getUser } from '../../redux/actions/Calendar';
+import { getUser, getContract, getApartmentById } from '../../redux/actions/Calendar';
 import { connect } from 'react-redux';
 import { Select, Switch, Form } from 'antd';
 import { checkChanged, validateState } from "../../helpers/validateState";
@@ -61,27 +61,43 @@ class ModalEvents extends Component {
     if (moment(start).format("DD/MM/YYYY") === moment(end).format("DD/MM/YYYY")) {
       end = moment(end).add("days", 1);
     }
-    this.state = { listUser: [], selectedData: { ...props.selectedData, start, end }, error: "" };
+    this.state = {
+      listUser: [], listContract: [], selectedData: { user: "", contract: "", ...props.selectedData, start, end }, error: "",
+      timeBookedList: []
+    };
   }
   componentDidMount() {
-    let { getUser, token } = this.props;
-    getUser(token, (err, res) => {
-      if (!err) this.setState({ listUser: res.data })
+    let { token, modalVisible, getApartmentById, selectedApartment } = this.props;
+    getApartmentById(selectedApartment._id, modalVisible === "new" ? "" : this.state.selectedData._id, token, (err, res) => {
+      if (!err) this.setState({ timeBookedList: res.data.timeBooked });
     })
+    if (modalVisible === "new") {
+      let { getUser, getContract } = this.props;
+      getUser(token, (err, res) => {
+        if (!err) this.setState({ listUser: res.data })
+      })
+      getContract(token, (err, res) => {
+        if (!err) this.setState({ listContract: res.data })
+      })
+    }
   }
   handleOk = () => {
     let { modalVisible, selectedData } = this.props;
+    let { user, contract, start, end } = this.state.selectedData;
     if (modalVisible === "new") {
       let checkNullState = validateState(this.state.selectedData, ['user']);
       if (checkNullState.error)
         return this.setState({ error: checkNullState.error });
+      if (contract === "")
+        return this.props.setModalData('ok', { user, start, end });
+      this.props.setModalData('ok', { user, start, end, contract });
     }
-    else if (modalVisible === "update") {
+    else {
       const checkChangedState = checkChanged(selectedData, this.state.selectedData, ["checkin", "checkout", "dateStart", "dateEnd"]);
       if (checkChangedState.error)
         return this.setState({ error: checkChangedState.error });
+      this.props.setModalData('ok', this.state.selectedData);
     }
-    this.props.setModalData('ok', this.state.selectedData);
   };
   handleCancel = () => {
     this.props.setModalData('cancel');
@@ -90,10 +106,26 @@ class ModalEvents extends Component {
   handleDelete = () => {
     this.props.setModalData('delete', this.props.selectedData);
   };
-  onChange = (value) => {
-    let { selectedData } = this.state;
-    selectedData.user = value;
-    this.setState({ selectedData, error: "" });
+  onChange = (name) => {
+    if (name === "user")
+      return (value) => {
+        let { selectedData } = this.state;
+        selectedData.user = value ? value : "";
+        selectedData.contract = "";
+        this.setState({ selectedData, error: "" });
+      }
+    else return (_id) => {
+      let { selectedData } = this.state;
+      if (!_id) {
+        selectedData.contract = "";
+        this.setState({ selectedData, error: "" });
+      } else {
+        let contract = this.state.listContract.find(value => value._id === _id);
+        selectedData.contract = contract._id;
+        selectedData.user = contract.user._id;
+        this.setState({ selectedData, error: "" });
+      }
+    }
   }
   onSwitchChange = (name) => {
     return value => {
@@ -113,6 +145,14 @@ class ModalEvents extends Component {
     } catch (e) { }
     this.setState({ selectedData })
   };
+
+  disabledDate = (current) => {
+    let timeBooked = this.state.timeBookedList;
+    return (
+      current &&
+      timeBooked.map(value => moment(value).format("DD/MM/YYYY")).indexOf(current.format("DD/MM/YYYY")) !== -1
+    )
+  }
   render() {
     const { modalVisible } = this.props;
     const { selectedData } = this.state;
@@ -120,9 +160,15 @@ class ModalEvents extends Component {
     if (!visible) {
       return <div />;
     }
-    const user = selectedData.user;
     const start = selectedData && selectedData.start ? moment(selectedData.start) : '';
     const end = selectedData && selectedData.end ? moment(selectedData.end) : '';
+
+    let { listUser, listContract } = this.state;
+    if (this.props.modalVisible === "new") {
+      let { contract, user } = this.state.selectedData;
+      if (contract !== "") listUser = listUser.filter(value => value._id === user);
+      if (user !== "") listContract = listContract.filter(value => value.user._id === user);
+    }
     return (
       <div>
         <Modal
@@ -149,13 +195,36 @@ class ModalEvents extends Component {
                     </Form.Item>
                   </React.Fragment>
                 ) : (
-                    <Select value={user} placeholder={"Chọn người dùng"} style={{ width: "100%" }} onChange={this.onChange}>
-                      {
-                        this.state.listUser.map(value => (
-                          <Option key={value._id} value={value._id}>{value.name}</Option>
-                        ))
-                      }
-                    </Select>
+                    <React.Fragment>
+                      <Form.Item label="Hợp đồng" {...formItemStyle} className="form-item">
+                        <Select value={this.state.selectedData.contract} style={{ width: "100%" }} onChange={this.onChange("contract")}
+                          showSearch
+                          allowClear={true}
+                          optionFilterProp="children"
+                          filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        >
+                          {
+                            listContract.map(value => (
+                              <Option key={value._id} value={value._id}>{value.code}</Option>
+                            ))
+                          }
+                        </Select>
+                      </Form.Item>
+                      <Form.Item label="Người dùng" {...formItemStyle} className="form-item" required={true}>
+                        <Select value={this.state.selectedData.user} style={{ width: "100%" }} onChange={this.onChange("user")}
+                          showSearch
+                          allowClear={true}
+                          optionFilterProp="children"
+                          filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        >
+                          {
+                            listUser.map(value => (
+                              <Option key={value._id} value={value._id}>{value.email}</Option>
+                            ))
+                          }
+                        </Select>
+                      </Form.Item>
+                    </React.Fragment>
                   )
               }
             </div>
@@ -166,6 +235,7 @@ class ModalEvents extends Component {
                 format="YYYY/MM/DD"
                 onChange={this.onChangeFromTimePicker}
                 style={{ width: `${modalVisible !== "update" ? "100%" : "calc(100%-35px)"}` }}
+                disabledDate={this.disabledDate}
               />
               {modalVisible === "update" && <DeleteButton handleDelete={this.handleDelete} />}
             </div>
@@ -180,8 +250,9 @@ class ModalEvents extends Component {
 
 export default connect(
   state => ({
-    token: state.Auth.token
+    token: state.Auth.token,
+    selectedApartment: state.Calendar.selectedApartment
   }), {
-    getUser
+    getUser, getContract, getApartmentById
   }
 )(ModalEvents);

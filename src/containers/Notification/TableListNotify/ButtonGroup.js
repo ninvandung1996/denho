@@ -16,11 +16,11 @@ class ButtonGroup extends Component {
     
     return (
       <div className="button-group">
-        <Link to={`/dashboard/notify/view/${notificationId}`}>
+        <Link to={`/dashboard/view/${notificationId}`}>
           <button className="button-group--1">Xem</button>
         </Link>
 
-        <Link to={`/dashboard/notify/edit/${notificationId}`}>
+        <Link to={`/dashboard/edit/${notificationId}`}>
           <button className="button-group--2">
             Sửa
           </button>

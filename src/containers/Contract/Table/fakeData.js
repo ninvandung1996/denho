@@ -8,25 +8,20 @@ export const columns = [
     width: "5vw"
   },
   {
-    title: "Tiêu đề",
-    dataIndex: "title",
+    title: "Người dùng",
+    dataIndex: "user",
     width: "35vw"
   },
   {
-    title: "Thời gian gửi",
-    dataIndex: "pushtime",
-    width: "20vw"
-  },
-  {
-    title: "Gửi hay chưa?",
-    dataIndex: "push",
-    width: "15vw"
+    title: "Mã",
+    dataIndex: "code",
+    width: "25vw"
   },
   {
     title: "Thao tác",
     dataIndex: "action",
     render: (text, record) => {
-      return <ButtonGroup notificationId={record.key}/>
+      return <ButtonGroup value={record.data} />
     },
     width: "35vw"
   }

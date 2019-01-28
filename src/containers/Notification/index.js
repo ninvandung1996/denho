@@ -37,7 +37,7 @@ class Notification extends Component {
               </div>
 
               <div>
-                <Link to="/dashboard/notify/createnotification">
+                <Link to="/dashboard/createnotification">
                   <Button icon="plus" className="notify__button">
                     Tạo thông báo mới
                   </Button>

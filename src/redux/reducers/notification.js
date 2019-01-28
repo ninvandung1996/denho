@@ -34,7 +34,7 @@ export default (state = initialState, { type, payload }) => {
     case SAVE_REMOVE_NOTIFICATION:
       return update(state, {
         listNotification: {
-          $findIndex: [payload]
+          $findIndex: [payload._id]
         }
       })
 

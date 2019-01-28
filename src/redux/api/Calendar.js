@@ -26,5 +26,11 @@ export default {
   },
   deleteBooking: (_id, token) => {
     return API.delete('/cms/bookings/' + _id, {}, getHeader(token))
-  }
+  },
+  getAllContract: (token) => {
+    return API.get('/cms/contracts', {}, getHeader(token))
+  },
+  getApartmentById: (apartment_id, booking_id, token) => {
+    return API.get(`/cms/apartments/${apartment_id}?booking=${booking_id}`, {}, getHeader(token))
+  },
 };

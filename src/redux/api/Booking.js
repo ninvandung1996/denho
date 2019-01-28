@@ -12,6 +12,12 @@ export default {
     getAllUser: (token) => {
         return API.get('/cms/users/get', {}, getHeader(token))
     },
+    getAllContract: (token) => {
+        return API.get('/cms/contracts', {}, getHeader(token))
+    },
+    getApartment: (apartment_id, booking_id, token) => {
+        return API.get(`/cms/apartments/${apartment_id}?booking=${booking_id}`, {}, getHeader(token))
+    },
     addBooking: (data, token) => {
         return API.post('/cms/bookings', data, getHeader(token))
     },

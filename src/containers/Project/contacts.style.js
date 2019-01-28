@@ -49,6 +49,10 @@ const WDContactsWrapper = styled.div`
     border-left: ${props => (props["data-rtl"] === "rtl" ? "inherit" : "0")};
     border-right: ${props => (props["data-rtl"] === "rtl" ? "0" : "inherit")};
     position: relative;
+    @media only screen and (max-width: 990px) {
+      width: 100% !important;
+      margin: 0 auto !important;
+    }
 
     .isoContactBox {
       width: 100%;

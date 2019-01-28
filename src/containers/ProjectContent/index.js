@@ -42,7 +42,7 @@ class ProjectContent extends Component {
           </Col>
         </Header>
         <Content className="pc-layout-content">
-          <Row type="flex" justify="space-around">
+          <Row>
             {
               selectedProject.apartments.map(value => <Apartment key={value._id} data={value} />)
             }

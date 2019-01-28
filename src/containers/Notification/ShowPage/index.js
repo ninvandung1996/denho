@@ -54,9 +54,7 @@ class ShowPage extends Component {
             <div className="notify__item">
               <div className="notify__item--left">Thời gian gửi</div>
               <div className="notify__item--right notify__item--title">
-                {`${moment(time.toLocaleDateString()).format(
-                  "L"
-                )}  -  ${time.toLocaleTimeString()} `}
+                {`${moment(time).format("DD/MM-YYYY hh:mm")} `}
               </div>
             </div>
           </div>

@@ -2,62 +2,62 @@ const options = [
   {
     key: "project",
     label: "Dự án",
-    leftIcon: "ion-document"
-  },
-  {
-    key: "promotion",
-    label: "Quảng cáo",
-    leftIcon: "ion-document"
-  },
-  {
-    key: "supplier",
-    label: "Nhà cung cấp",
-    leftIcon: "ion-document"
-  },
-  {
-    key: "feedback",
-    label: "FeedBack",
-    leftIcon: "ion-document"
-  },
-  {
-    key: "faq",
-    label: "FAQ",
-    leftIcon: "ion-document"
-  },
-  {
-    key: "booking",
-    label: "Booking",
-    leftIcon: "ion-document"
-  },
-  {
-    key: "calendar",
-    label: "Căn hộ",
-    leftIcon: "ion-document"
+    leftIcon: "ion-folder"
   },
   {
     key: "service",
     label: "Dịch vụ",
-    leftIcon: "ion-document"
+    leftIcon: "ion-ios-keypad"
+  },
+  {
+    key: "calendar",
+    label: "Căn hộ",
+    leftIcon: "ion-android-home"
   },
   {
     key: "user",
     label: "Người dùng",
-    leftIcon: "ion-document"
+    leftIcon: "ion-android-person-add"
+  },
+  {
+    key: "contract",
+    label: "Hợp đồng",
+    leftIcon: "ion-ios-paper"
+  },
+  {
+    key: "booking",
+    label: "Booking",
+    leftIcon: "ion-android-clipboard"
+  },
+  {
+    key: "promotion",
+    label: "Quảng cáo",
+    leftIcon: "ion-ios-color-wand"
+  },
+  {
+    key: "supplier",
+    label: "Nhà cung cấp",
+    leftIcon: "ion-android-contact"
+  },
+  {
+    key: "feedback",
+    label: "FeedBack",
+    leftIcon: "ion-email-unread"
+  },
+  {
+    key: "faq",
+    label: "FAQ",
+    leftIcon: "ion-help-circled"
   },
   {
     key: "news",
     label: "Tin tức",
-    leftIcon: "ion-document"
+    leftIcon: "ion-ios-list"
   },
   {
-    key: "notify",
-    label: "Thông báo",
-    leftIcon: "ion-document"
-  },
-  {
-    key: "configs",
+    key: "config",
     label: "Cấu hình",
-    leftIcon: "ion-document"
+    leftIcon: "ion-android-settings"
   },
 ];
 export default options;

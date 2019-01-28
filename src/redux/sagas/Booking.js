@@ -5,6 +5,8 @@ import {
     SAVE_GET_ALL_BOOKING,
     BOOKING_GET_ALL_APARTMENT,
     BOOKING_GET_ALL_USER,
+    BOOKING_GET_ALL_CONTRACT,
+    BOOKING_GET_APARTMENT,
     ADD_BOOKING,
     SAVE_ADD_BOOKING,
     EDIT_BOOKING,
@@ -29,9 +31,23 @@ const getAllApartment = createRequestSaga({
     failure: []
 })
 
+const getApartment = createRequestSaga({
+    request: Api.getApartment,
+    key: "getApartmentBooking",
+    success: [res => ({})],
+    failure: []
+})
+
 const getAllUser = createRequestSaga({
     request: Api.getAllUser,
     key: "getAllUserBooking",
+    success: [res => ({})],
+    failure: []
+})
+
+const getAllContract = createRequestSaga({
+    request: Api.getAllContract,
+    key: "getAllContractBooking",
     success: [res => ({})],
     failure: []
 })
@@ -69,6 +85,8 @@ export default [
             takeLatest(GET_ALL_BOOKING, getAllBooking),
             takeLatest(BOOKING_GET_ALL_APARTMENT, getAllApartment),
             takeLatest(BOOKING_GET_ALL_USER, getAllUser),
+            takeLatest(BOOKING_GET_ALL_CONTRACT, getAllContract),
+            takeLatest(BOOKING_GET_APARTMENT, getApartment),
             takeLatest(ADD_BOOKING, addBooking),
             takeLatest(EDIT_BOOKING, editBooking),
             takeLatest(DELETE_BOOKING, deleteBooking)

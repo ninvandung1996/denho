@@ -83,14 +83,14 @@ class FullCalender extends Component {
         })
       }
     } else {
-      let { start, end, user, checkin, checkout } = selectedData;
+      let { start, end, user, checkin, checkout, contract } = selectedData;
       let { selectedApartment } = this.props;
       if (moment(start).format("DD/MM/YYYY") === moment(end).format("DD/MM/YYYY")) {
         end = moment(end).add("days", 1);
         selectedData.end = end;
       }
       if (modalVisible === "new") {
-        addBooking({ dateStart: moment(start).hours(12).toDate(), dateEnd: moment(end).hours(10).toDate(), user, apartment: selectedApartment._id }, token);
+        addBooking({ contract, dateStart: moment(start).hours(12).toDate(), dateEnd: moment(end).hours(10).toDate(), user, apartment: selectedApartment._id }, token);
       } else {
         const index = getIndex(events, selectedData);
         if (index > -1) {

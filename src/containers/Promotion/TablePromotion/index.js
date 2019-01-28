@@ -3,6 +3,7 @@ import { columns } from "./fakeData";
 import { Table } from "antd";
 import { connect } from "react-redux";
 import { getAllPromotion } from '../../../redux/actions/Promotion';
+import moment from 'moment';
 
 class TablePromotion extends Component {
   componentDidMount() {
@@ -14,14 +15,13 @@ class TablePromotion extends Component {
     const data = [];
 
     promotionList.forEach((promotion, index) => {
-      const date = new Date(promotion.date);
       data.push({
         key: promotion._id,
         id: index + 1,
         title: promotion.title,
         thumbnail: promotion.thumbnail,
         content: promotion.content,
-        date: date.toLocaleTimeString()
+        date: moment(promotion.date).format("DD/MM/YYYY hh:mm")
       });
     });
 
