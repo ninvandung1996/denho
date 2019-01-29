@@ -5,7 +5,7 @@ export default {
 const siteConfig = {
   siteName: 'Vin Leasing',
   siteIcon: 'ion-flash',
-  footerText: 'Isomorphic ©2017 Created by RedQ, Inc',
+  footerText: 'Vin Leasing ©2019',
 };
 const themeConfig = {
   topbar: 'themedefault',

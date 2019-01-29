@@ -11,7 +11,8 @@ import {
     CALENDAR_EDIT_APARTMENT,
     CALENDAR_DELETE_APARTMENT,
     CALENDAR_GET_ALL_CONTRACT,
-    CALENDAR_GET_APARTMENT_BY_ID
+    CALENDAR_GET_APARTMENT_BY_ID,
+    SAVE_CALENDAR_CHANGE_BOOKING
 } from './types';
 
 export const changeView = (view) => ({ type: CALENDAR_VIEW, view });
@@ -27,3 +28,4 @@ export const editApartment = (...args) => ({ type: CALENDAR_EDIT_APARTMENT, args
 export const deleteApartment = (...args) => ({ type: CALENDAR_DELETE_APARTMENT, args });
 export const getContract = (...args) => ({ type: CALENDAR_GET_ALL_CONTRACT, args });
 export const getApartmentById = (...args) => ({ type: CALENDAR_GET_APARTMENT_BY_ID, args });
+export const saveCalendarChangeBooking = (payload) => ({ type: SAVE_CALENDAR_CHANGE_BOOKING, payload });

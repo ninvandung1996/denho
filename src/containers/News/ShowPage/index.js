@@ -34,7 +34,7 @@ class ShowPage extends Component {
       <LayoutContentWrapper>
         <LayoutContent className="notify-layout">
           <div className="notify">
-            <div className="notify__title">Nội dung quảng cáo</div>
+            <div className="notify__title">Nội dung tin tức</div>
             <div className="notify__item">
               <div className="notify__item--left">Tiêu đề</div>
               <div className="notify__item--right notify__item--title">

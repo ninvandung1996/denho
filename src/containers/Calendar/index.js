@@ -57,6 +57,7 @@ class Calendar extends Component {
                         <Select
                             showSearch
                             className="select-apartment"
+                            value={selectedApartment ? selectedApartment._id : undefined}
                             placeholder="Chọn căn hộ"
                             optionFilterProp="children"
                             onChange={this.handleSelectChange}

@@ -19,7 +19,8 @@ class TableSupplier extends Component {
         id: index + 1,
         name: Supplier.name,
         about: Supplier.about,
-        star: Supplier.star
+        star: Supplier.star,
+        thumbnail: Supplier.thumbnail
       });
     });
 

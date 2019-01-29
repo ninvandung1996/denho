@@ -8,14 +8,22 @@ export const columns = [
     width: "5vw"
   },
   {
+    title: "Thumbnail",
+    dataIndex: "thumbnail",
+    render: (text, record) => {
+      return <img style={{ width: "100%" }} src={record.thumbnail} />
+    },
+    width: "15vw"
+  },
+  {
     title: "Tên",
     dataIndex: "name",
-    width: "25vw"
+    width: "15vw"
   },
   {
     title: "Thông tin",
     dataIndex: "about",
-    width: "25vw"
+    width: "20vw"
   },
   {
     title: "Sao",

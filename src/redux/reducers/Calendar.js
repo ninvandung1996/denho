@@ -8,6 +8,7 @@ import {
     SAVE_CALENDAR_EDIT_APARTMENT,
     SAVE_CALENDAR_DELETE_APARTMENT,
     SAVE_CALENDAR_EDIT_BOOKING,
+    SAVE_CALENDAR_CHANGE_BOOKING
 } from '../actions/types';
 import moment from 'moment';
 
@@ -83,6 +84,14 @@ export default (state = defaultState, action) => {
         }
         case SAVE_CALENDAR_EDIT_APARTMENT: {
             let selectedApartment = action.payload;
+            let apartments = [...state.apartments].map(value => {
+                if (value._id === selectedApartment._id) return { ...selectedApartment, bookings: value.bookings };
+                return value;
+            });
+            return { ...state, selectedApartment, apartments }
+        }
+        case SAVE_CALENDAR_CHANGE_BOOKING: {
+            let selectedApartment = { ...state.selectedApartment, timeBooked: action.payload };
             let apartments = [...state.apartments].map(value => {
                 if (value._id === selectedApartment._id) return { ...selectedApartment, bookings: value.bookings };
                 return value;
