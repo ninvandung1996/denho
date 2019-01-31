@@ -22,6 +22,6 @@ export default {
         return API.get('/cms/contracts?booking=true', {}, getHeader(token))
     },
     getAllService: (booking_id, token) => {
-        return API.get('/cms/services?booking' + booking_id, {}, getHeader(token))
+        return API.get('/cms/services?booking=' + booking_id, {}, getHeader(token))
     },
 }

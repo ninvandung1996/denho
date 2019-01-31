@@ -18,6 +18,7 @@ class TableData extends Component {
         key: value._id,
         id: index + 1,
         user: value.booking.user.email,
+        apartment: value.booking.apartment.name,
         date: value.date,
         data: value
       });

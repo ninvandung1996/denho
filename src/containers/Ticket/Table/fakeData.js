@@ -10,12 +10,17 @@ export const columns = [
   {
     title: "Người dùng",
     dataIndex: "user",
-    width: "50vw"
+    width: "15vw"
+  },
+  {
+    title: "Căn hộ",
+    dataIndex: "apartment",
+    width: "15vw"
   },
   {
     title: "Thời gian",
     dataIndex: "date",
-    width: "45vw"
+    width: "20vw"
   },
   {
     title: "Thao tác",
