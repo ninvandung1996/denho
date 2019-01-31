@@ -58,7 +58,7 @@ class ButtonGroup extends Component {
     const { contractModal, bookingModal } = this.state;
     const { value } = this.props;
     return (
-      <div className="button-group">
+      <div className="button-group-contract">
         <button className="button-group--1" onClick={this.showModal("contract", "view")}>Xem</button>
         {
           value.booking ? (

@@ -10,7 +10,8 @@ import {
     EDIT_SUPPLIER,
     SAVE_EDIT_SUPPLIER,
     DELETE_SUPPLIER,
-    SAVE_DELETE_SUPPLIER
+    SAVE_DELETE_SUPPLIER,
+    SUPPLIER_GET_ALL_PROJECT
 } from '../actions/types'
 import { createRequestSaga } from './common';
 import { message } from "antd";
@@ -56,6 +57,16 @@ const deleteSupplier = createRequestSaga({
     functionFailure: [() => message.failure("Xóa thất bại!")]
 })
 
+const getAllProject = createRequestSaga({
+    request: Api.getAllProject,
+    key: "supplierGetAllProject",
+    success: [res => ({})],
+    failure: [],
+    functionSuccess: [],
+    functionFailure: []
+})
+
+
 export default [
     function* fetchWatcher() {
         yield all([
@@ -63,7 +74,8 @@ export default [
             takeLatest(GET_SUPPLIER, getSupplier),
             takeLatest(ADD_SUPPLIER, addSupplier),
             takeLatest(EDIT_SUPPLIER, editSupplier),
-            takeLatest(DELETE_SUPPLIER, deleteSupplier)
+            takeLatest(DELETE_SUPPLIER, deleteSupplier),
+            takeLatest(SUPPLIER_GET_ALL_PROJECT, getAllProject)
         ]);
     }
 ];

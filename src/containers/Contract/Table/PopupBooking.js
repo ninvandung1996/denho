@@ -95,7 +95,7 @@ class Popup extends React.Component {
         let { type, dataSource } = this.props;
         if (type === "add") {
             let { dateStart, dateEnd, apartment } = this.state.add;
-            let { _id: contract, user: { _id: user } } = dataSource;
+            let { _id: contract, mainUser: { _id: user } } = dataSource;
             const checkNullState = validateState(this.state.add, ["apartment"]);
             if (checkNullState.error)
                 return this.setState({ error: checkNullState.error });

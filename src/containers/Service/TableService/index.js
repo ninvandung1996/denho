@@ -18,9 +18,10 @@ class TableService extends Component {
         key: service._id,
         id: index + 1,
         thumbnail: service.thumbnail,
+        name: service.name,
         detail: service.detail,
         dateAndTime: service.dateAndTime,
-        project: service.project
+        projects: service.projects
       });
     });
 

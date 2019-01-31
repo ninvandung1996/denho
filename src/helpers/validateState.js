@@ -5,7 +5,10 @@ export const validateState = (state, args) => {
   let listErrs = [];
 
   args.forEach(arg => {
-    if (typeof state[arg] === "number") {
+    if (Array.isArray(state[arg])) {
+      if (state[arg].length === 0) listErrs.push(arg);
+    }
+    else if (typeof state[arg] === "number") {
       if (!(state[arg] >= state[arg] || state[arg] < state[arg])) listErrs.push(arg);
     }
     else if (_.isEmpty(state[arg])) listErrs.push(arg);
@@ -23,7 +26,14 @@ export const checkChanged = (props, state, args) => {
   let error = "";
 
   args.forEach(arg => {
-    if (state[arg] instanceof moment) {
+    if (Array.isArray(state[arg])) {
+      if (props[arg].length === state[arg].length) {
+        state[arg].forEach(value => {
+          if (!props[arg].indexOf(value)) checked = true;
+        })
+      }else checked = true;
+    }
+    else if (state[arg] instanceof moment) {
       if (!(moment(props[arg]).format(timeFormat) === state[arg].format(timeFormat))) {
         checked = true;
       }

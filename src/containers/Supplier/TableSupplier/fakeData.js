@@ -34,7 +34,7 @@ export const columns = [
     title: "Thao tác",
     dataIndex: "action",
     render: (text, record) => {
-      return <ButtonGroup supplierId={record.key} />
+      return <ButtonGroup supplier={record.data} />
     },
     width: "35vw"
   }

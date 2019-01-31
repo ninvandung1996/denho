@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { columns } from "./fakeData";
 import { Table } from "antd";
 import { connect } from "react-redux";
-import { getAllContract } from '../../../redux/actions/Contract';
+import { getAllTicket } from '../../../redux/actions/Ticket';
 
 class TableData extends Component {
   componentDidMount() {
-    let { token, getAllContract } = this.props;
-    getAllContract(token);
+    let { token, getAllTicket } = this.props;
+    getAllTicket(token);
   }
   render() {
     const { data } = this.props;
@@ -17,8 +17,8 @@ class TableData extends Component {
       dataSource.push({
         key: value._id,
         id: index + 1,
-        user: value.mainUser.email,
-        code: value.code,
+        user: value.booking.user.email,
+        date: value.date,
         data: value
       });
     });
@@ -33,6 +33,6 @@ export default connect(
   state => ({
     token: state.Auth.token
   }), {
-    getAllContract
+    getAllTicket
   }
 )(TableData);

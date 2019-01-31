@@ -10,6 +10,12 @@
 .calendarHeader{
     &-info{
         width: 90%;
+        &-select{
+            margin-bottom: 5px;
+            .ant-form-item-label{
+                text-align: left;
+            }
+        }
     }
     &-btns{
         width: 10%;

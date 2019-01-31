@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Popconfirm } from 'antd';
 import './buttonGroup.scss';
 import { connect } from 'react-redux';
-import { getSupplier, editSupplier, deleteSupplier } from '../../../redux/actions/Supplier';
+import { getTicket, editTicket, deleteTicket } from '../../../redux/actions/Ticket';
 import Popup from '../Popup';
 
 class ButtonGroup extends Component {
   constructor(props) {
     super(props);
-    this.state = { type: ""};
+    this.state = { type: "" };
   }
   showModal = (type) => {
     return () => {
@@ -19,8 +19,8 @@ class ButtonGroup extends Component {
     if (this.state.type === "view") {
       return this.setState({ type: "" })
     }
-    let { token, supplier, editSupplier } = this.props;
-    editSupplier(supplier._id, data, token, (err, res) => {
+    let { token, value, editTicket } = this.props;
+    editTicket(value._id, data, token, (err, res) => {
       if (!err) this.setState({ type: "" })
     })
   }
@@ -30,12 +30,12 @@ class ButtonGroup extends Component {
     });
   }
   onConfirmDelete = () => {
-    let { token, supplier, deleteSupplier } = this.props;
-    deleteSupplier(supplier._id, token);
+    let { token, value, deleteTicket } = this.props;
+    deleteTicket(value._id, token);
   }
   render() {
     const { type } = this.state;
-    let { supplier } = this.props;
+    let { value } = this.props;
     return (
       <div className="button-group">
         <button className="button-group--1" onClick={this.showModal("view")}>Xem</button>
@@ -44,7 +44,7 @@ class ButtonGroup extends Component {
           <button className="button-group--3">Xóa</button>
         </Popconfirm>
         {
-          type !== "" && <Popup type={type} supplier={supplier} handleOk={this.handleOk} handleCancel={this.handleCancel} />
+          type !== "" && <Popup type={type} dataSource={value} handleOk={this.handleOk} handleCancel={this.handleCancel} />
         }
       </div>
     );
@@ -56,8 +56,8 @@ export default connect(
     token: state.Auth.token,
   }),
   {
-    getSupplier,
-    editSupplier,
-    deleteSupplier
+    getTicket,
+    editTicket,
+    deleteTicket
   }
 )(ButtonGroup);

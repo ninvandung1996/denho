@@ -15,7 +15,7 @@ export default (state = defaultState, { type, payload }) => {
             return { ...state, newsList: payload }
         }
         case SAVE_ADD_NEWS: {
-            return { ...state, newsList: [payload, ...state.selectedNEWS] }
+            return { ...state, newsList: [payload, ...state.newsList] }
         }
         case SAVE_EDIT_NEWS: {
             let newsList = [...state.newsList].map(value => {

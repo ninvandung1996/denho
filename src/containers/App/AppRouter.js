@@ -44,6 +44,10 @@ const routes = [
     component: asyncComponent(() => import("../Supplier"))
   },
   {
+    path: "reviewsupplier",
+    component: asyncComponent(() => import("../Supplier/Reviews"))
+  },
+  {
     path: "feedback",
     component: asyncComponent(() => import("../FeedBack"))
   },
@@ -56,7 +60,7 @@ const routes = [
     component: asyncComponent(() => import("../Booking"))
   },
   {
-    path: "calendar",
+    path: "apartment",
     component: asyncComponent(() => import("../Calendar/"))
   },
   {
@@ -90,6 +94,10 @@ const routes = [
   {
     path: "contract",
     component: asyncComponent(() => import("../Contract"))
+  },
+  {
+    path: "ticket",
+    component: asyncComponent(() => import("../Ticket"))
   },
 ];
 

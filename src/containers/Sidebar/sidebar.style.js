@@ -78,6 +78,8 @@ const SidebarWrapper = styled.div`
         -ms-flex-align: center;
         align-items: center;
         padding: 0 24px;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
       }
 
       .isoMenuHolder {
@@ -151,7 +153,7 @@ const SidebarWrapper = styled.div`
         }
 
         &:after {
-          content: "\f123";
+          content: "";
           font-family: "Ionicons" !important;
           font-size: 16px;
           color: inherit;

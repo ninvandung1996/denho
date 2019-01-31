@@ -1,3 +1,5 @@
+import { Children } from "react";
+
 const options = [
   {
     key: "project",
@@ -10,7 +12,7 @@ const options = [
     leftIcon: "ion-ios-keypad"
   },
   {
-    key: "calendar",
+    key: "apartment",
     label: "Căn hộ",
     leftIcon: "ion-android-home"
   },
@@ -35,9 +37,18 @@ const options = [
     leftIcon: "ion-ios-color-wand"
   },
   {
-    key: "supplier",
     label: "Nhà cung cấp",
-    leftIcon: "ion-android-contact"
+    leftIcon: "ion-android-contact",
+    children: [
+      {
+        key: "supplier",
+        label: "Nhà cung cấp"
+      },
+      {
+        key: "reviewsupplier",
+        label: "Đánh giá"
+      }
+    ]
   },
   {
     key: "feedback",
@@ -50,14 +61,33 @@ const options = [
     leftIcon: "ion-help-circled"
   },
   {
+    key: "ticket",
+    label: "Ticket",
+    leftIcon: "ion-closed-captioning"
+  },
+  {
     key: "news",
     label: "Tin tức",
     leftIcon: "ion-ios-list"
   },
   {
-    key: "config",
     label: "Cấu hình",
-    leftIcon: "ion-android-settings"
+    leftIcon: "ion-android-settings",
+    children: [
+      {
+        key: "project",
+        label: "Dự án",
+        leftIcon: "ion-folder"
+      },
+      {
+        key: "service",
+        label: "Dịch vụ"
+      },
+      {
+        key: "config",
+        label: "Liên hệ",
+      }
+    ]
   },
 ];
 export default options;

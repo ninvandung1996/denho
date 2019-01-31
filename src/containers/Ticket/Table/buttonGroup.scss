@@ -1,4 +1,4 @@
-.button-group-contract {
+.button-group {
   &--1, &--2, &--3 {
     border: 0; 
     border-radius: 5px !important;
@@ -27,7 +27,6 @@
     background-color: transparent;
     border: 1px solid green;
     color: green;
-    width: 7rem;
 
     &:hover {
       background-color: green;

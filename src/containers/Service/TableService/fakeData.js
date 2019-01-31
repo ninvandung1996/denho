@@ -17,23 +17,20 @@ export const columns = [
     width: "15vw"
   },
   {
+    title: "Tên",
+    dataIndex: "name",
+    width: "10vw"
+  },
+  {
     title: "Chi tiết",
     dataIndex: "detail",
-    width: "15vw"
+    width: "20vw"
   },
   {
     title: "Thời gian",
     dataIndex: "dateAndTime",
     render: (text, record) => {
       return moment(record.dateAndTime).format("DD/MM/YYYY hh:mm")
-    },
-    width: "15vw"
-  },
-  {
-    title: "Dự án",
-    dataIndex: "project",
-    render: (text, record) => {
-      return record.project? record.project.name : ""
     },
     width: "15vw"
   },

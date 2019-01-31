@@ -57,7 +57,10 @@ export default (state = defaultState, { type, payload }) => {
             })
             selectedProject = { ...selectedProject, apartments };
             let projectList = [...projectList];
-            projectList[projectList.indexOf(value => value._id === selectedProject._id)] = selectedProject;
+            projectList = projectList.map(value => {
+                if (value._id === selectedProject._id) return selectedProject;
+                return value;
+            })
             return { ...state, selectedProject, projectList }
         }
         case SAVE_DELETE_APARTMENT: {

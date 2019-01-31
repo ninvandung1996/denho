@@ -11,14 +11,15 @@ import Service from './Service';
 import User from './User';
 import News from './News';
 import Notifications from './notification';
-import Contract from './Contract'
+import Contract from './Contract';
+import Ticket from './Ticket';
 import { requests, toast, modal } from './common';
 import { combineReducers } from 'redux'
 
 export default {
   Auth,
   requests,
-  App, Project, Promotion, Supplier, FeedBack, FAQ, Booking, Calendar, Service, User, News, Notifications, Contract,
+  App, Project, Promotion, Supplier, FeedBack, FAQ, Booking, Calendar, Service, User, News, Notifications, Contract, Ticket,
   ui: combineReducers({
     toast,
     modal

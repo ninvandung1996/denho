@@ -1,18 +1,27 @@
 import React, { Component } from "react";
-import { Button, Tooltip, Select, Popconfirm, Modal } from 'antd';
+import { Button, Tooltip, Select, Popconfirm, Modal, Form } from 'antd';
 import './index.scss';
 import FullCalendar from './Calendar';
 import { CalenderHeaderWrapper } from "./calendar.style";
 import { connect } from 'react-redux';
-import { selectApartment, editApartment, deleteApartment } from '../../redux/actions/Calendar';
+import { selectApartment, getProject, selectProject, editApartment, deleteApartment, getApartment } from '../../redux/actions/Calendar';
 import Popup from '../ProjectContent/Apartment/Popup';
 
 const Option = Select.Option;
 
+const formItemStyle = {
+    labelCol: { span: 3 },
+    wrapperCol: { span: 21 }
+}
+
 class Calendar extends Component {
     constructor(props) {
         super(props);
-        this.state = { visible: false, selectApartment: {}, showDelete: false }
+        this.state = { visible: false }
+    }
+    componentDidMount() {
+        let { token, getProject } = this.props;
+        getProject(token);
     }
     showModal = () => {
         this.setState({ visible: true })
@@ -25,48 +34,73 @@ class Calendar extends Component {
             }
         })
     }
-    handleCancel = () => {
-        this.setState({ visible: false });
-    }
-    toggleDelete = () => {
-        this.setState((preState, props) => {
-            return { showDelete: !preState.showDelete }
-        })
-    }
-    handleChange = (name) => {
-        return e => {
-            let { selectApartment } = this.state;
-            selectApartment[name] = e.target.value;
-            this.setState({ selectApartment });
+    // handleCancel = () => {
+    //     this.setState({ visible: false });
+    // }
+    // toggleDelete = () => {
+    //     this.setState((preState, props) => {
+    //         return { showDelete: !preState.showDelete }
+    //     })
+    // }
+    // handleChange = (name) => {
+    //     return e => {
+    //         let { selectApartment } = this.state;
+    //         selectApartment[name] = e.target.value;
+    //         this.setState({ selectApartment });
+    //     }
+    // }
+    handleSelectChange = (name) => {
+        return value => {
+            this.props["select" + name](value);
+            if (name === "Project") {
+                let { token, getApartment } = this.props;
+                getApartment(value === "all" ? "" : value, token)
+            }
         }
-    }
-    handleSelectChange = (value) => {
-        this.props.selectApartment(value);
     }
     onConfirmDelete = () => {
         let { selectedApartment, deleteApartment, token } = this.props;
         deleteApartment(selectedApartment._id, token);
     }
     render() {
-        let { selectedApartment, apartments } = this.props;
+        let { selectedApartment, apartments, selectedProject, projects } = this.props;
         let { visible } = this.state;
         return (
             <React.Fragment>
                 <CalenderHeaderWrapper className="calendarHeader">
                     <div className="calendarHeader-info" span={20}>
-                        <Select
-                            showSearch
-                            className="select-apartment"
-                            value={selectedApartment ? selectedApartment._id : undefined}
-                            placeholder="Chọn căn hộ"
-                            optionFilterProp="children"
-                            onChange={this.handleSelectChange}
-                            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                        >
-                            {
-                                apartments.map(value => <Option key={value._id} value={value._id}>{value.name}</Option>)
-                            }
-                        </Select>
+                        <Form>
+                            <Form.Item label="Dự án" {...formItemStyle} className="calendarHeader-info-select">
+                                <Select
+                                    showSearch
+                                    className="select-apartment"
+                                    value={selectedProject ? selectedProject._id : "all"}
+                                    optionFilterProp="children"
+                                    onChange={this.handleSelectChange("Project")}
+                                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                >
+                                    <Option value={"all"}>Tất cả</Option>
+                                    {
+                                        projects.map(value => <Option key={value._id} value={value._id}>{value.name}</Option>)
+                                    }
+                                </Select>
+                            </Form.Item>
+                            <Form.Item label="Căn hộ" {...formItemStyle} className="calendarHeader-info-select">
+                                <Select
+                                    showSearch
+                                    className="select-apartment"
+                                    value={selectedApartment ? selectedApartment._id : undefined}
+                                    placeholder="Chọn căn hộ"
+                                    optionFilterProp="children"
+                                    onChange={this.handleSelectChange("Apartment")}
+                                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                >
+                                    {
+                                        apartments.map(value => <Option key={value._id} value={value._id}>{value.name}</Option>)
+                                    }
+                                </Select>
+                            </Form.Item>
+                        </Form>
                         <div classnName="apartment-info">
                             <div className="apartment-info-item">
                                 <span>Tên căn hộ:</span>
@@ -86,7 +120,7 @@ class Calendar extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="calendarHeader-btns" span={4}>
+                    {/* <div className="calendarHeader-btns" span={4}>
                         <Tooltip placement="top" title="Chỉnh sửa thông tin căn hộ">
                             <Button className="button-group__single" icon="edit" onClick={this.showModal} />
                         </Tooltip>
@@ -103,7 +137,7 @@ class Calendar extends Component {
                                     </Popconfirm>
                                 )
                         }
-                    </div>
+                    </div> */}
                     <div className="calendarHeader-status-info" >
                         <div className="calendarHeader-status-info-item">Chưa check-in</div>
                         <div className="calendarHeader-status-info-item">Chưa check-out</div>
@@ -133,8 +167,11 @@ export default connect(
     state => ({
         token: state.Auth.token,
         apartments: state.Calendar.apartments,
-        selectedApartment: state.Calendar.selectedApartment
+        selectedApartment: state.Calendar.selectedApartment,
+        projects: state.Calendar.projects,
+        selectedProject: state.Calendar.selectedProject
     }), {
-        selectApartment, editApartment, deleteApartment
+        selectApartment, editApartment, deleteApartment,
+        getProject, selectProject, getApartment
     }
 )(Calendar);

@@ -10,12 +10,12 @@ export const columns = [
   {
     title: "Người dùng",
     dataIndex: "user",
-    width: "35vw"
+    width: "50vw"
   },
   {
-    title: "Mã",
-    dataIndex: "code",
-    width: "60vw"
+    title: "Thời gian",
+    dataIndex: "date",
+    width: "45vw"
   },
   {
     title: "Thao tác",

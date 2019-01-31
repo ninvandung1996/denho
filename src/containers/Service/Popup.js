@@ -21,19 +21,15 @@ const title = {
 const Option = Select.Option;
 
 const initState = {
-    thumbnail: "", detail: "", dateAndTime: moment(), project: "", projectList: [], loading: false, error: ""
+    thumbnail: "", name: "", detail: "", dateAndTime: moment(), projects: [], projectList: [], loading: false, error: ""
 }
 
 function beforeUpload(file) {
-    const isJPG = file.type === 'image/jpeg';
-    if (!isJPG) {
-        message.error('Chỉ có thể upload file JPG!');
-    }
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
         message.error('Dung lượng ảnh phải nhỏ hơn 2MB!');
     }
-    return isJPG && isLt2M;
+    return isLt2M;
 }
 
 class Popup extends React.Component {
@@ -41,7 +37,7 @@ class Popup extends React.Component {
         super(props);
         this.state = props.type === "add" ? initState : {
             ...props.data,
-            project: props.data.project._id
+            projects: props.data.projects.map(value => value._id)
             , projectList: [], error: ""
         }
     }
@@ -53,11 +49,12 @@ class Popup extends React.Component {
             }
         })
     }
-    detailChange = (e) => {
-        this.setState({ detail: e.target.value, error: "" });
+    onChange = (name) => {
+        return e =>
+            this.setState({ [name]: e.target.value, error: "" });
     }
-    projectChange = (project) => {
-        this.setState({ project, error: "" })
+    projectChange = (projects) => {
+        this.setState({ projects, error: "" })
     }
     timeChange = (dateAndTime) => {
         this.setState({ dateAndTime, error: "" })
@@ -76,32 +73,35 @@ class Popup extends React.Component {
         }
     }
     handleOk = () => {
-        let { thumbnail, detail, dateAndTime, project } = this.state;
+        let { thumbnail, detail, dateAndTime, projects, name } = this.state;
         let { type, data } = this.props;
-        const checkNullState = validateState(this.state, ["thumbnail", "detail", "dateAndTime", "project"]);
-        const checkChangedState = type === "edit" ? checkChanged({ ...data, project: data.project._id }, this.state, ["thumbnail", "detail", "dateAndTime", "project"]) : { error: false };
+        const checkNullState = validateState(this.state, ["thumbnail", "detail", "dateAndTime", "projects", "name"]);
+        const checkChangedState = type === "edit" ? checkChanged({ ...data }, this.state, ["thumbnail", "detail", "dateAndTime", "projects", "name"]) : { error: false };
         if (checkChangedState.error)
             return this.setState({ error: checkChangedState.error });
         if (checkNullState.error)
             return this.setState({ error: checkNullState.error });
-        this.props.handleOk({ thumbnail, detail, dateAndTime, project });
+        this.props.handleOk({ thumbnail, detail, dateAndTime, projects, name });
     }
     handleCancel = () => {
         this.props.handleCancel();
     }
     render() {
-        let { thumbnail, detail, dateAndTime, project, projectList, error } = this.state;
+        let { thumbnail, name, detail, dateAndTime, projects, projectList, error } = this.state;
         if (this.props.type === "view") {
             return (
                 <Modal
                     title={title[this.props.type]}
                     visible={true}
-                    onOk={this.handleOk}
+                    footer={null}
                     onCancel={this.handleCancel}
                 >
                     <Form>
                         <Form.Item label="Thumbnail" {...formItemStyle} className="form-item">
                             <img style={{ width: "102px", objectFit: "cover" }} src={thumbnail} />
+                        </Form.Item>
+                        <Form.Item label="Tên" {...formItemStyle} className="form-item">
+                            <span>{name}</span>
                         </Form.Item>
                         <Form.Item label="Chi tiết" {...formItemStyle} className="form-item">
                             <span>{detail}</span>
@@ -110,7 +110,11 @@ class Popup extends React.Component {
                             <span>{moment(dateAndTime).format(timeFormat)}</span>
                         </Form.Item>
                         <Form.Item label="Dự án" {...formItemStyle} className="form-item">
-                            <span>{this.props.data.project.name}</span>
+                            <div className="project-list">
+                                {this.props.data.projects.map(value => (
+                                    <div key={value._id} className="project-list-item">{value.name}</div>
+                                ))}
+                            </div>
                         </Form.Item>
                     </Form>
                 </Modal>
@@ -144,8 +148,11 @@ class Popup extends React.Component {
                             {thumbnail ? <img style={{ width: "100%" }} src={thumbnail} alt="thumbnail" /> : uploadButton}
                         </Upload>
                     </Form.Item>
+                    <Form.Item label="Tên" {...formItemStyle} className="form-item" required={true}>
+                        <Input value={name} onChange={this.onChange("name")} />
+                    </Form.Item>
                     <Form.Item label="Chi tiết" {...formItemStyle} className="form-item" required={true}>
-                        <Input value={detail} onChange={this.detailChange} />
+                        <Input value={detail} onChange={this.onChange("detail")} />
                     </Form.Item>
                     <Form.Item label="Thời gian" {...formItemStyle} className="form-item" required={true}>
                         <DatePicker
@@ -155,7 +162,7 @@ class Popup extends React.Component {
                         />
                     </Form.Item>
                     <Form.Item label="Dự án" {...formItemStyle} className="form-item" required={true}>
-                        <Select defaultValue={project} value={project} placeholder={"Chọn dự án"} style={{ width: "100%" }} onChange={this.projectChange}>
+                        <Select mode="multiple" value={projects} placeholder={"Chọn dự án"} style={{ width: "100%" }} onChange={this.projectChange}>
                             {
                                 projectList.map(value => (
                                     <Option key={value._id} value={value._id}>{value.name}</Option>

@@ -47,7 +47,7 @@ export default class Popup extends React.Component {
                 <Modal
                     title={title[this.props.type]}
                     visible={true}
-                    onOk={this.handleOk}
+                    footer={null}
                     onCancel={this.handleCancel}
                 >
                     <Form>

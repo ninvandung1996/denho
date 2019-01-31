@@ -16,7 +16,9 @@ import {
     CALENDAR_DELETE_BOOKING,
     SAVE_CALENDAR_DELETE_BOOKING,
     CALENDAR_GET_ALL_CONTRACT,
-    CALENDAR_GET_APARTMENT_BY_ID
+    CALENDAR_GET_APARTMENT_BY_ID,
+    CALENDAR_GET_PROJECT,
+    SAVE_CALENDAR_GET_PROJECT
 } from '../actions/types'
 import { createRequestSaga } from './common';
 import { message } from "antd";
@@ -102,6 +104,13 @@ const getContract = createRequestSaga({
     failure: []
 })
 
+const getProject = createRequestSaga({
+    request: Api.getProject,
+    key: "calendarGetProject",
+    success: [res => ({ type: SAVE_CALENDAR_GET_PROJECT, payload: res.data })],
+    failure: []
+})
+
 export default [
     function* fetchWatcher() {
         yield all([
@@ -115,6 +124,7 @@ export default [
             takeLatest(CALENDAR_DELETE_BOOKING, deleteBooking),
             takeLatest(CALENDAR_GET_ALL_CONTRACT, getContract),
             takeLatest(CALENDAR_GET_APARTMENT_BY_ID, getApartmentById),
+            takeLatest(CALENDAR_GET_PROJECT, getProject),
         ]);
     }
 ];

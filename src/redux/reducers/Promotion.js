@@ -15,7 +15,7 @@ export default (state = defaultState, { type, payload }) => {
             return { ...state, promotionList: payload }
         }
         case SAVE_ADD_PROMOTION: {
-            return { ...state, promotionList: [payload, ...state.selectedPromotion] }
+            return { ...state, promotionList: [payload, ...state.promotionList] }
         }
         case SAVE_EDIT_PROMOTION: {
             let promotionList = [...state.promotionList].map(value => {

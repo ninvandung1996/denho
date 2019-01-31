@@ -35,7 +35,7 @@ class FullCalender extends Component {
 
   componentDidMount() {
     let { getApartment, token } = this.props;
-    getApartment(token);
+    getApartment("",token);
   }
 
   onSelectEvent = selectedData => {

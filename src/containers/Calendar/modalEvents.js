@@ -85,11 +85,9 @@ class ModalEvents extends Component {
     let { modalVisible, selectedData } = this.props;
     let { user, contract, start, end } = this.state.selectedData;
     if (modalVisible === "new") {
-      let checkNullState = validateState(this.state.selectedData, ['user']);
+      let checkNullState = validateState(this.state.selectedData, ['user', "contract"]);
       if (checkNullState.error)
         return this.setState({ error: checkNullState.error });
-      if (contract === "")
-        return this.props.setModalData('ok', { user, start, end });
       this.props.setModalData('ok', { user, start, end, contract });
     }
     else {
@@ -122,7 +120,7 @@ class ModalEvents extends Component {
       } else {
         let contract = this.state.listContract.find(value => value._id === _id);
         selectedData.contract = contract._id;
-        selectedData.user = contract.user._id;
+        selectedData.user = contract.mainUser._id;
         this.setState({ selectedData, error: "" });
       }
     }
@@ -167,7 +165,7 @@ class ModalEvents extends Component {
     if (this.props.modalVisible === "new") {
       let { contract, user } = this.state.selectedData;
       if (contract !== "") listUser = listUser.filter(value => value._id === user);
-      if (user !== "") listContract = listContract.filter(value => value.user._id === user);
+      if (user !== "") listContract = listContract.filter(value => value.mainUser._id === user);
     }
     return (
       <div>
@@ -196,7 +194,7 @@ class ModalEvents extends Component {
                   </React.Fragment>
                 ) : (
                     <React.Fragment>
-                      <Form.Item label="Hợp đồng" {...formItemStyle} className="form-item">
+                      <Form.Item label="Hợp đồng" {...formItemStyle} className="form-item" required={true}>
                         <Select value={this.state.selectedData.contract} style={{ width: "100%" }} onChange={this.onChange("contract")}
                           showSearch
                           allowClear={true}

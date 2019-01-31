@@ -13,7 +13,7 @@ export default {
         return API.get('/cms/users/get', {}, getHeader(token))
     },
     getAllContract: (token) => {
-        return API.get('/cms/contracts', {}, getHeader(token))
+        return API.get('/cms/contracts?booking=false', {}, getHeader(token))
     },
     getApartment: (apartment_id, booking_id, token) => {
         return API.get(`/cms/apartments/${apartment_id}?booking=${booking_id}`, {}, getHeader(token))

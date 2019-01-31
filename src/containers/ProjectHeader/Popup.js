@@ -19,15 +19,11 @@ const initState = {
 }
 
 function beforeUpload(file) {
-    const isJPG = file.type === 'image/jpeg';
-    if (!isJPG) {
-        message.error('Chỉ có thể upload ảnh JPG!');
-    }
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
         message.error('Kích thước ảnh tối đa là 2MB!');
     }
-    return isJPG && isLt2M;
+    return isLt2M;
 }
 
 class Popup extends React.Component {

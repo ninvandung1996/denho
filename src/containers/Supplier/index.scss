@@ -77,3 +77,12 @@
   .form__error {
     color: red;
   }
+
+  .project-list{
+    width: 100%;
+    height: auto;
+    &-item{
+      word-break: break-all;
+      padding: 5px 0;
+    }
+  }

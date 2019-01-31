@@ -18,7 +18,8 @@ export default (state = defaultState, { type, payload }) => {
             return { ...state, contractList: payload }
         }
         case SAVE_ADD_CONTRACT: {
-            return { ...state, contractList: [payload, ...state.contractList] }
+            let addContract = { ...payload, mainUser: { _id: payload.mainUser, email: payload.mainEmail } }
+            return { ...state, contractList: [addContract, ...state.contractList] }
         }
         case SAVE_EDIT_CONTRACT: {
             let contractList = [...state.contractList].map(value => {

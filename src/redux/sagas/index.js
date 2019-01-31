@@ -13,6 +13,7 @@ import News from './News';
 import Notifications from "./notification";
 import Config from "./Config";
 import Contract from './Contract';
+import Ticket from './Ticket';
 const rootSaga = function* () {
   yield all([
     ...auth.map(watcher => fork(watcher)),
@@ -29,6 +30,7 @@ const rootSaga = function* () {
     ...Notifications.map(watcher => fork(watcher)),
     ...Config.map(watcher => fork(watcher)),
     ...Contract.map(watcher => fork(watcher)),
+    ...Ticket.map(watcher => fork(watcher)),
   ]);
 };
 export default rootSaga;

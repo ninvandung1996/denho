@@ -37,12 +37,22 @@ const resetPassword = createRequestSaga({
     functionFailure: [() => message.failure("Reset mật khẩu thất bại!")]
 })
 
+const deleteUser = createRequestSaga({
+    request: Api.deleteUser,
+    key: "deleteUser",
+    success: [res => ({ type: SAVE_DELETE_USER, payload: res.data })],
+    failure: [],
+    functionSuccess: [() => message.success("Xóa người dùng thành công!")],
+    functionFailure: [() => message.failure("Xóa người dùng thất bại!")]
+})
+
 export default [
     function* fetchWatcher() {
         yield all([
             takeLatest(GET_ALL_USER, getAllUser),
             takeLatest(CREATE_USER, createUser),
-            takeLatest(RESET_PASSWORD_USER, resetPassword)
+            takeLatest(RESET_PASSWORD_USER, resetPassword),
+            takeLatest(DELETE_USER, deleteUser)
         ]);
     }
 ];

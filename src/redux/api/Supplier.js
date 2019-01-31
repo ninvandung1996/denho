@@ -17,5 +17,8 @@ export default {
     },
     deleteSupplier: (_id, token) => {
         return API.delete('/cms/suppliers/' + _id, {}, getHeader(token))
+    },
+    getAllProject: (token) => {
+        return API.get('/cms/projects', {}, getHeader(token))
     }
 }

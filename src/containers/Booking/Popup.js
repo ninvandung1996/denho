@@ -101,7 +101,7 @@ class Popup extends React.Component {
             })
             let contract = this.state.contractList.find(value => value._id === _id);
             this.setState((prevState) => {
-                return { add: { ...prevState.add, user: contract.user._id, contract: _id } }
+                return { add: { ...prevState.add, user: contract.mainUser._id, contract: _id } }
             })
         }
         return (value) => {
@@ -114,11 +114,10 @@ class Popup extends React.Component {
         let { type } = this.props;
         if (type === "add") {
             let { dateStart, dateEnd, apartment, user, contract } = this.state.add;
-            const checkNullState = validateState(this.state.add, ["apartment", "user"]);
+            const checkNullState = validateState(this.state.add, ["apartment", "user", "contract"]);
             if (checkNullState.error)
                 return this.setState({ error: checkNullState.error });
-            if (contract === "") this.props.handleOk({ dateStart, dateEnd, apartment, user });
-            else this.props.handleOk({ dateStart, dateEnd, apartment, user, contract });
+            this.props.handleOk({ dateStart, dateEnd, apartment, user, contract });
         } else if (type === "edit") {
             let { checkin, checkout, dateStart, dateEnd } = this.state.edit;
             let { selectedBooking } = this.props;
@@ -160,11 +159,14 @@ class Popup extends React.Component {
                 <Modal
                     title={title[this.props.type]}
                     visible={true}
-                    onOk={this.handleOk}
+                    footer={null}
                     onCancel={this.handleCancel}
                 >
                     <Form>
                         <Form.Item label="Người dùng" {...formItemStyle} className="form-item">
+                            <span>{selectedBooking.user.email}</span>
+                        </Form.Item>
+                        <Form.Item label="Hợp đồng" {...formItemStyle} className="form-item">
                             <span>{selectedBooking.user.email}</span>
                         </Form.Item>
                         <Form.Item label="Căn hộ" {...formItemStyle} className="form-item">
@@ -219,7 +221,7 @@ class Popup extends React.Component {
         let { apartmentList, userList, contractList } = this.state;
         let { contract, user } = this.state.add;
         if (contract !== "") userList = userList.filter(value => value._id === user);
-        if (user !== "") contractList = contractList.filter(value => value.user._id === user);
+        if (user !== "") contractList = contractList.filter(value => value.mainUser._id === user);
         return (
             <Modal
                 title={title[this.props.type]}
@@ -228,7 +230,7 @@ class Popup extends React.Component {
                 onCancel={this.handleCancel}
             >
                 <Form>
-                    <Form.Item label="Hợp đồng" {...formItemStyle} className="form-item">
+                    <Form.Item label="Hợp đồng" {...formItemStyle} className="form-item" required={true}>
                         <Select value={add.contract} placeholder={"Chọn hợp đồng"} span={24} onChange={this.onAddChange("contract")}
                             showSearch
                             allowClear={true}

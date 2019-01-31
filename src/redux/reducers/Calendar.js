@@ -8,14 +8,17 @@ import {
     SAVE_CALENDAR_EDIT_APARTMENT,
     SAVE_CALENDAR_DELETE_APARTMENT,
     SAVE_CALENDAR_EDIT_BOOKING,
-    SAVE_CALENDAR_CHANGE_BOOKING
+    SAVE_CALENDAR_CHANGE_BOOKING,
+    SAVE_CALENDAR_GET_PROJECT,
+    CALENDAR_SELECT_PROJECT
 } from '../actions/types';
 import moment from 'moment';
+
 
 const defaultState = {
     events: [],
     view: "month",
-    apartments: [], selectedApartment: null
+    apartments: [], selectedApartment: null, projects: [], selectedProject: null
 }
 
 const toEvent = (value) => {
@@ -41,10 +44,21 @@ export default (state = defaultState, action) => {
             let { events } = action;
             return { ...state, events };
         }
+        case SAVE_CALENDAR_GET_PROJECT: {
+            let projects = action.payload;
+            return { ...state, projects }
+        }
+        case CALENDAR_SELECT_PROJECT: {
+            let selectedProject = null;
+            [...state.projects].forEach(value => {
+                if (value._id === action.payload) selectedProject = value;
+            })
+            return { ...state, selectedProject };
+        }
         case SAVE_CALENDAR_GET_APARTMENT: {
             let apartments = action.payload;
             let selectedApartment = apartments.length > 0 ? apartments[0] : null;
-            let events = selectedApartment.bookings.map(value => (toEvent(value)))
+            let events = apartments.length > 0 ? selectedApartment.bookings.map(value => (toEvent(value))) : [];
             return { ...state, apartments, selectedApartment, events }
         }
         case SAVE_CALENDAR_ADD_BOOKING: {
