@@ -2,16 +2,6 @@ import { Children } from "react";
 
 const options = [
   {
-    key: "project",
-    label: "Dự án",
-    leftIcon: "ion-folder"
-  },
-  {
-    key: "service",
-    label: "Dịch vụ",
-    leftIcon: "ion-ios-keypad"
-  },
-  {
     key: "apartment",
     label: "Căn hộ",
     leftIcon: "ion-android-home"
@@ -30,6 +20,11 @@ const options = [
     key: "booking",
     label: "Booking",
     leftIcon: "ion-android-clipboard"
+  },
+  {
+    key: "ticket",
+    label: "Ticket",
+    leftIcon: "ion-closed-captioning"
   },
   {
     key: "promotion",
@@ -59,11 +54,6 @@ const options = [
     key: "faq",
     label: "FAQ",
     leftIcon: "ion-help-circled"
-  },
-  {
-    key: "ticket",
-    label: "Ticket",
-    leftIcon: "ion-closed-captioning"
   },
   {
     key: "news",
