@@ -6,13 +6,15 @@ import {
   APP_SAVE_LOGGED_USER,
   APP_SAVE_REFRESH_TOKEN,
   APP_REMOVE_LOGGED_USER,
-  APP_REGISTER
+  APP_REGISTER,
+  APP_SAVE_PUSH_TOKEN
 } from './types';
 
 export const login = (...args) => ({ type: APP_LOGIN, args });
 export const logout = (...args) => ({ type: APP_LOGOUT, args });
 export const register = (...args) => ({ type: APP_REGISTER, args });
 export const verifyToken = (...args) => ({ type: APP_VERIFY_TOKEN, args });
+export const savePushToken = (...args) => ({ type: APP_SAVE_PUSH_TOKEN, args });
 /**
  * Sets the authentication state of the application
  * @param  {boolean} newAuthState True means a user is logged in, false means no user is logged in

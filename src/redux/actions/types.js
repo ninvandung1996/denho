@@ -12,6 +12,7 @@ export const APP_LOGIN = "app/login";
 export const APP_LOGOUT = "app/logout";
 export const APP_REGISTER = "app/register";
 export const APP_VERIFY_TOKEN = "app/verifyToken";
+export const APP_SAVE_PUSH_TOKEN = 'app/savePushToken';
 
 /**
  * ACCOUNT
