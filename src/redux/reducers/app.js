@@ -5,7 +5,8 @@ import {
   COLLPSE_OPEN_DRAWER,
   CHANGE_OPEN_KEYS,
   CHANGE_CURRENT,
-  CLOSE_ALL
+  CLOSE_ALL,
+  SAVE_IS_REQUEST_NOTIFICATION
 } from "../actions/types";
 import { getView } from "../actions/app";
 const preKeys = getDefaultPath();
@@ -16,7 +17,8 @@ const initState = {
   height: window.innerHeight,
   openDrawer: false,
   openKeys: preKeys,
-  current: preKeys
+  current: preKeys,
+  isRequestNotification: true
 };
 export default function appReducer(state = initState, action) {
   switch (action.type) {
@@ -41,6 +43,8 @@ export default function appReducer(state = initState, action) {
       return { ...state, current: action.current };
     case CLOSE_ALL:
       return { ...state, current: [], openKeys: [] };
+    case SAVE_IS_REQUEST_NOTIFICATION:
+      return { ...state, isRequestNotification: action.payload };
     default:
       return state;
   }
