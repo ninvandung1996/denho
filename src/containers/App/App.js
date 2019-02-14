@@ -76,7 +76,7 @@ export class App extends Component {
           <Layout style={{ height: appHeight }}>
             <Modal
               title="Chấp nhận thông báo"
-              style={{ top: 0 }}
+              style={{ top: "50px" }}
               visible={this.state.visibleModal && isRequestNotification}
               onOk={() => this.handleAcceptNotification()}
               onCancel={() => this.handleCancelNotification()}

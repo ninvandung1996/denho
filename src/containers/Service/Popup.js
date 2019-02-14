@@ -152,7 +152,7 @@ class Popup extends React.Component {
                         <Input value={name} onChange={this.onChange("name")} />
                     </Form.Item>
                     <Form.Item label="Chi tiết" {...formItemStyle} className="form-item" required={true}>
-                        <Input value={detail} onChange={this.onChange("detail")} />
+                        <Input.TextArea autosize={{minRows: 2}} value={detail} onChange={this.onChange("detail")} />
                     </Form.Item>
                     <Form.Item label="Thời gian" {...formItemStyle} className="form-item" required={true}>
                         <DatePicker

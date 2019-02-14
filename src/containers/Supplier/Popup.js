@@ -166,7 +166,7 @@ class Popup extends React.Component {
                         <Input value={name} onChange={this.onChange("name")} />
                     </Form.Item>
                     <Form.Item label="Thông tin" {...formItemStyle} className="form-item" required={true}>
-                        <Input value={about} onChange={this.onChange("about")} />
+                        <Input.TextArea autosize={{minRows: 2}} value={about} onChange={this.onChange("about")} />
                     </Form.Item>
                     <Form.Item label="Sao" {...formItemStyle} className="form-item" required={true}>
                         <InputNumber min={1} max={5} defaultValue={star} onChange={this.onNumberChange} />
