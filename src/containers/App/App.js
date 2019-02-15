@@ -23,10 +23,6 @@ import 'firebase/functions';
 import { saveIsRequestNotification } from '../../redux/actions/app';
 import { savePushToken } from '../../redux/actions/auth';
 
-const messaging = firebase.messaging();
-messaging.usePublicVapidKey(
-  "BE6g3lBd8qnTW7WeygxO_iFko_Kef3WkxjcWk1xIEQF3Px78LgrlRqPMOnZCcENN4Q7CSztvjSq1Uk6HG0Lmd5w"
-);
 
 const { Content, Footer } = Layout;
 // const { logout } = authAction;
