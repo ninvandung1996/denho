@@ -10,9 +10,9 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-export const messaging = firebase.messaging();
+export default firebase;
 
 // Add the public key generated from the console here.
-messaging.usePublicVapidKey(
-    "BCTJ4XMqSZYgGQ4fgkYHHLUUe0u3brLwLRAsMhQM8wHfAEvlEPsBPk4ydy8y8lvH2YZ1phhnC-ivxNp8uLzO2SA"
-);
+// messaging.usePublicVapidKey(
+//   "BE6g3lBd8qnTW7WeygxO_iFko_Kef3WkxjcWk1xIEQF3Px78LgrlRqPMOnZCcENN4Q7CSztvjSq1Uk6HG0Lmd5w"
+// );
