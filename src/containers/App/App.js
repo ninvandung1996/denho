@@ -14,7 +14,12 @@ import themes from "../../settings/themes";
 import { themeConfig } from "../../settings";
 import AppHolder from "./commonStyle";
 import "./global.css";
-import { messaging } from './firebase';
+import {messaging} from './firebase';
+import firebase from 'firebase';
+import 'firebase/messaging';
+import 'firebase/auth';
+import 'firebase/database';
+import 'firebase/functions';
 import { saveIsRequestNotification } from '../../redux/actions/app';
 import { savePushToken } from '../../redux/actions/auth';
 
@@ -24,7 +29,7 @@ const { Content, Footer } = Layout;
 export class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { visibleModal: true }
+    this.state = { visibleModal: firebase.messaging.isSupported() }
   }
   componentWillReceiveProps(nextProps) {
     //lưu thông tin người dùng cho phép gửi notification
