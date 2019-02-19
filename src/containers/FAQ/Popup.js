@@ -70,10 +70,10 @@ export default class Popup extends React.Component {
             >
                 <Form>
                     <Form.Item label="Câu hỏi" {...formItemStyle} className="form-item" required={true}>
-                        <Input value={question} onChange={this.onChange("question")} />
+                        <Input.TextArea autosize={{minRows: 2}} value={question} onChange={this.onChange("question")} />
                     </Form.Item>
                     <Form.Item label="Trả lời" {...formItemStyle} className="form-item" required={true}>
-                        <Input value={answer} onChange={this.onChange("answer")} />
+                        <Input.TextArea autosize={{minRows: 2}} value={answer} onChange={this.onChange("answer")} />
                     </Form.Item>
                 </Form>
                 <span className="form__error">{error}</span>

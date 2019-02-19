@@ -4,7 +4,8 @@ import {
   COLLPSE_OPEN_DRAWER,
   CHANGE_OPEN_KEYS,
   CHANGE_CURRENT,
-  CLOSE_ALL
+  CLOSE_ALL,
+  SAVE_IS_REQUEST_NOTIFICATION
 } from "./types";
 
 export const getView = width => {
@@ -43,3 +44,10 @@ export const changeCurrent = current => ({
 });
 
 export const closeAll = () => ({ type: CLOSE_ALL });
+
+export const saveIsRequestNotification = data => {
+  return {
+    type: SAVE_IS_REQUEST_NOTIFICATION,
+    payload: data
+  };
+};

@@ -12,6 +12,7 @@ export const APP_LOGIN = "app/login";
 export const APP_LOGOUT = "app/logout";
 export const APP_REGISTER = "app/register";
 export const APP_VERIFY_TOKEN = "app/verifyToken";
+export const APP_SAVE_PUSH_TOKEN = 'app/savePushToken';
 
 /**
  * ACCOUNT
@@ -99,6 +100,7 @@ export const CHANGE_OPEN_KEYS = "CHANGE_OPEN_KEYS";
 export const TOGGLE_ALL = "TOGGLE_ALL";
 export const CHANGE_CURRENT = "CHANGE_CURRENT";
 export const CLOSE_ALL = "CLOSE_ALL";
+export const SAVE_IS_REQUEST_NOTIFICATION = 'SAVE_IS_REQUEST_NOTIFICATION';
 
 //Project
 export const GET_ALL_PROJECT = "GET_ALL_PROJECT";
