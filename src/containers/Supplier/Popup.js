@@ -1,15 +1,15 @@
 import React from 'react';
-import { Modal, Form, Input, InputNumber, Upload, Icon, message, Select } from 'antd';
+import { Modal, Form, Input, InputNumber, Upload, Icon, message, Select, AutoComplete } from 'antd';
 import { checkChanged, validateState } from "../../helpers/validateState";
 import configs from '../../redux/constants/configs';
 import { connect } from 'react-redux';
-import { getAllProject } from '../../redux/actions/Supplier';
+import { getAllProject, getCategory } from '../../redux/actions/Supplier';
 
 const Option = Select.Option;
 
 const formItemStyle = {
-    labelCol: { span: 5 },
-    wrapperCol: { span: 19 }
+    labelCol: { span: 6 },
+    wrapperCol: { span: 18 }
 }
 
 const title = {
@@ -19,8 +19,8 @@ const title = {
 }
 
 const initState = {
-    name: "", about: "", star: 5, contact: { numberphone: "", message: "" }, error: "", thumbnail: "",
-    projects: [], projectList: []
+    name: "", about: "", star: 5, contact: { numberphone: "", message: "" }, error: "", thumbnail: "", category: "",
+    projects: [], projectList: [], categoryList: []
 }
 
 function beforeUpload(file) {
@@ -37,14 +37,18 @@ class Popup extends React.Component {
         this.state = props.type === "add" ? initState : {
             ...props.supplier,
             projects: props.supplier.projects.map(value => value._id),
-            projectList: [], error: ""
+            projectList: [], categoryList: [], error: ""
         }
     }
     componentDidMount() {
         if (this.props.type === "add" || this.props.type === "edit") {
-            let { token, getAllProject } = this.props;
+            let { token, getAllProject, getCategory } = this.props;
             getAllProject(token, (err, res) => {
                 if (!err) this.setState({ projectList: res.data })
+            })
+            getCategory(token, (err, res) => {
+                console.log(res)
+                if (!err) this.setState({ categoryList: res.data });
             })
         }
     }
@@ -55,6 +59,9 @@ class Popup extends React.Component {
     }
     onNumberChange = (value) => {
         this.setState({ star: value, error: "" });
+    }
+    changeCategory = (value) => {
+        this.setState({ category: value, error: "" });
     }
     changeContact = (name) => {
         return (e) => {
@@ -76,17 +83,17 @@ class Popup extends React.Component {
         }
     }
     handleOk = () => {
-        let { name, about, star, contact, contact: { numberphone, message }, thumbnail, projects } = this.state;
+        let { name, about, star, contact, contact: { numberphone, message }, thumbnail, projects, category } = this.state;
         let { type, supplier } = this.props;
-        const checkNullState = validateState({ name, about, star, numberphone, message, thumbnail, projects }, ["name", "about", "star", "numberphone", "message", "thumbnail", "projects"]);
+        const checkNullState = validateState({ name, about, star, numberphone, message, thumbnail, projects, category }, ["name", "about", "star", "numberphone", "message", "thumbnail", "projects", "category"]);
         const checkChangedState = type === "edit" ? checkChanged({
             ...supplier, numberphone: supplier.contact.numberphone, message: supplier.contact.message
-        }, { ...this.state, numberphone, message }, ["name", "about", "star", "numberphone", "message", "thumbnail", "projects"]) : { error: false };
+        }, { ...this.state, numberphone, message }, ["name", "about", "star", "numberphone", "message", "thumbnail", "projects", "category"]) : { error: false };
         if (checkChangedState.error)
             return this.setState({ error: checkChangedState.error });
         if (checkNullState.error)
             return this.setState({ error: checkNullState.error });
-        this.props.handleOk({ name, about, star, contact, thumbnail, projects });
+        this.props.handleOk({ name, about, star, contact, thumbnail, projects, category });
     }
     handleCancel = () => {
         this.props.handleCancel();
@@ -95,7 +102,7 @@ class Popup extends React.Component {
         this.setState({ projects, error: "" })
     }
     render() {
-        let { name, about, star, contact, error, thumbnail, projects } = this.state;
+        let { name, about, star, contact, error, thumbnail, projects, category, categoryList } = this.state;
         if (this.props.type === "view") {
             return (
                 <Modal
@@ -113,6 +120,9 @@ class Popup extends React.Component {
                         </Form.Item>
                         <Form.Item label="Thông tin" {...formItemStyle} className="form-item">
                             <span>{about}</span>
+                        </Form.Item>
+                        <Form.Item label="Danh mục" {...formItemStyle} className="form-item">
+                            <span>{category}</span>
                         </Form.Item>
                         <Form.Item label="Sao" {...formItemStyle} className="form-item">
                             <span>{star}</span>
@@ -166,7 +176,19 @@ class Popup extends React.Component {
                         <Input value={name} onChange={this.onChange("name")} />
                     </Form.Item>
                     <Form.Item label="Thông tin" {...formItemStyle} className="form-item" required={true}>
-                        <Input.TextArea autosize={{minRows: 2}} value={about} onChange={this.onChange("about")} />
+                        <Input.TextArea autosize={{ minRows: 2 }} value={about} onChange={this.onChange("about")} />
+                    </Form.Item>
+                    <Form.Item label="Danh mục" {...formItemStyle} className="form-item" required={true}>
+                        <AutoComplete
+                            dataSource={categoryList}
+                            value={category}
+                            onChange={this.changeCategory}
+                            filterOption={(inputValue, option) =>
+                                option.props.children
+                                    .toUpperCase()
+                                    .indexOf(inputValue.toUpperCase()) !== -1
+                            }
+                        />
                     </Form.Item>
                     <Form.Item label="Sao" {...formItemStyle} className="form-item" required={true}>
                         <InputNumber min={1} max={5} defaultValue={star} onChange={this.onNumberChange} />
@@ -197,6 +219,6 @@ export default connect(
     state => ({
         token: state.Auth.token
     }), {
-        getAllProject
+        getAllProject, getCategory
     }
 )(Popup)

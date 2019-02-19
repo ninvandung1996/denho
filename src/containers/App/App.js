@@ -14,14 +14,22 @@ import themes from "../../settings/themes";
 import { themeConfig } from "../../settings";
 import AppHolder from "./commonStyle";
 import "./global.css";
-import {messaging} from './firebase';
-import firebase from 'firebase';
+import firebase from './firebase';
 import 'firebase/messaging';
 import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/functions';
 import { saveIsRequestNotification } from '../../redux/actions/app';
 import { savePushToken } from '../../redux/actions/auth';
+
+let messaging = null;
+
+if (firebase.messaging.isSupported()) {
+  messaging = firebase.messaging();
+  messaging.usePublicVapidKey(
+    "BE6g3lBd8qnTW7WeygxO_iFko_Kef3WkxjcWk1xIEQF3Px78LgrlRqPMOnZCcENN4Q7CSztvjSq1Uk6HG0Lmd5w"
+  );
+}
 
 
 const { Content, Footer } = Layout;
@@ -35,7 +43,7 @@ export class App extends Component {
   componentWillReceiveProps(nextProps) {
     //lưu thông tin người dùng cho phép gửi notification
     const { isRequestNotification } = nextProps;
-    if (!isRequestNotification) {
+    if (!isRequestNotification && this.props.isRequestNotification) {
       // nếu người dùng cho phép gửi notification thì sử dụng lấy token cho firebase
       this.getPushToken();
     }
