@@ -1,4 +1,4 @@
-import { takeLatest, all } from 'redux-saga/effects';
+import { takeLatest, all, take } from 'redux-saga/effects';
 import Api from '../api/Supplier';
 import {
     GET_ALL_SUPPLIER,
@@ -11,7 +11,8 @@ import {
     SAVE_EDIT_SUPPLIER,
     DELETE_SUPPLIER,
     SAVE_DELETE_SUPPLIER,
-    SUPPLIER_GET_ALL_PROJECT
+    SUPPLIER_GET_ALL_PROJECT,
+    SUPPLIER_GET_CATEGORY
 } from '../actions/types'
 import { createRequestSaga } from './common';
 import { message } from "antd";
@@ -66,6 +67,15 @@ const getAllProject = createRequestSaga({
     functionFailure: []
 })
 
+const supplierGetCategory = createRequestSaga({
+    request: Api.getCategory,
+    key: "supplierGetCategory",
+    success: [res => ({})],
+    failure: [],
+    functionSuccess: [],
+    functionFailure: []
+})
+
 
 export default [
     function* fetchWatcher() {
@@ -75,7 +85,8 @@ export default [
             takeLatest(ADD_SUPPLIER, addSupplier),
             takeLatest(EDIT_SUPPLIER, editSupplier),
             takeLatest(DELETE_SUPPLIER, deleteSupplier),
-            takeLatest(SUPPLIER_GET_ALL_PROJECT, getAllProject)
+            takeLatest(SUPPLIER_GET_ALL_PROJECT, getAllProject),
+            takeLatest(SUPPLIER_GET_CATEGORY, supplierGetCategory)
         ]);
     }
 ];

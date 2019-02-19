@@ -20,5 +20,8 @@ export default {
     },
     getAllProject: (token) => {
         return API.get('/cms/projects', {}, getHeader(token))
+    },
+    getCategory: (token) => {
+        return API.get('/cms/suppliers/categories', {}, getHeader(token))
     }
 }
