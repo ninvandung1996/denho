@@ -3,9 +3,9 @@ export default {
 };
 
 const siteConfig = {
-  siteName: 'Vin Leasing',
+  siteName: 'Vinhomes Leasing',
   siteIcon: 'ion-flash',
-  footerText: 'Vin Leasing ©2019',
+  footerText: 'Vinhomes Leasing ©2019',
 };
 const themeConfig = {
   topbar: 'themedefault',

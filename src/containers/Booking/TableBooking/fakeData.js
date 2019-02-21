@@ -5,17 +5,19 @@ export const columns = [
   {
     title: "ID",
     dataIndex: "id",
-    width: "5vw"
+    width: "50px",
+    fixed: "left"
   },
   {
     title: "Người dùng",
     dataIndex: "user",
-    width: "10vw"
+    width: "200px",
+    fixed: "left"
   },
   {
     title: "Căn hộ",
     dataIndex: "apartment",
-    width: "10vw"
+    width: "15vw"
   },
   {
     title: "Bắt đầu",
