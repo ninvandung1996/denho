@@ -96,9 +96,10 @@
     "react-app-rewired": "^1.4.0"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "PORT=3333 react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "pm2:start": "pm2 start --name \"leasing-cms\" npm -- run start"
   }
 }
