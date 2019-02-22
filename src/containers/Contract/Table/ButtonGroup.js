@@ -59,16 +59,16 @@ class ButtonGroup extends Component {
     const { value } = this.props;
     return (
       <div className="button-group-contract">
-        <button className="button-group--1" onClick={this.showModal("contract", "view")}>Xem</button>
+        <button className="button-group-contract--1" onClick={this.showModal("contract", "view")}>Xem</button>
         {
           value.booking ? (
-            <button className="button-group--2" onClick={this.showModal("booking", "edit")}>Sửa booking</button>
+            <button className="button-group-contract--2" onClick={this.showModal("booking", "edit")}>Sửa booking</button>
           ) : (
-              <button className="button-group--2" onClick={this.showModal("booking", "add")}>Tạo booking</button>
+              <button className="button-group-contract--2" onClick={this.showModal("booking", "add")}>Tạo booking</button>
             )
         }
         <Popconfirm placement="top" title="Bạn có chắc chắn muốn xóa?" onConfirm={this.onConfirmDelete} okText="Có" cancelText="Không">
-          <button className="button-group--3">Xóa</button>
+          <button className="button-group-contract--3">Xóa</button>
         </Popconfirm>
         {
           contractModal !== "" && <Popup type={contractModal} dataSource={value} handleOk={this.handleOk("contract")} handleCancel={this.handleCancel("contract")} />

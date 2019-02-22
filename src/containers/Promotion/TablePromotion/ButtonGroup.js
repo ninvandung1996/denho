@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Popconfirm, message } from 'antd';
+import { Popconfirm } from 'antd';
 import './buttonGroup.scss';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';

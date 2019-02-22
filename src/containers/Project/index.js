@@ -1,23 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getAllProject, deleteProject, getProject, saveDeleteProject } from "../../redux/actions/Project";
-import { Layout, Icon } from "antd";
-import Button from "../../components/uielements/button";
+import { Layout } from "antd";
+// import Button from "../../components/uielements/button";
 import ContactList from "../../components/contacts/contactList";
-import SingleContactView from "../../components/contacts/singleView";
-import EditContactView from "../../components/contacts/editView";
-import DeleteButton from "../../components/contacts/deleteButton";
-import IntlMessages from "../../components/utility/intlMessages";
+// import SingleContactView from "../../components/contacts/singleView";
+// import EditContactView from "../../components/contacts/editView";
+// import DeleteButton from "../../components/contacts/deleteButton";
+// import IntlMessages from "../../components/utility/intlMessages";
 import { ContactsWrapper } from "./contacts.style";
-import Scrollbar from "../../components/utility/customScrollBar.js";
+// import Scrollbar from "../../components/utility/customScrollBar.js";
 import ProjectContent from '../ProjectContent';
 import ProjectHeader from '../ProjectHeader';
 
 const { Content } = Layout;
 class Project extends Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
     let { getProject, getAllProject, token } = this.props;
     getAllProject(token, (err, res) => {

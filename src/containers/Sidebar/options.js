@@ -1,81 +1,80 @@
-import { Children } from "react";
 
 const options = [
   {
     key: "apartment",
-    label: "Căn hộ",
+    label: "sidebar.apartment",
     leftIcon: "ion-android-home"
   },
   {
     key: "user",
-    label: "Người dùng",
+    label: "sidebar.user",
     leftIcon: "ion-android-person-add"
   },
   {
     key: "contract",
-    label: "Hợp đồng",
+    label: "sidebar.contract",
     leftIcon: "ion-ios-paper"
   },
   {
     key: "booking",
-    label: "Booking",
+    label: "sidebar.booking",
     leftIcon: "ion-android-clipboard"
   },
   {
     key: "ticket",
-    label: "Ticket",
+    label: "sidebar.ticket",
     leftIcon: "ion-closed-captioning"
   },
   {
     key: "promotion",
-    label: "Quảng cáo",
+    label: "sidebar.promotion",
     leftIcon: "ion-ios-color-wand"
   },
   {
-    label: "Nhà cung cấp",
-    leftIcon: "ion-android-contact",
-    children: [
-      {
-        key: "supplier",
-        label: "Nhà cung cấp"
-      },
-      {
-        key: "reviewsupplier",
-        label: "Đánh giá"
-      }
-    ]
-  },
-  {
     key: "feedback",
-    label: "FeedBack",
+    label: "sidebar.feedback",
     leftIcon: "ion-email-unread"
   },
   {
     key: "faq",
-    label: "FAQ",
+    label: "sidebar.faq",
     leftIcon: "ion-help-circled"
   },
   {
     key: "news",
-    label: "Tin tức",
+    label: "sidebar.news",
     leftIcon: "ion-ios-list"
   },
   {
-    label: "Cấu hình",
+    label: "sidebar.supplier",
+    leftIcon: "ion-android-contact",
+    children: [
+      {
+        key: "supplier",
+        label: "sidebar.supplier.supplier"
+      },
+      {
+        key: "reviewsupplier",
+        label: "sidebar.supplier.review"
+      }
+    ]
+  },
+  {
+    label: "sidebar.config",
     leftIcon: "ion-android-settings",
     children: [
       {
         key: "project",
-        label: "Dự án",
+        label: "sidebar.config.project",
         leftIcon: "ion-folder"
       },
       {
         key: "service",
-        label: "Dịch vụ"
+        label: "sidebar.config.service"
       },
       {
         key: "config",
-        label: "Liên hệ",
+        label: "sidebar.config.config",
       }
     ]
   },

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Popconfirm from '../feedback/popconfirm';
 import Button from '../uielements/button';
-import notification from '../notification';
+// import notification from '../notification';
 import { Modal } from 'antd';
 
 export default class extends Component {

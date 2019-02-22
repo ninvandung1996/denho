@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Input, Button, Modal, Form } from "antd";
 import LayoutContentWrapper from "../../components/utility/layoutWrapper";
 import LayoutContent from "../../components/utility/layoutContent";
@@ -81,6 +81,7 @@ class User extends React.Component {
                             visible={true}
                             onOk={this.handleOk}
                             onCancel={this.toggleModal}
+                            okText="Lưu"
                         >
                             <Form>
                                 <Form.Item label="Email" {...formItemStyle} className="form-item" required={true}>

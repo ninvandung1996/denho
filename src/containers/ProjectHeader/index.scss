@@ -4,6 +4,7 @@
   height: auto;
   margin-bottom: 15px;
   padding: 5px 10px;
+  justify-content: space-between;
   &-btns{
       display: flex;
       align-items: center;
@@ -14,17 +15,18 @@
   &-info{
       display: flex;
       flex-wrap: wrap;
+      flex-grow: 1;
       &-item{
-          width: 35%;
+          width: 50%;
           min-width: 250px;
           display: inline-block;
           padding: 5px 10px 0 10px;
           line-height: 3rem;
           span:nth-child(1){
-              width: 100px;
+              width: 75px;
               line-height: 1rem;
               display: inline-block;
-              margin-right: 15px;
+              margin-right: 2px;
           }
           span:nth-child(2){
               font-weight: bold;

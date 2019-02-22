@@ -13,7 +13,7 @@ class ManageConfigutation extends Component {
   componentDidMount() {
     const { token, getConfig } = this.props;
     getConfig(token, (err, res) => {
-      if (!err) this.setState({ data: res.data.contact })
+      if (!err) this.setState({ data: res.data.contact || {} })
     })
   }
 
@@ -27,7 +27,6 @@ class ManageConfigutation extends Component {
 
   render() {
     const { data } = this.state;
-
     return (
       <LayoutContentWrapper className="manage-configuration">
         <LeftForm data={data} update={this.updateConfig} />

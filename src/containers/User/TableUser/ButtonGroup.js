@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Popconfirm } from 'antd';
 import './buttonGroup.scss';
 import { connect } from 'react-redux';
-import { resetPassword, deleteUser } from '../../../redux/actions/User';
+import { resetPassword } from '../../../redux/actions/User';
 
 class ButtonGroup extends Component {
   resetPassword = () => {
     let { token, resetPassword, selectedData } = this.props;
-    resetPassword({ userId: selectedData.key }, token);
+    resetPassword({ email: selectedData.email }, token);
   }
   render() {
     return (

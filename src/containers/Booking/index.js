@@ -63,7 +63,7 @@ class Booking extends React.Component {
                         </div>
                         <div className="notify-status-info" >
                             <div className="notify-status-info-item">Chưa check-in</div>
-                            <div className="notify-status-info-item">Chưa check-out</div>
+                            <div className="notify-status-info-item">Đã check-in</div>
                             <div className="notify-status-info-item">Đã check-out</div>
                         </div>
                         <TableBooking

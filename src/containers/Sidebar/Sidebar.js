@@ -72,7 +72,7 @@ class Sidebar extends Component {
     if (children) {
       return (
         <SubMenu
-          key={key}
+          key={label}
           title={
             <span className="isoMenuHolder" style={submenuColor}>
               <i className={leftIcon} />

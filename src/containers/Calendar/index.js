@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Tooltip, Select, Popconfirm, Modal, Form } from 'antd';
+import { Select, Modal, Form } from 'antd';
 import './index.scss';
 import FullCalendar from './Calendar';
 import { CalenderHeaderWrapper } from "./calendar.style";
@@ -10,8 +10,8 @@ import Popup from '../ProjectContent/Apartment/Popup';
 const Option = Select.Option;
 
 const formItemStyle = {
-    labelCol: { span: 3 },
-    wrapperCol: { span: 21 }
+    labelCol: { span: 2 },
+    wrapperCol: { span: 22 }
 }
 
 class Calendar extends Component {
@@ -101,7 +101,7 @@ class Calendar extends Component {
                                 </Select>
                             </Form.Item>
                         </Form>
-                        <div classnName="apartment-info">
+                        <div className="apartment-info">
                             <div className="apartment-info-item">
                                 <span>Tên căn hộ:</span>
                                 <span>{selectedApartment ? selectedApartment.name : ""}</span>
@@ -140,7 +140,7 @@ class Calendar extends Component {
                     </div> */}
                     <div className="calendarHeader-status-info" >
                         <div className="calendarHeader-status-info-item">Chưa check-in</div>
-                        <div className="calendarHeader-status-info-item">Chưa check-out</div>
+                        <div className="calendarHeader-status-info-item">Đã check-in</div>
                         <div className="calendarHeader-status-info-item">Đã check-out</div>
                     </div>
                 </CalenderHeaderWrapper>

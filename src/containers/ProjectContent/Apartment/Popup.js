@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal, Form, Input, Upload, Icon } from 'antd';
+import {  Modal, Form, Input } from 'antd';
 import { checkChanged, validateState } from "../../../helpers/validateState";
 
 const formItemStyle = {
@@ -52,6 +52,7 @@ export default class Popup extends React.Component {
                 visible={true}
                 onOk={this.handleOk}
                 onCancel={this.handleCancel}
+                okText={type === "add" ? "Thêm": "Sửa"}
             >
                 <Form>
                     <Form.Item label="Tên" {...formItemStyle} required={true}>

@@ -8,22 +8,17 @@ export const columns = [
     width: "5vw"
   },
   {
-    title: "Thumbnail",
+    title: "Ảnh đại diện",
     dataIndex: "thumbnail",
     render: (text, record) => {
-      return <img style={{ width: "102px", objectFit: "cover" }} src={record.thumbnail} />
+      return <img style={{ width: "102px", objectFit: "cover" }} src={record.thumbnail} alt="" />
     },
-    width: "15vw"
+    width: "20vw"
   },
   {
     title: "Tiêu đề",
     dataIndex: "title",
-    width: "30vw"
-  },
-  {
-    title: "Thời gian",
-    dataIndex: "date",
-    width: "15vw"
+    width: "40vw"
   },
   {
     title: "Thao tác",

@@ -15,11 +15,6 @@ import moment from 'moment';
 const getIndex = (events, selectedEvent) =>
   events.findIndex(event => event._id === selectedEvent._id);
 
-const formItemStyle = {
-  labelCol: { span: 2 },
-  wrapperCol: { span: 22 }
-}
-
 const timeFormat = "DD/MM/YYYY";
 
 class FullCalender extends Component {

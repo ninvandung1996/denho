@@ -138,7 +138,7 @@ class Popup extends React.Component {
         })
     }
     render() {
-        let { type, selectedBooking } = this.props;
+        let { type } = this.props;
         let { add, edit, apartmentList, error } = this.state;
         if (type === "edit") {
             return (

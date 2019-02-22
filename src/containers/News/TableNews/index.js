@@ -3,7 +3,6 @@ import { columns } from "./fakeData";
 import { Table } from "antd";
 import { connect } from "react-redux";
 import { getAllNews } from '../../../redux/actions/News';
-import moment from 'moment';
 
 class TableNews extends Component {
   componentDidMount() {
@@ -20,13 +19,12 @@ class TableNews extends Component {
         id: index + 1,
         thumbnail: news.thumbnail,
         title: news.title,
-        content: news.content,
-        date: moment(news.date).format("DD/MM/YYYY")
+        content: news.content
       });
     });
 
     return (
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} scroll={{ x: 1500}} />
     );
   }
 }

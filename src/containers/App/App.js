@@ -50,7 +50,7 @@ export class App extends Component {
   }
   // hỏi quyền và lấy token cho firebase
   getPushToken = () => {
-    const { auth, savePushToken } = this.props;
+    // const { auth, savePushToken } = this.props;
     // request notification
     messaging.requestPermission()
       .then(() => {

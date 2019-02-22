@@ -1,6 +1,5 @@
-import React, { Component } from "react";
-import { Input, Button } from "antd";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Input } from "antd";
 import LayoutContentWrapper from "../../../components/utility/layoutWrapper";
 import LayoutContent from "../../../components/utility/layoutContent";
 import TableData from "./TableData";
@@ -33,7 +32,7 @@ class Review extends React.Component {
         this.setState({ visible: false });
     }
     render() {
-        let reviewList = [{_id: 1, supplier: "abc", content: "123"}]
+        let reviewList = []
         return (
             <LayoutContentWrapper>
                 <LayoutContent>

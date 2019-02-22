@@ -53,7 +53,7 @@ const SignInStyleWrapper = styled.div`
       width: 100%;
       display: flex;
       justify-content: center;
-      margin-bottom: 5rem;
+      margin-bottom: 3.5rem;
       flex-shrink: 0;
 
       a {
@@ -74,7 +74,7 @@ const SignInStyleWrapper = styled.div`
       flex-direction: column;
 
       .isoInputWrapper {
-        margin-bottom: 3rem;
+        margin-bottom: 1.5rem;
 
         &:last-of-type {
           margin-bottom: 0;

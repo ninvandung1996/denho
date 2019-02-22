@@ -103,7 +103,7 @@ class CreateNewPage extends Component {
 
     res &&
       setTimeout(() => {
-        this.props.history.push("/dashboard/notify");
+        this.props.history.push("/dashboard/");
       }, 500);
   };
 

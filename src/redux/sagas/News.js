@@ -4,7 +4,6 @@ import {
     GET_ALL_NEWS,
     SAVE_GET_ALL_NEWS,
     GET_NEWS,
-    SAVE_GET_NEWS,
     ADD_NEWS,
     SAVE_ADD_NEWS,
     EDIT_NEWS,

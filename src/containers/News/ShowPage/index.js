@@ -4,12 +4,10 @@ import { getNews } from "../../../redux/actions/News";
 import LayoutContentWrapper from "../../../components/utility/layoutWrapper";
 import LayoutContent from "../../../components/utility/layoutContent";
 import "./index.scss";
-import moment from 'moment';
 
 const initState = {
   title: "",
   content: "",
-  date: "",
   thumbnail: ""
 };
 
@@ -28,8 +26,7 @@ class ShowPage extends Component {
     })
   }
   render() {
-    const { title, content, date, thumbnail } = this.state;
-    const time = new Date(date);
+    const { title, content, thumbnail } = this.state;
     return (
       <LayoutContentWrapper>
         <LayoutContent className="notify-layout">
@@ -42,9 +39,9 @@ class ShowPage extends Component {
               </div>
             </div>
             <div className="notify__item">
-              <div className="notify__item--left">Thumbnail</div>
+              <div className="notify__item--left">Ảnh đại diện</div>
               <div className="notify__item--right notify__item--title">
-                <img style={{width: "200px", objectFit: "cover"}} src={thumbnail} />
+                <img style={{width: "200px", objectFit: "cover"}} src={thumbnail} alt="" />
               </div>
             </div>
             <div className="notify__item">
@@ -53,12 +50,6 @@ class ShowPage extends Component {
                 className="notify__item--right"
                 dangerouslySetInnerHTML={{ __html: content }}
               />
-            </div>
-            <div className="notify__item">
-              <div className="notify__item--left">Thời gian</div>
-              <div className="notify__item--right notify__item--title">
-                {moment(date).format("DD/MM/YYYY")}
-              </div>
             </div>
           </div>
         </LayoutContent>

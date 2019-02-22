@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './ProjectContent.scss';
-import { Layout, Button, Col, Row } from 'antd';
+import { Layout, Button} from 'antd';
 import Apartment from './Apartment/index';
 import Popup from './Apartment/Popup';
 import { addNewApartment } from '../../redux/actions/Project';
@@ -37,16 +37,12 @@ class ProjectContent extends Component {
     return (
       <Layout className="pc-layout">
         <Header className="pc-layout-header">
-          <Col span={24} type="flex" justify="center" >
-            <Button type="primary" icon="plus" onClick={this.showModal}>Thêm căn hộ</Button>
-          </Col>
+          <Button type="primary" icon="plus" onClick={this.showModal}>Thêm căn hộ</Button>
         </Header>
         <Content className="pc-layout-content">
-          <Row>
-            {
-              selectedProject.apartments.map(value => <Apartment key={value._id} data={value} />)
-            }
-          </Row>
+          {
+            selectedProject.apartments.map(value => <Apartment key={value._id} data={value} />)
+          }
         </Content>
         {
           visible && <Popup handleOk={this.handleOk} handleCancel={this.handleCancel} type="add" />

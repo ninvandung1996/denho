@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 import { Input, Button } from "antd";
-import { Link } from "react-router-dom";
 import LayoutContentWrapper from "../../components/utility/layoutWrapper";
 import LayoutContent from "../../components/utility/layoutContent";
 import TableService from "./TableService";
@@ -15,7 +14,7 @@ const Search = Input.Search;
 function filter(notes, search) {
     if (search) {
         return notes.filter(note =>
-            convertToSearchName(note.project.name).includes(convertToSearchName(search))
+            convertToSearchName(note.name).includes(convertToSearchName(search))
         );
     }
     return notes;

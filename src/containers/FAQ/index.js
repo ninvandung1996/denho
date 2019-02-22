@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 import { Input, Button } from "antd";
-import { Link } from "react-router-dom";
 import LayoutContentWrapper from "../../components/utility/layoutWrapper";
 import LayoutContent from "../../components/utility/layoutContent";
 import TableFAQ from "./TableFAQ";

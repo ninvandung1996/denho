@@ -12,8 +12,8 @@ export default {
   addProject: (data, token) => {
     return API.post('/cms/projects', data, getHeader(token))
   },
-  editProject: (data, token) => {
-    return API.patch('/cms/projects/' + data._id, data, getHeader(token))
+  editProject: (_id, data, token) => {
+    return API.patch('/cms/projects/' + _id, data, getHeader(token))
   },
   deleteProject: (_id, token) => {
     return API.delete('/cms/projects/' + _id, {}, getHeader(token))

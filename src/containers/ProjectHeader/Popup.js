@@ -3,7 +3,6 @@ import { Modal, Form, Input, Upload, Icon, message } from 'antd';
 import configs from '../../redux/constants/configs';
 import { connect } from 'react-redux';
 import { checkChanged, validateState } from "../../helpers/validateState";
-const timeFormat = "DD/MM/YYYY MM:HH";
 
 const formItemStyle = {
     labelCol: { span: 5 },

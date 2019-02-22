@@ -69,7 +69,6 @@ class LeftForm extends Component {
   };
 
   handleChangeInput = e => {
-    console.log(e.target.value);
     const { value, name } = e.target;
     this.setState({ [name]: value, error: "" });
   };

@@ -41,7 +41,6 @@ class Popup extends React.Component {
     }
     onChange = (name) => {
         return value => {
-            console.log(value);
             this.setState({ [name]: value, error: "" })
         }
     }
@@ -70,7 +69,6 @@ class Popup extends React.Component {
     }
     render() {
         let { mainEmail, listEmails, userList, code, error } = this.state;
-        console.log(this.props)
         if (this.props.type === "view") {
             return (
                 <Modal
@@ -97,7 +95,6 @@ class Popup extends React.Component {
                 </Modal>
             )
         }
-        let dataSource = userList.map(value => value.email);
         return (
             <Modal
                 title={title[this.props.type]}

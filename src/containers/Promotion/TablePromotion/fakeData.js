@@ -11,7 +11,7 @@ export const columns = [
     title: "Thumbnail",
     dataIndex: "thumbnail",
     render: (text, record) => {
-      return <img style={{ width: "102px", objectFit: "cover" }} src={record.thumbnail} />
+      return <img style={{ width: "102px", objectFit: "cover" }} src={record.thumbnail} alt="" />
     },
     width: "15vw"
   },

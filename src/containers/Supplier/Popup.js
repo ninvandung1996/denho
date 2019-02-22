@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Form, Input, InputNumber, Upload, Icon, message, Select, AutoComplete } from 'antd';
+import { Modal, Form, Input, Upload, Icon, message, Select, AutoComplete } from 'antd';
 import { checkChanged, validateState } from "../../helpers/validateState";
 import configs from '../../redux/constants/configs';
 import { connect } from 'react-redux';
@@ -19,7 +19,7 @@ const title = {
 }
 
 const initState = {
-    name: "", about: "", star: 5, contact: { numberphone: "", message: "" }, error: "", thumbnail: "", category: "",
+    name: "", about: "",  contact: { numberphone: "", message: "" }, error: "", thumbnail: "", category: "",
     projects: [], projectList: [], categoryList: []
 }
 
@@ -57,9 +57,6 @@ class Popup extends React.Component {
             this.setState({ [name]: e.target.value, error: "" })
         }
     }
-    onNumberChange = (value) => {
-        this.setState({ star: value, error: "" });
-    }
     changeCategory = (value) => {
         this.setState({ category: value, error: "" });
     }
@@ -83,17 +80,17 @@ class Popup extends React.Component {
         }
     }
     handleOk = () => {
-        let { name, about, star, contact, contact: { numberphone, message }, thumbnail, projects, category } = this.state;
+        let { name, about, contact, contact: { numberphone, message }, thumbnail, projects, category } = this.state;
         let { type, supplier } = this.props;
-        const checkNullState = validateState({ name, about, star, numberphone, message, thumbnail, projects, category }, ["name", "about", "star", "numberphone", "message", "thumbnail", "projects", "category"]);
+        const checkNullState = validateState({ name, about, numberphone, message, thumbnail, projects, category }, ["name", "about", "numberphone", "message", "thumbnail", "projects", "category"]);
         const checkChangedState = type === "edit" ? checkChanged({
             ...supplier, numberphone: supplier.contact.numberphone, message: supplier.contact.message
-        }, { ...this.state, numberphone, message }, ["name", "about", "star", "numberphone", "message", "thumbnail", "projects", "category"]) : { error: false };
+        }, { ...this.state, numberphone, message }, ["name", "about", "numberphone", "message", "thumbnail", "projects", "category"]) : { error: false };
         if (checkChangedState.error)
             return this.setState({ error: checkChangedState.error });
         if (checkNullState.error)
             return this.setState({ error: checkNullState.error });
-        this.props.handleOk({ name, about, star, contact, thumbnail, projects, category });
+        this.props.handleOk({ name, about, contact, thumbnail, projects, category });
     }
     handleCancel = () => {
         this.props.handleCancel();
@@ -102,7 +99,7 @@ class Popup extends React.Component {
         this.setState({ projects, error: "" })
     }
     render() {
-        let { name, about, star, contact, error, thumbnail, projects, category, categoryList } = this.state;
+        let { name, about, contact, error, thumbnail, projects, category, categoryList } = this.state;
         if (this.props.type === "view") {
             return (
                 <Modal
@@ -113,7 +110,7 @@ class Popup extends React.Component {
                 >
                     <Form>
                         <Form.Item label="Thumbnail" {...formItemStyle} className="form-item">
-                            <img style={{ width: "102px", objectFit: "cover" }} src={thumbnail} />
+                            <img style={{ width: "102px", objectFit: "cover" }} src={thumbnail} alt="" />
                         </Form.Item>
                         <Form.Item label="Tên" {...formItemStyle} className="form-item">
                             <span>{name}</span>
@@ -124,13 +121,10 @@ class Popup extends React.Component {
                         <Form.Item label="Danh mục" {...formItemStyle} className="form-item">
                             <span>{category}</span>
                         </Form.Item>
-                        <Form.Item label="Sao" {...formItemStyle} className="form-item">
-                            <span>{star}</span>
-                        </Form.Item>
                         <Form.Item label="Số điện thoại" {...formItemStyle} className="form-item">
                             <span>{contact.numberphone}</span>
                         </Form.Item>
-                        <Form.Item label="Tin nhắn" {...formItemStyle} className="form-item">
+                        <Form.Item label="Link Messenger" {...formItemStyle} className="form-item">
                             <span>{contact.message}</span>
                         </Form.Item>
                         <Form.Item label="Dự án" {...formItemStyle} className="form-item">
@@ -190,13 +184,10 @@ class Popup extends React.Component {
                             }
                         />
                     </Form.Item>
-                    <Form.Item label="Sao" {...formItemStyle} className="form-item" required={true}>
-                        <InputNumber min={1} max={5} defaultValue={star} onChange={this.onNumberChange} />
-                    </Form.Item>
                     <Form.Item label="Số điện thoại" {...formItemStyle} className="form-item" required={true}>
                         <Input value={contact.numberphone} onChange={this.changeContact("numberphone")} />
                     </Form.Item>
-                    <Form.Item label="Tin nhắn" {...formItemStyle} className="form-item" required={true}>
+                    <Form.Item label="Link messenger" {...formItemStyle} className="form-item" required={true}>
                         <Input value={contact.message} onChange={this.changeContact("message")} />
                     </Form.Item>
                     <Form.Item label="Dự án" {...formItemStyle} className="form-item" required={true}>

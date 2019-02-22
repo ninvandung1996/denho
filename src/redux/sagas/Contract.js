@@ -17,7 +17,6 @@ import {
     SAVE_CONTRACT_EDIT_BOOKING,
     CONTRACT_DELETE_BOOKING,
     SAVE_CONTRACT_DELETE_BOOKING,
-    GET_APARTMENT,
     CONTRACT_GET_APARTMENT
 } from '../actions/types'
 import { createRequestSaga } from './common';

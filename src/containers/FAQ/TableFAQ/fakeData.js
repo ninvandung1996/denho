@@ -5,7 +5,8 @@ export const columns = [
   {
     title: "ID",
     dataIndex: "id",
-    width: "5vw"
+    width: "5vw",
+    fixed: "left"
   },
   {
     title: "Câu hỏi",

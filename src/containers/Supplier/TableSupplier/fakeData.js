@@ -11,7 +11,7 @@ export const columns = [
     title: "Thumbnail",
     dataIndex: "thumbnail",
     render: (text, record) => {
-      return <img style={{ width: "100%" }} src={record.thumbnail} />
+      return <img style={{ width: "100%" }} src={record.thumbnail} alt="" />
     },
     width: "15vw"
   },
@@ -23,10 +23,10 @@ export const columns = [
   {
     title: "Thông tin",
     dataIndex: "about",
-    width: "20vw"
+    width: "25vw"
   },
   {
-    title: "Sao",
+    title: "Rate",
     dataIndex: "star",
     width: "10vw"
   },
@@ -36,6 +36,6 @@ export const columns = [
     render: (text, record) => {
       return <ButtonGroup supplier={record.data} />
     },
-    width: "35vw"
+    width: "30vw"
   }
 ];

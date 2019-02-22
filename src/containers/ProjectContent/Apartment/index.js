@@ -1,10 +1,8 @@
 import React from 'react';
-import { Card, Icon, Button, Tooltip, Popconfirm, Modal } from 'antd';
+import { Button, Tooltip, Popconfirm, Modal } from 'antd';
 import Popup from './Popup';
 import { getApartment, editApartment, deleteApartment } from '../../../redux/actions/Project';
 import { connect } from 'react-redux';
-
-const { Meta } = Card;
 
 class Apartment extends React.Component {
     constructor(props) {
@@ -48,36 +46,28 @@ class Apartment extends React.Component {
         let { data } = this.props;
         return (
             <React.Fragment>
-                <Card
-                    className="single-aparment"
-                    // cover={<img className="single-aparment-img" alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                    cover={<span className="single-aparment-img"></span>}
-                    actions={[
-                        <div className="button-group">
-                            <Tooltip placement="top" title="Chỉnh sửa căn hộ">
-                                <Button className="button-group__single single-apartment-btn" icon="edit" onClick={this.showModal("edit")} />
-                            </Tooltip>
-                            {
-                                data.bookings.length > 0 ? (
-                                    <Tooltip placement="top" title="Xóa dự án hiện tại">
-                                        <Button className="button-group__single single-apartment-btn" icon="close" onClick={this.toggleDelete} />
-                                    </Tooltip>
-                                ) : (
-                                        <Popconfirm placement="top" title="Bạn có chắc chắn muốn xóa?" onConfirm={this.onConfirmDelete} okText="Có" cancelText="Không">
-                                            <Tooltip placement="top" title="Xóa dự án hiện tại">
-                                                <Button className="button-group__single single-apartment-btn" icon="close" />
-                                            </Tooltip>
-                                        </Popconfirm>
-                                    )
-                            }
-                        </div>
-                    ]}
-                >
-                    <Meta className="single-apartment-content"
-                        title="Căn hộ"
-                        description={apartment.name}
-                    />
-                </Card>
+                <div className="single-aparment">
+                    <span className="single-aparment-img"></span>
+                    <div className="button-group">
+                        <Tooltip placement="top" title="Chỉnh sửa căn hộ">
+                            <Button className="button-group__single single-apartment-btn" icon="form" onClick={this.showModal("edit")} />
+                        </Tooltip>
+                        {
+                            data.bookings.length > 0 ? (
+                                <Tooltip placement="top" title="Xóa căn hộ">
+                                    <Button className="button-group__single single-apartment-btn" icon="close" onClick={this.toggleDelete} />
+                                </Tooltip>
+                            ) : (
+                                    <Popconfirm placement="top" title="Bạn có chắc chắn muốn xóa?" onConfirm={this.onConfirmDelete} okText="Có" cancelText="Không">
+                                        <Tooltip placement="top" title="Xóa căn hộ">
+                                            <Button className="button-group__single single-apartment-btn" icon="close" />
+                                        </Tooltip>
+                                    </Popconfirm>
+                                )
+                        }
+                    </div>
+                    <div className="single-aparment-name">{apartment.name}</div>
+                </div>
                 {
                     type !== "" && <Popup type={type} apartment={apartment} handleOk={this.handleOk} handleCancel={this.handleCancel} />
                 }

@@ -48,10 +48,10 @@ const createNotification = createRequestSaga({
     })
   ],
   failure: [
-    // () => message.error("Có lỗi xảy ra, vui lòng tải lại trang!")
+    () => message.error("Có lỗi xảy ra, vui lòng tải lại trang!")
   ],
   functionSuccess: [
-    // () => message.success("Tạo thông báo thành công!")
+    () => message.success("Tạo thông báo thành công!")
   ]
 });
 
@@ -85,7 +85,7 @@ const removeNotification = createRequestSaga({
     () => message.error("Có lỗi xảy ra, vui lòng tải lại trang!")
   ],
   functionSuccess: [
-    () => message.info("Xóa thông báo thành công!")
+    () => message.success("Xóa thông báo thành công!")
   ]
 });
 

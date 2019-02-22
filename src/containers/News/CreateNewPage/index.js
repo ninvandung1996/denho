@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import LayoutContentWrapper from "../../../components/utility/layoutWrapper";
 import LayoutContent from "../../../components/utility/layoutContent";
-import { Form, Input, DatePicker, Upload, Icon, message } from "antd";
+import { Form, Input, Upload, Icon, message } from "antd";
 import { connect } from "react-redux";
 import {
   getNews,
@@ -13,14 +13,13 @@ import moment from "moment";
 import "moment/locale/vi";
 import "./index.scss";
 import configs from '../../../redux/constants/configs';
-import { checkChanged, validateState } from "../../../helpers/validateState";
+import { validateState } from "../../../helpers/validateState";
 
 const FormItem = Form.Item;
 
 const initState = {
   title: "",
   content: "",
-  date: moment(),
   thumbnail: "",
   loading: false,
   error: ""
@@ -64,10 +63,6 @@ class CreateNewPage extends Component {
       title: e.target.value, error: ""
     });
   }
-  onDateChange = (value) => {
-    value && this.setState({ pushTime: value, error: "" });
-    !value && this.setState({ pushTime: new Date(), error: "" });
-  }
   thumbnailChange = (info) => {
     if (info.file.status === 'uploading') {
       this.setState({ loading: true });
@@ -96,7 +91,7 @@ class CreateNewPage extends Component {
     let { state } = this;
     delete state.loading;
     delete state.error;
-    let checkNullState = validateState(this.state, ["title", "content", "date", "thumbnail"]);
+    let checkNullState = validateState(this.state, ["title", "content", "thumbnail"]);
     if (checkNullState.error)
       return this.setState({ error: checkNullState.error });
     if (_id) {
@@ -123,7 +118,7 @@ class CreateNewPage extends Component {
         <LayoutContent>
           <div className="new-notify">
             <Form layout="vertical">
-              <FormItem label="Thumbnail">
+              <FormItem label="Ảnh đại diện">
                 <Upload
                   name="file"
                   listType="picture-card"
@@ -148,17 +143,6 @@ class CreateNewPage extends Component {
                 <div className="new-notify__editor">
                   <Editor customProps={this.getCustomPropsEditor()} />
                 </div>
-              </FormItem>
-              <FormItem label="Thời gian gửi">
-                <DatePicker
-                  style={{ width: "300", marginTop: "1rem" }}
-                  onChange={this.onDateChange}
-                  format="DD-MM-YYYY HH:mm"
-                  value={moment(this.state.date, "DD-MM-YYYY HH:mm")}
-                  defaultValue={moment(this.state.date, "DD-MM-YYYY HH:mm")}
-                  placeholder="Chọn thời gian"
-                  showTime={{ defaultValue: moment("00:00:00", "HH:mm") }}
-                />
               </FormItem>
               <FormItem>
                 <button className="new-notify__button" onClick={this.onSubmit}>

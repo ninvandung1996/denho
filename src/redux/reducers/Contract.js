@@ -47,7 +47,7 @@ export default (state = defaultState, { type, payload }) => {
         }
         case SAVE_CONTRACT_EDIT_BOOKING: {
             let contractList = [...state.contractList].map(value => {
-                if (value._id === payload.contract) {
+                if (value.booking._id === payload._id) {
                     return { ...value, booking: payload };
                 }
                 return value;

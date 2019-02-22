@@ -56,7 +56,7 @@ export default (state = defaultState, { type, payload }) => {
                 return value;
             })
             selectedProject = { ...selectedProject, apartments };
-            let projectList = [...projectList];
+            let projectList = [...state.projectList];
             projectList = projectList.map(value => {
                 if (value._id === selectedProject._id) return selectedProject;
                 return value;

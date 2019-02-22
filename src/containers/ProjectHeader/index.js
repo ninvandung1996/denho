@@ -19,7 +19,7 @@ class ProjectHeader extends Component {
   }
   handleOk = (data) => {
     let { type } = this.state;
-    let { addNewProject, editProject, token } = this.props;
+    let { addNewProject, editProject, token, selectedProject } = this.props;
     if (type === "add") {
       let { projectList, changeProject } = this.props;
       let length = projectList.length;
@@ -31,7 +31,7 @@ class ProjectHeader extends Component {
         }
       })
     } else {
-      editProject(data, token);
+      editProject(selectedProject._id, data, token);
     }
     this.setState({ type: "" });
   }

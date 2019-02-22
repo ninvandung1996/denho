@@ -44,7 +44,7 @@ class ShowPage extends Component {
             <div className="notify__item">
               <div className="notify__item--left">Thumbnail</div>
               <div className="notify__item--right notify__item--title">
-                <img style={{width: "200px", objectFit: "cover"}} src={thumbnail} />  
+                <img style={{width: "200px", objectFit: "cover"}} src={thumbnail} alt="" />  
               </div>
             </div>
             <div className="notify__item">

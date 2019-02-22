@@ -12,14 +12,14 @@ export const columns = [
     title: "Thumbnail",
     dataIndex: "thumbnail",
     render: (text, record) => {
-      return <img style={{ width: "100%" }} src={record.thumbnail} />
+      return <img style={{ width: "100%" }} src={record.thumbnail} alt="" />
     },
     width: "15vw"
   },
   {
     title: "Tên",
     dataIndex: "name",
-    width: "10vw"
+    width: "15vw"
   },
   {
     title: "Chi tiết",
@@ -40,6 +40,6 @@ export const columns = [
     render: (text, record) => {
       return <ButtonGroup selectedData={record} />
     },
-    width: "35vw"
+    width: "30vw"
   }
 ];

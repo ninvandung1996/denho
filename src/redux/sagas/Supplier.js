@@ -1,4 +1,4 @@
-import { takeLatest, all, take } from 'redux-saga/effects';
+import { takeLatest, all } from 'redux-saga/effects';
 import Api from '../api/Supplier';
 import {
     GET_ALL_SUPPLIER,

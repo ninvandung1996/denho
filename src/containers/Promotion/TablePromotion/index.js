@@ -26,7 +26,7 @@ class TablePromotion extends Component {
     });
 
     return (
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} scroll={{ x: 1500}} />
     );
   }
 }

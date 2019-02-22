@@ -98,7 +98,7 @@ class Popup extends React.Component {
                 >
                     <Form>
                         <Form.Item label="Thumbnail" {...formItemStyle} className="form-item">
-                            <img style={{ width: "102px", objectFit: "cover" }} src={thumbnail} />
+                            <img style={{ width: "102px", objectFit: "cover" }} src={thumbnail} alt="" />
                         </Form.Item>
                         <Form.Item label="Tên" {...formItemStyle} className="form-item">
                             <span>{name}</span>
@@ -145,14 +145,14 @@ class Popup extends React.Component {
                             beforeUpload={beforeUpload}
                             onChange={this.thumbnailChange}
                         >
-                            {thumbnail ? <img style={{ width: "100%" }} src={thumbnail} alt="thumbnail" /> : uploadButton}
+                            {thumbnail ? <img style={{ width: "100%" }} src={thumbnail} alt="thumbnail" alt="" /> : uploadButton}
                         </Upload>
                     </Form.Item>
                     <Form.Item label="Tên" {...formItemStyle} className="form-item" required={true}>
                         <Input value={name} onChange={this.onChange("name")} />
                     </Form.Item>
                     <Form.Item label="Chi tiết" {...formItemStyle} className="form-item" required={true}>
-                        <Input.TextArea autosize={{minRows: 2}} value={detail} onChange={this.onChange("detail")} />
+                        <Input.TextArea autosize={{ minRows: 2 }} value={detail} onChange={this.onChange("detail")} />
                     </Form.Item>
                     <Form.Item label="Thời gian" {...formItemStyle} className="form-item" required={true}>
                         <DatePicker

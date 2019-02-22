@@ -51,7 +51,7 @@ export default class ContactList extends Component {
     return (
       <ContactListWrapper className="isoContactListWrapper">
         <InputSearch
-          placeholder={"Tìm dự án"}
+          placeholder={"Tên dự án"}
           value={search}
           onChange={this.onChange}
           className="isoSearchBar"

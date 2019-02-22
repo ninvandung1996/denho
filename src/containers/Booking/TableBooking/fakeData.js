@@ -5,14 +5,13 @@ export const columns = [
   {
     title: "ID",
     dataIndex: "id",
-    width: "50px",
+    width: "5vw",
     fixed: "left"
   },
   {
     title: "Người dùng",
     dataIndex: "user",
-    width: "200px",
-    fixed: "left"
+    width: "20vw"
   },
   {
     title: "Căn hộ",
@@ -22,12 +21,12 @@ export const columns = [
   {
     title: "Bắt đầu",
     dataIndex: "dateStart",
-    width: "15vw"
+    width: "10vw"
   },
   {
     title: "Kết thúc",
     dataIndex: "dateEnd",
-    width: "15vw"
+    width: "10vw"
   },
   {
     title: "Trạng thái",
@@ -45,6 +44,6 @@ export const columns = [
     render: (text, record) => {
       return <ButtonGroup booking={record} />
     },
-    width: "35vw"
+    width: "30vw"
   }
 ];
