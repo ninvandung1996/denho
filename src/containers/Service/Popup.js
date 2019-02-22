@@ -132,6 +132,7 @@ class Popup extends React.Component {
                 visible={true}
                 onOk={this.handleOk}
                 onCancel={this.handleCancel}
+                okText={`${this.props.type === "add" ? "Thêm" : "Sửa"}`}
             >
                 <Form>
                     <Form.Item label="Thumbnail" {...formItemStyle} className="form-item" required={true}>

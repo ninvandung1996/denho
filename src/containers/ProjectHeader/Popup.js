@@ -75,10 +75,11 @@ class Popup extends React.Component {
                 visible={true}
                 onOk={this.handleOk}
                 onCancel={this.handleCancel}
+                okText={`${this.props.type === "add" ? "Thêm" : "Sửa"}`}
             >
                 <Form>
                     <Form.Item label="Tên dự án" {...formItemStyle} required={true}>
-                        <Input value={name} onChange={this.onChange("name")}/>
+                        <Input value={name} onChange={this.onChange("name")} />
                     </Form.Item>
                     <Form.Item label="Địa chỉ" {...formItemStyle} required={true}>
                         <Input value={address} onChange={this.onChange("address")} />

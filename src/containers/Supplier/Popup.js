@@ -19,7 +19,7 @@ const title = {
 }
 
 const initState = {
-    name: "", about: "",  contact: { numberphone: "", message: "" }, error: "", thumbnail: "", category: "",
+    name: "", about: "", contact: { numberphone: "", message: "" }, error: "", thumbnail: "", category: "",
     projects: [], projectList: [], categoryList: []
 }
 
@@ -150,6 +150,7 @@ class Popup extends React.Component {
                 visible={true}
                 onOk={this.handleOk}
                 onCancel={this.handleCancel}
+                okText={`${this.props.type === "add" ? "Thêm" : "Sửa"}`}
             >
                 <Form>
                     <Form.Item label="Thumbnail" {...formItemStyle} className="form-item" required={true}>

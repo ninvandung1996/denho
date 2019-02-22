@@ -29,7 +29,7 @@ const routes = [
   },
   {
     path: "promotion/edit/:idPromotion",
-    component: asyncComponent(() => import(".././Promotion/CreateNewPage"))
+    component: asyncComponent(() => import("../Promotion/EditPage"))
   },
   {
     path: "promotion/view/:idPromotion",
@@ -77,7 +77,7 @@ const routes = [
   },
   {
     path: "news/edit/:idNews",
-    component: asyncComponent(() => import("../News/CreateNewPage"))
+    component: asyncComponent(() => import("../News/EditPage"))
   },
   {
     path: "news/view/:idNews",
