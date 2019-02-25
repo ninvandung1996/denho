@@ -7,6 +7,7 @@ import "./index.scss";
 import { convertToSearchName } from "../../helpers/utils";
 import { connect } from 'react-redux';
 import { createUser } from '../../redux/actions/User';
+import { validateEmail } from '../../helpers/validateState';
 
 const Search = Input.Search;
 
@@ -37,7 +38,8 @@ class User extends React.Component {
     }
     handleOk = () => {
         let { email } = this.state;
-        if (email === "") return this.setState({ error: "*Bạn cần nhập đầy đủ thông tin" })
+        if (email === "") return this.setState({ error: "*Bạn cần nhập đầy đủ thông tin" });
+        if (!validateEmail(email)) return this.setState({ error: "*Email không hợp lệ" });
         let { token, createUser } = this.props;
         createUser({ email }, token, (err, res) => {
             if (!err) this.setState({ visible: false })

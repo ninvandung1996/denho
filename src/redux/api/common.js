@@ -3,7 +3,7 @@ import { API_TIMEOUT } from "../constants/api";
 import configs from "../constants/configs";
 
 let endpoint = configs.endPoint;
-const endpointImage = `${endpoint}/uploads/files/image`;
+const endpointImage = `${endpoint}/uploads/files/`;
 const API = create({
   baseURL: endpoint,
   timeout: API_TIMEOUT,

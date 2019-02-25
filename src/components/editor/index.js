@@ -3,6 +3,10 @@ import { Editor } from "@tinymce/tinymce-react";
 import axios from "axios";
 import { endpointImage } from "../../redux/api/common";
 import configs from "../../redux/constants/configs";
+
+import { store } from "../../redux/store";
+
+
 const editorProps = {
   apiKey: "kafqfni3x7vjqn0u9cgerj6x94455s9xpcy7cn87v1ydljrb",
   cloudChannel: "dev",
@@ -29,10 +33,11 @@ const editorProps = {
       formData.append("file", blobInfo.blob(), blobInfo.filename());
 
       axios
-        .post(`${configs.endPoint}/uploads/files/notify/`, formData)
+        .post(`${configs.endPoint}/uploads/files`, formData, {
+          headers: { Authorization: "access_token " + store.getState().Auth.token }
+        })
         .then(res => {
-          const linkImage = res.data.data;
-          success(`${endpointImage}/${linkImage}`);
+          success(`${endpointImage}${res.data.data.name}`);
         })
         .catch(error => failure(error.message));
     },

@@ -71,7 +71,7 @@ class CreateNewPage extends Component {
     if (info.file.status === 'done') {
       this.setState({
         loading: false,
-        thumbnail: `${configs.endPointImage}/uploads/files/${info.file.response.data.name}`, error: ""
+        thumbnail: `${configs.endPointImage}${info.file.response.data.name}`, error: ""
       })
     }
   }
@@ -124,7 +124,7 @@ class CreateNewPage extends Component {
                   listType="picture-card"
                   className="avatar-uploader"
                   showUploadList={false}
-                  action={`${configs.endPointImage}/uploads/files`}
+                  action={`${configs.endPointImage}`}
                   headers={{ Authorization: `access_token ${this.props.token}` }}
                   beforeUpload={beforeUpload}
                   onChange={this.thumbnailChange}

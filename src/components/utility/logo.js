@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { siteConfig } from '../../settings';
+import VinhomesLogo from '../../image/Vinhomes.png';
 
 export default ({ collapsed }) => {
   return (
@@ -9,15 +10,17 @@ export default ({ collapsed }) => {
         <div>
           <h3>
             <Link to="/dashboard">
-              <i className={siteConfig.siteIcon} />
+              <img alt="ảnh logo" src={VinhomesLogo} style={{ width: "4rem" }} />
             </Link>
           </h3>
         </div>
       ) : (
-        <h3>
-          <Link to="/dashboard">{siteConfig.siteName}</Link>
-        </h3>
-      )}
+          <h3>
+            <Link to="/dashboard">
+              <img alt="ảnh logo" src={VinhomesLogo} style={{ width: "6rem" }} />
+            </Link>
+          </h3>
+        )}
     </div>
   );
 };
