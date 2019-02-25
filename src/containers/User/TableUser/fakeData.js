@@ -10,7 +10,12 @@ export const columns = [
   {
     title: "Email",
     dataIndex: "email",
-    width: "55vw"
+    width: "35vw"
+  },
+  {
+    title: "Điện thoại",
+    dataIndex: "phone",
+    width: "20vw"
   },
   {
     title: "Thao tác",

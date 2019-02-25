@@ -174,7 +174,7 @@ class ModalEvents extends Component {
           visible={visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
-          okText="Ok"
+          okText={`${modalVisible === "update" ? "Lưu" : "Thêm"}`}
           cancelText="Hủy"
         >
           <CalendarModalBody>

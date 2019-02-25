@@ -17,7 +17,8 @@ class TableUser extends Component {
       data.push({
         key: user._id,
         id: index + 1,
-        email: user.email
+        email: user.email,
+        phone: user.phone || ""
       });
     });
 

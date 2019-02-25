@@ -27,7 +27,7 @@ class Popup extends React.Component {
         this.state = this.props.type === "add" ? initState : {
             ...props.dataSource,
             mainEmail: props.dataSource.mainUser.email,
-            listEmails: props.dataSource.users.map(value=>value.email),
+            listEmails: props.dataSource.users.map(value => value.email),
             error: ""
         }
     }
@@ -83,7 +83,7 @@ class Popup extends React.Component {
                         </Form.Item>
                         <Form.Item label="List Email" {...formItemStyle} className="form-item">
                             <div className="project-list">
-                                {listEmails.map((value,key) => (
+                                {listEmails.map((value, key) => (
                                     <div key={key} className="project-list-item">{value}</div>
                                 ))}
                             </div>
@@ -101,6 +101,7 @@ class Popup extends React.Component {
                 visible={true}
                 onOk={this.handleOk}
                 onCancel={this.handleCancel}
+                okText={`${this.props.type === "add" ? "Thêm" : "Sửa"}`}
             >
                 <Form>
                     <Form.Item label="List Email" {...formItemStyle} className="form-item" required={true}>

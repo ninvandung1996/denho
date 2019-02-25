@@ -81,7 +81,7 @@ class User extends React.Component {
                             visible={true}
                             onOk={this.handleOk}
                             onCancel={this.toggleModal}
-                            okText="Lưu"
+                            okText="Thêm"
                         >
                             <Form>
                                 <Form.Item label="Email" {...formItemStyle} className="form-item" required={true}>

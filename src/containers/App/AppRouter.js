@@ -8,6 +8,10 @@ const routes = [
     component: asyncComponent(() => import(".././Notification"))
   },
   {
+    path: "notification",
+    component: asyncComponent(() => import(".././Notification"))
+  },
+  {
     path: "edit/:idNotification",
     component: asyncComponent(() => import(".././Notification/CreateNewPage"))
   },

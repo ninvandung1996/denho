@@ -1,6 +1,11 @@
 
 const options = [
   {
+    key: "notification",
+    label: "sidebar.notification",
+    leftIcon: "ion-android-mail"
+  },
+  {
     key: "apartment",
     label: "sidebar.apartment",
     leftIcon: "ion-android-home"

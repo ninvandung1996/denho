@@ -195,6 +195,7 @@ class Popup extends React.Component {
                     visible={true}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
+                    okText="Sửa"
                 >
                     <Form>
                         <Form.Item label="Check in" {...formItemStyle} className="form-item">
@@ -228,6 +229,7 @@ class Popup extends React.Component {
                 visible={true}
                 onOk={this.handleOk}
                 onCancel={this.handleCancel}
+                okText="Thêm"
             >
                 <Form>
                     <Form.Item label="Hợp đồng" {...formItemStyle} className="form-item" required={true}>
