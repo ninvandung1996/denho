@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { siteConfig } from '../../settings';
 import VinhomesLogo from '../../image/Vinhomes.png';
 
 export default ({ collapsed }) => {

@@ -7,7 +7,7 @@ import Form from "../../components/uielements/form";
 import { login } from "../../redux/actions/auth";
 import SignInStyleWrapper from "./signin.style";
 
-import vinCityImg from "../../image/logo-vincity.png";
+import vinCityImg from "../../image/logo-vinhome.png";
 
 class SignIn extends Component {
   state = {

@@ -15,27 +15,6 @@ import "./index.scss";
 import { validateState } from "../../../helpers/validateState";
 
 const FormItem = Form.Item;
-// function range(start, end) {
-//   const result = [];
-//   for (let i = start; i < end; i++) {
-//     result.push(i);
-//   }
-//   return result;
-// }
-
-// function disabledDate(current) {
-//   // Can not select days before today and today
-//   console.log({ current, moment: moment().endOf("day") });
-//   return current && current < moment().endOf("day");
-// }
-
-// function disabledDateTime() {
-//   return {
-//     disabledHours: () => range(0, 24).splice(4, 20),
-//     disabledMinutes: () => range(30, 60),
-//     disabledSeconds: () => [55, 56]
-//   };
-// }
 
 const initialState = {
   title: "",
@@ -76,7 +55,6 @@ class CreateNewPage extends Component {
   };
 
   onDateChange = (value, dateString) => {
-    console.log({ value: moment, dateString });
     value && this.setState({ pushTime: value, error: "" });
     // value && this.setState({ pushTime: value._d });/
     !value && this.setState({ pushTime: new Date(), error: "" });

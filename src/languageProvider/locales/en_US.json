@@ -563,7 +563,7 @@
   "sidebar.selectbox": "Select",
   "sidebar.frappeChart": "Frappe Charts",
   "topbar.help": "Help",
-  "topbar.logout": "Logout",
+  "topbar.logout": "Đăng xuất",
   "topbar.viewAll": "View All",
   "topbar.viewCart": "View Cart",
   "topbar.totalPrice": "Total Price"

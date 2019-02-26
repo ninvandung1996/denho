@@ -53,12 +53,11 @@ const SignInStyleWrapper = styled.div`
       width: 100%;
       display: flex;
       justify-content: center;
-      margin-bottom: 3.5rem;
+      margin-bottom: 2.5rem;
       flex-shrink: 0;
 
       a {
-        width: 50%;
-        height: 50%;
+        width: 60%;
       }
 
       .vinCity-logo {

@@ -26,15 +26,6 @@ class TopbarUser extends Component {
   render() {
     const content = (
       <TopbarDropdownWrapper className="isoUserDropdown">
-        <a className="isoDropdownLink">
-          <IntlMessages id="themeSwitcher.settings" />
-        </a>
-        <a className="isoDropdownLink">
-          <IntlMessages id="sidebar.feedback" />
-        </a>
-        <a className="isoDropdownLink">
-          <IntlMessages id="topbar.help" />
-        </a>
         <a
           className="isoDropdownLink"
           onClick={() => {

@@ -146,7 +146,7 @@ class Popup extends React.Component {
                             beforeUpload={beforeUpload}
                             onChange={this.thumbnailChange}
                         >
-                            {thumbnail ? <img style={{ width: "100%" }} src={thumbnail} alt="thumbnail" alt="" /> : uploadButton}
+                            {thumbnail ? <img style={{ width: "100%" }} src={thumbnail} alt="thumbnail" /> : uploadButton}
                         </Upload>
                     </Form.Item>
                     <Form.Item label="Tên" {...formItemStyle} className="form-item" required={true}>
