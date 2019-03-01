@@ -1,5 +1,5 @@
 export default {
-  endPoint: "http://192.168.1.6:2000/api/v1",
+  endPoint: "http://3.0.89.212:2222/api/v1",
   endPointLocal: "http://192.168.1.6:2000/api/v1",
   endPointImage: "http://192.168.1.6:2000/api/v1/uploads/files/",
   appId: "7816cdf418aa2f9815dbe39b63dba5e5a6a4658933d061e6686ba4ad28f1852f",
