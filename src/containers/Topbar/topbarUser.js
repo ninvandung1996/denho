@@ -6,6 +6,7 @@ import userpic from "../../image/user1.png";
 import { logout } from "../../redux/actions/auth";
 import { closeAll } from "../../redux/actions/app";
 import TopbarDropdownWrapper from "./topbarDropdown.style";
+import { Icon } from "antd";
 
 class TopbarUser extends Component {
   constructor(props) {
@@ -48,7 +49,7 @@ class TopbarUser extends Component {
         placement="bottomLeft"
       >
         <div className="isoImgWrapper">
-          <img alt="user" src={userpic} />
+          <Icon type="user" />
           <span className="userActivity online" />
         </div>
       </Popover>

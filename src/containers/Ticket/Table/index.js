@@ -25,7 +25,7 @@ class TableData extends Component {
     });
 
     return (
-      <Table columns={columns} dataSource={dataSource} scroll={{ x: 1500}} />
+      <Table columns={columns} dataSource={dataSource} scroll={{ x: 970}} />
     );
   }
 }

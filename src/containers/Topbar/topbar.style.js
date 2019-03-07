@@ -161,12 +161,17 @@ const TopbarWrapper = styled.div`
             align-items: center;
             justify-content: center;
             position: relative;
-            background-color: ${palette("grayscale", 9)};
+            background-color: #E5E5E5;
             ${borderRadius("50%")};
 
-            img {
+            i {
+              display: inline-block;
+              width: 100%;
               height: 100%;
-              object-fit: cover;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #fff;
             }
 
             .userActivity {

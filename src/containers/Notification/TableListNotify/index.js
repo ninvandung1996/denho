@@ -29,7 +29,7 @@ class TableListNotify extends Component {
     return (
       // sử dụng scroll={{ x: 600 }} để có thể reposive hơn trên các thiết bị mobile
       // kết hợp với thuộc tính <fixed: 'left'> của column
-      <Table columns={columns} dataSource={data} scroll={{ x: 1500}} />
+      <Table columns={columns} dataSource={data} scroll={{ x: 970}} />
     );
   }
 }

@@ -23,7 +23,7 @@ class TableFAQ extends Component {
     });
 
     return (
-      <Table columns={columns} dataSource={data} scroll={{ x: 1500}} />
+      <Table columns={columns} dataSource={data} scroll={{ x: 970}} />
     );
   }
 }
