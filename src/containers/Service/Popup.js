@@ -21,7 +21,8 @@ const title = {
 const Option = Select.Option;
 
 const initState = {
-    thumbnail: "", name: "", detail: "", dateAndTime: moment(), projects: [], projectList: [], loading: false, error: ""
+    thumbnail: "", name: "", detail: "", dateAndTime: moment(), projects: [], projectList: [], loading: false, error: "",
+    createBy: ""
 }
 
 function beforeUpload(file) {
@@ -73,21 +74,23 @@ class Popup extends React.Component {
         }
     }
     handleOk = () => {
-        let { thumbnail, detail, dateAndTime, projects, name } = this.state;
+        let { thumbnail, detail, dateAndTime, projects, name, createBy } = this.state;
         let { type, data } = this.props;
-        const checkNullState = validateState(this.state, ["thumbnail", "detail", "dateAndTime", "projects", "name"]);
-        const checkChangedState = type === "edit" ? checkChanged({ ...data }, this.state, ["thumbnail", "detail", "dateAndTime", "projects", "name"]) : { error: false };
+        const checkNullState = validateState(this.state, ["thumbnail", "detail", "dateAndTime", "projects", "name", "createBy"]);
+        const checkChangedState = type === "edit" ? checkChanged({ ...data }, this.state, ["thumbnail", "detail", "dateAndTime", "projects", "name", "createBy"]) : { error: false };
         if (checkChangedState.error)
             return this.setState({ error: checkChangedState.error });
         if (checkNullState.error)
             return this.setState({ error: checkNullState.error });
-        this.props.handleOk({ thumbnail, detail, dateAndTime, projects, name });
+        this.props.handleOk({ thumbnail, detail, dateAndTime, projects, name, createBy });
     }
     handleCancel = () => {
         this.props.handleCancel();
     }
     render() {
-        let { thumbnail, name, detail, dateAndTime, projects, projectList, error } = this.state;
+        let { thumbnail, name, detail, dateAndTime, projects, projectList, createBy, error } = this.state;
+        console.log(this.props);
+        console.log(this.state);
         if (this.props.type === "view") {
             return (
                 <Modal
@@ -108,6 +111,9 @@ class Popup extends React.Component {
                         </Form.Item>
                         <Form.Item label="Thời gian" {...formItemStyle} className="form-item">
                             <span>{moment(dateAndTime).format(timeFormat)}</span>
+                        </Form.Item>
+                        <Form.Item label="Người tạo" {...formItemStyle} className="form-item">
+                            <span>{createBy}</span>
                         </Form.Item>
                         <Form.Item label="Dự án" {...formItemStyle} className="form-item">
                             <div className="project-list">
@@ -161,6 +167,9 @@ class Popup extends React.Component {
                             value={moment(dateAndTime)}
                             format={timeFormat} placeholder="Chọn thời gian" onChange={this.timeChange} onOk={this.timeChange}
                         />
+                    </Form.Item>
+                    <Form.Item label="Người tạo" {...formItemStyle} className="form-item" required={true}>
+                        <Input value={createBy} onChange={this.onChange("createBy")} />
                     </Form.Item>
                     <Form.Item label="Dự án" {...formItemStyle} className="form-item" required={true}>
                         <Select mode="multiple" value={projects} placeholder={"Chọn dự án"} style={{ width: "100%" }} onChange={this.projectChange}>

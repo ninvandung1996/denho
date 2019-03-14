@@ -19,12 +19,13 @@ class TableData extends Component {
         id: index + 1,
         user: value.mainUser.email,
         code: value.code,
-        data: value
+        data: value,
+        description: value.description
       });
     });
 
     return (
-      <Table columns={columns} dataSource={dataSource} scroll={{ x:	1170}} />
+      <Table columns={columns} dataSource={dataSource} scroll={{ x: 1170 }} />
     );
   }
 }

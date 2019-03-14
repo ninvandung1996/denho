@@ -1,16 +1,16 @@
 import React from 'react';
-import {  Modal, Form, Input } from 'antd';
+import { Modal, Form, Input, InputNumber } from 'antd';
 import { checkChanged, validateState } from "../../../helpers/validateState";
 
 const formItemStyle = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 20 }
+    labelCol: { span: 6 },
+    wrapperCol: { span: 18 }
 }
 
 const title = { add: "Thêm căn hộ mới", edit: "Sửa thông tin căn hộ" }
 
 const initState = {
-    name: "", location: "", area: "", cost: "", error: ""
+    name: "", location: "", area: "", cost: "", maxMembers: "", error: ""
 }
 
 export default class Popup extends React.Component {
@@ -21,6 +21,7 @@ export default class Popup extends React.Component {
             location: this.props.apartment.location,
             area: this.props.apartment.area,
             cost: this.props.apartment.cost,
+            maxMembers: this.props.apartment.maxMembers,
             error: ""
         }
     }
@@ -29,22 +30,27 @@ export default class Popup extends React.Component {
             this.setState({ [name]: e.target.value, error: "" })
         }
     }
+    numberChange = (name) => {
+        return (value) => {
+            this.setState({ [name]: value, error: "" })
+        }
+    }
     handleOk = () => {
-        let { name, location, area, cost } = this.state;
+        let { name, location, area, cost, maxMembers } = this.state;
         let { type, apartment } = this.props;
-        const checkNullState = validateState(this.state, ["name", "location", "area", "cost"]);
-        const checkChangedState = type === "edit" ? checkChanged(apartment, this.state, ["name", "location", "area", "cost"]) : { error: false };
+        const checkNullState = validateState(this.state, ["name", "location", "area", "cost", "maxMembers"]);
+        const checkChangedState = type === "edit" ? checkChanged(apartment, this.state, ["name", "location", "area", "cost", "maxMembers"]) : { error: false };
         if (checkChangedState.error)
             return this.setState({ error: checkChangedState.error });
         if (checkNullState.error)
             return this.setState({ error: checkNullState.error });
-        this.props.handleOk({ name, location, area, cost });
+        this.props.handleOk({ name, location, area, cost, maxMembers });
     }
     handleCancel = () => {
         this.props.handleCancel();
     }
     render() {
-        let { name, location, area, cost, error } = this.state;
+        let { name, location, area, cost, maxMembers, error } = this.state;
         let { type } = this.props;
         return (
             <Modal
@@ -52,7 +58,7 @@ export default class Popup extends React.Component {
                 visible={true}
                 onOk={this.handleOk}
                 onCancel={this.handleCancel}
-                okText={type === "add" ? "Thêm": "Sửa"}
+                okText={type === "add" ? "Thêm" : "Sửa"}
             >
                 <Form>
                     <Form.Item label="Tên" {...formItemStyle} required={true}>
@@ -62,10 +68,13 @@ export default class Popup extends React.Component {
                         <Input value={location} onChange={this.onChange("location")} />
                     </Form.Item>
                     <Form.Item label="Diện tích" {...formItemStyle} required={true}>
-                        <Input type="number" value={area} onChange={this.onChange("area")} />
+                        <InputNumber value={area} onChange={this.numberChange("area")} />
                     </Form.Item>
                     <Form.Item label="Giá tiền" {...formItemStyle} required={true}>
-                        <Input type="number" value={cost} onChange={this.onChange("cost")} />
+                        <InputNumber value={cost} onChange={this.numberChange("cost")} />
+                    </Form.Item>
+                    <Form.Item label="Thành viên" {...formItemStyle} required={true}>
+                        <InputNumber value={maxMembers} onChange={this.numberChange("maxMembers")} />
                     </Form.Item>
                 </Form>
                 <span className="form__error">{error}</span>

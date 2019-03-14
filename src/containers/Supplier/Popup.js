@@ -8,8 +8,8 @@ import { getAllProject, getCategory } from '../../redux/actions/Supplier';
 const Option = Select.Option;
 
 const formItemStyle = {
-    labelCol: { span: 6 },
-    wrapperCol: { span: 18 }
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 }
 }
 
 const title = {
@@ -20,7 +20,7 @@ const title = {
 
 const initState = {
     name: "", about: "", contact: { numberphone: "", message: "" }, error: "", thumbnail: "", category: "",
-    projects: [], projectList: [], categoryList: []
+    projects: [], projectList: [], categoryList: [], address: "", time: ""
 }
 
 function beforeUpload(file) {
@@ -80,17 +80,17 @@ class Popup extends React.Component {
         }
     }
     handleOk = () => {
-        let { name, about, contact, contact: { numberphone, message }, thumbnail, projects, category } = this.state;
+        let { name, about, contact, contact: { numberphone, message }, thumbnail, projects, category, address, time } = this.state;
         let { type, supplier } = this.props;
-        const checkNullState = validateState({ name, about, numberphone, message, thumbnail, projects, category }, ["name", "about", "numberphone", "message", "thumbnail", "projects", "category"]);
+        const checkNullState = validateState({ name, about, numberphone, message, thumbnail, projects, category, address, time }, ["name", "about", "numberphone", "message", "thumbnail", "projects", "category", "address", "time"]);
         const checkChangedState = type === "edit" ? checkChanged({
             ...supplier, numberphone: supplier.contact.numberphone, message: supplier.contact.message
-        }, { ...this.state, numberphone, message }, ["name", "about", "numberphone", "message", "thumbnail", "projects", "category"]) : { error: false };
+        }, { ...this.state, numberphone, message }, ["name", "about", "numberphone", "message", "thumbnail", "projects", "category", "address", "time"]) : { error: false };
         if (checkChangedState.error)
             return this.setState({ error: checkChangedState.error });
         if (checkNullState.error)
             return this.setState({ error: checkNullState.error });
-        this.props.handleOk({ name, about, contact, thumbnail, projects, category });
+        this.props.handleOk({ name, about, contact, thumbnail, projects, category, address, time });
     }
     handleCancel = () => {
         this.props.handleCancel();
@@ -99,7 +99,7 @@ class Popup extends React.Component {
         this.setState({ projects, error: "" })
     }
     render() {
-        let { name, about, contact, error, thumbnail, projects, category, categoryList } = this.state;
+        let { name, about, contact, error, thumbnail, projects, category, categoryList, address, time } = this.state;
         if (this.props.type === "view") {
             return (
                 <Modal
@@ -126,6 +126,12 @@ class Popup extends React.Component {
                         </Form.Item>
                         <Form.Item label="Link Messenger" {...formItemStyle} className="form-item">
                             <span>{contact.message}</span>
+                        </Form.Item>
+                        <Form.Item label="Địa chỉ" {...formItemStyle} className="form-item">
+                            <span>{address}</span>
+                        </Form.Item>
+                        <Form.Item label="Thời gian hoạt động" {...formItemStyle} className="form-item">
+                            <span>{time}</span>
                         </Form.Item>
                         <Form.Item label="Dự án" {...formItemStyle} className="form-item">
                             <div className="project-list">
@@ -190,6 +196,12 @@ class Popup extends React.Component {
                     </Form.Item>
                     <Form.Item label="Link messenger" {...formItemStyle} className="form-item" required={true}>
                         <Input value={contact.message} onChange={this.changeContact("message")} />
+                    </Form.Item>
+                    <Form.Item label="Địa chỉ" {...formItemStyle} className="form-item" required={true}>
+                        <Input value={address} onChange={this.onChange("address")} />
+                    </Form.Item>
+                    <Form.Item label="Thời gian hoạt động" {...formItemStyle} className="form-item" required={true}>
+                        <Input value={time} onChange={this.onChange("time")} />
                     </Form.Item>
                     <Form.Item label="Dự án" {...formItemStyle} className="form-item" required={true}>
                         <Select mode="multiple" value={projects} placeholder={"Chọn dự án"} style={{ width: "100%" }} onChange={this.projectChange}>

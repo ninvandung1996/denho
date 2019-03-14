@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Form, AutoComplete, Select } from 'antd';
+import { Modal, Form, AutoComplete, Select, Input } from 'antd';
 import { checkChanged, validateState, validateEmail } from "../../helpers/validateState";
 import { getAllUser } from '../../redux/actions/Contract';
 import { connect } from 'react-redux';
@@ -18,7 +18,7 @@ const title = {
 }
 
 const initState = {
-    mainEmail: "", listEmails: [], error: "", userList: []
+    mainEmail: "", listEmails: [], error: "", userList: [], description: ""
 }
 
 class Popup extends React.Component {
@@ -44,11 +44,14 @@ class Popup extends React.Component {
             this.setState({ [name]: value, error: "" })
         }
     }
+    onInputChange = (e) => {
+        this.setState({ description: e.target.value });
+    }
     handleOk = () => {
-        let { mainEmail, listEmails } = this.state;
+        let { mainEmail, listEmails, description } = this.state;
         let { type, dataSource } = this.props;
-        const checkNullState = validateState(this.state, ["mainEmail", "listEmails"]);
-        const checkChangedState = type === "edit" ? checkChanged(dataSource, this.state, ["mainEmail", "listEmails"]) : { error: false };
+        const checkNullState = validateState(this.state, ["mainEmail", "listEmails", "description"]);
+        const checkChangedState = type === "edit" ? checkChanged(dataSource, this.state, ["mainEmail", "listEmails", "description"]) : { error: false };
         const checkEmail = validateEmail(mainEmail);
         let checkListEmail = true;
         listEmails.forEach(value => {
@@ -62,13 +65,13 @@ class Popup extends React.Component {
             return this.setState({ error: "*Main Email không hợp lệ!" })
         if (!checkListEmail)
             return this.setState({ error: "*List Email không hợp lệ!" })
-        this.props.handleOk({ mainEmail, listEmails });
+        this.props.handleOk({ mainEmail, listEmails, description });
     }
     handleCancel = () => {
         this.props.handleCancel();
     }
     render() {
-        let { mainEmail, listEmails, userList, code, error } = this.state;
+        let { mainEmail, listEmails, userList, code, error, description } = this.state;
         if (this.props.type === "view") {
             return (
                 <Modal
@@ -90,6 +93,9 @@ class Popup extends React.Component {
                         </Form.Item>
                         <Form.Item label="Mã" {...formItemStyle} className="form-item">
                             <span>{code}</span>
+                        </Form.Item>
+                        <Form.Item label="Mô tả" {...formItemStyle} className="form-item">
+                            <span>{description}</span>
                         </Form.Item>
                     </Form>
                 </Modal>
@@ -131,6 +137,9 @@ class Popup extends React.Component {
                             </Form.Item>
                         )
                     }
+                    <Form.Item label="Mô tả" {...formItemStyle} className="form-item" required={true}>
+                        <Input value={description} onChange={this.onInputChange} />
+                    </Form.Item>
                 </Form>
                 <span className="form__error">{error}</span>
             </Modal>

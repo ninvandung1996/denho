@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import LayoutContentWrapper from "../../../components/utility/layoutWrapper";
 import LayoutContent from "../../../components/utility/layoutContent";
-import { Form, Input, DatePicker, Upload, Icon, message } from "antd";
+import { Form, Input, DatePicker, Upload, Icon, message, Select } from "antd";
 import { connect } from "react-redux";
 import {
   getPromotion,
@@ -22,9 +22,16 @@ const initState = {
   content: "",
   date: moment(),
   thumbnail: "",
+  type: "",
   loading: false,
   error: ""
 };
+
+const Option = Select.Option;
+
+const types = [
+  "Tin tức", "Quảng cáo", "Thông báo"
+]
 
 function beforeUpload(file) {
   const isLt2M = file.size / 1024 / 1024 < 2;
@@ -89,6 +96,9 @@ class CreateNewPage extends Component {
       this.setState({ content: e.target.getContent(), error: "" });
     }
   })
+  onChangeType = (type) => {
+    this.setState({ type });
+  }
   onSubmit = async () => {
     let _id = this.props.match.params.idPromotion;
     let { token, addPromotion, editPromotion } = this.props;
@@ -96,7 +106,7 @@ class CreateNewPage extends Component {
     let { state } = this;
     delete state.loading;
     delete state.error;
-    let checkNullState = validateState(this.state, ["title", "content", "date", "thumbnail"]);
+    let checkNullState = validateState(this.state, ["title", "content", "date", "thumbnail", "type"]);
     if (checkNullState.error)
       return this.setState({ error: checkNullState.error });
     if (_id) {
@@ -129,6 +139,15 @@ class CreateNewPage extends Component {
                   value={this.state.title}
                   onChange={this.onChangeTitle}
                 />
+              </FormItem>
+              <FormItem label="Loại">
+                <Select value={this.state.type} onChange={this.onChangeType}>
+                  {
+                    types.map((value, key) => (
+                      <Option key={key} value={key}>{value}</Option>
+                    ))
+                  }
+                </Select>
               </FormItem>
               <FormItem label="Thumbnail">
                 <Upload

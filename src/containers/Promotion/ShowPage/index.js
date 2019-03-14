@@ -10,8 +10,13 @@ const initState = {
   title: "",
   content: "",
   date: "",
-  thumbnail: ""
+  thumbnail: "",
+  type: ""
 };
+
+const types = [
+  "Tin tức", "Quảng cáo", "Thông báo"
+]
 
 class ShowPage extends Component {
   constructor(props) {
@@ -28,7 +33,7 @@ class ShowPage extends Component {
     })
   }
   render() {
-    const { title, content, date, thumbnail } = this.state;
+    const { title, content, date, thumbnail, type } = this.state;
     const time = new Date(date);
     return (
       <LayoutContentWrapper>
@@ -42,9 +47,17 @@ class ShowPage extends Component {
               </div>
             </div>
             <div className="notify__item">
+              <div className="notify__item--left">Loại</div>
+              <div className="notify__item--right notify__item--title">
+                {
+                  types[type]
+                }
+              </div>
+            </div>
+            <div className="notify__item">
               <div className="notify__item--left">Thumbnail</div>
               <div className="notify__item--right notify__item--title">
-                <img style={{width: "200px", objectFit: "cover"}} src={thumbnail} alt="" />  
+                <img style={{ width: "200px", objectFit: "cover" }} src={thumbnail} alt="" />
               </div>
             </div>
             <div className="notify__item">

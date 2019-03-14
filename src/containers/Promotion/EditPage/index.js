@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import LayoutContentWrapper from "../../../components/utility/layoutWrapper";
 import LayoutContent from "../../../components/utility/layoutContent";
 import { Editor } from "react-draft-wysiwyg";
-import { Form, Input, Upload, message, Icon, DatePicker } from "antd";
+import { Form, Input, Upload, message, Icon, DatePicker, Select } from "antd";
 import {
   EditorState,
   convertToRaw,
@@ -29,9 +29,16 @@ const initialState = {
   title: "",
   content: "",
   thumbnail: "",
+  type: "",
   error: "",
   loading: false
 };
+
+const Option = Select.Option;
+
+const types = [
+  "Tin tức", "Quảng cáo", "Thông báo"
+]
 
 function beforeUpload(file) {
   const isLt2M = file.size / 1024 / 1024 < 2;
@@ -58,7 +65,8 @@ class EditPage extends Component {
         thumbnail: res.data.thumbnail,
         title: res.data.title,
         date: res.data.date,
-        content: res.data.content
+        content: res.data.content,
+        type: res.data.type
       });
 
       // đây là cách khởi tạo dữ liệu cho editor trong draft.js từ dữ liệu gốc là định dạng các thẻ HTML,
@@ -90,6 +98,9 @@ class EditPage extends Component {
       title: e.target.value
     });
   };
+  onChangeType = (value) => {
+    this.setState({ type: value });
+  }
   thumbnailChange = (info) => {
     if (info.file.status === 'uploading') {
       this.setState({ loading: true });
@@ -110,7 +121,7 @@ class EditPage extends Component {
     let { state } = this;
     delete state.loading;
     delete state.error;
-    let checkNullState = validateState(this.state, ["title", "content", "date", "thumbnail"]);
+    let checkNullState = validateState(this.state, ["title", "content", "date", "thumbnail", "type"]);
     if (checkNullState.error)
       return this.setState({ error: checkNullState.error });
     const content = draftToHtml(
@@ -157,6 +168,15 @@ class EditPage extends Component {
                   onChange={this.onChangeTitle}
                 />
               </FormItem>
+              <FormItem label="Loại">
+                <Select value={this.state.type} onChange={this.onChangeType}>
+                  {
+                    types.map((value, key) => (
+                      <Option key={key} value={key}>{value}</Option>
+                    ))
+                  }
+                </Select>
+              </FormItem>
               <FormItem label="Nội dung">
                 <div className="notify-edit__editor">
                   <Editor
@@ -188,7 +208,7 @@ class EditPage extends Component {
             </Form>
           </div>
         </LayoutContent>
-      </LayoutContentWrapper>
+      </LayoutContentWrapper >
     );
   }
 }

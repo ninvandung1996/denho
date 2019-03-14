@@ -21,7 +21,8 @@ class TableService extends Component {
         name: service.name,
         detail: service.detail,
         dateAndTime: service.dateAndTime,
-        projects: service.projects
+        projects: service.projects,
+        createBy: service.createBy
       });
     });
 

@@ -21,12 +21,14 @@ class TableSupplier extends Component {
         about: Supplier.about,
         star: Supplier.star,
         thumbnail: Supplier.thumbnail,
-        data: Supplier
+        data: Supplier,
+        address: Supplier.address,
+        time: Supplier.time
       });
     });
 
     return (
-      <Table columns={columns} dataSource={data} scroll={{ x: 970}} />
+      <Table columns={columns} dataSource={data} scroll={{ x: 970 }} />
     );
   }
 }
