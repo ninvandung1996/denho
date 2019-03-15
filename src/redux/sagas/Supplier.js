@@ -12,7 +12,8 @@ import {
     DELETE_SUPPLIER,
     SAVE_DELETE_SUPPLIER,
     SUPPLIER_GET_ALL_PROJECT,
-    SUPPLIER_GET_CATEGORY
+    SUPPLIER_GET_CATEGORY,
+    SUPPLIER_GET_ALL_SERVICE
 } from '../actions/types'
 import { createRequestSaga } from './common';
 import { message } from "antd";
@@ -76,6 +77,14 @@ const supplierGetCategory = createRequestSaga({
     functionFailure: []
 })
 
+const getAllService = createRequestSaga({
+    request: Api.getAllService,
+    key: "supplierGetAllService",
+    success: [res => ({})],
+    failure: [],
+    functionSuccess: [],
+    functionFailure: []
+})
 
 export default [
     function* fetchWatcher() {
@@ -86,7 +95,8 @@ export default [
             takeLatest(EDIT_SUPPLIER, editSupplier),
             takeLatest(DELETE_SUPPLIER, deleteSupplier),
             takeLatest(SUPPLIER_GET_ALL_PROJECT, getAllProject),
-            takeLatest(SUPPLIER_GET_CATEGORY, supplierGetCategory)
+            takeLatest(SUPPLIER_GET_CATEGORY, supplierGetCategory),
+            takeLatest(SUPPLIER_GET_ALL_SERVICE, getAllService)
         ]);
     }
 ];

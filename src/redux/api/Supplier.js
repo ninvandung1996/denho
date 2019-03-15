@@ -23,5 +23,8 @@ export default {
     },
     getCategory: (token) => {
         return API.get('/cms/suppliers/categories', {}, getHeader(token))
-    }
+    },
+    getAllService: (token) => {
+        return API.get('/cms/services', {}, getHeader(token))
+    },
 }

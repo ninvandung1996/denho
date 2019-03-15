@@ -33,7 +33,6 @@ class Popup extends React.Component {
         }
     }
     componentDidMount() {
-        console.log(this.props.type);
         if (this.props.type === "add" || this.props.type === "edit") {
             let { token, getAllUser } = this.props;
             getAllUser(token, (err, res) => {
@@ -52,6 +51,11 @@ class Popup extends React.Component {
     handleOk = () => {
         let { mainEmail, listEmails, description } = this.state;
         let { type, dataSource } = this.props;
+        dataSource = {
+            mainEmail: dataSource.mainUser.email,
+            listEmails: dataSource.users.map(value => value.email),
+            description: dataSource.description
+        }
         const checkNullState = validateState(this.state, ["mainEmail", "listEmails", "description"]);
         const checkChangedState = type === "edit" ? checkChanged(dataSource, this.state, ["mainEmail", "listEmails", "description"]) : { error: false };
         const checkEmail = validateEmail(mainEmail);
@@ -64,9 +68,9 @@ class Popup extends React.Component {
         if (checkNullState.error)
             return this.setState({ error: checkNullState.error });
         if (!checkEmail)
-            return this.setState({ error: "*Main Email không hợp lệ!" })
+            return this.setState({ error: "*Email chủ hợp đồng không hợp lệ!" })
         if (!checkListEmail)
-            return this.setState({ error: "*List Email không hợp lệ!" })
+            return this.setState({ error: "*Email người dùng không hợp lệ!" })
         this.props.handleOk({ mainEmail, listEmails, description });
     }
     handleCancel = () => {
@@ -113,10 +117,10 @@ class Popup extends React.Component {
             >
                 <Form>
                     <Form.Item label="Người dùng" {...formItemStyle} className="form-item" required={true}>
-                        <Select mode="tags" value={listEmails} placeholder={"Chọn danh sách email"} style={{ width: "100%" }} onChange={this.onChange("listEmails")}>
+                        <Select mode="multiple" value={listEmails} placeholder={"Chọn danh sách email"} style={{ width: "100%" }} onChange={this.onChange("listEmails")}>
                             {
-                                userList.map(value => (
-                                    <Option disabled={value.email === mainEmail} key={value._id} value={value.email}>{value.email}</Option>
+                                userList.map((value, key) => (
+                                    <Option disabled={value.email === mainEmail} key={key} value={value.email}>{value.email}</Option>
                                 ))
                             }
                         </Select>

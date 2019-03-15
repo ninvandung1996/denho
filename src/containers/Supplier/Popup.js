@@ -3,7 +3,7 @@ import { Modal, Form, Input, Upload, Icon, message, Select, AutoComplete } from 
 import { checkChanged, validateState } from "../../helpers/validateState";
 import configs from '../../redux/constants/configs';
 import { connect } from 'react-redux';
-import { getAllProject, getCategory } from '../../redux/actions/Supplier';
+import { getAllProject, getCategory, getAllService } from '../../redux/actions/Supplier';
 
 const Option = Select.Option;
 
@@ -20,7 +20,7 @@ const title = {
 
 const initState = {
     name: "", about: "", contact: { numberphone: "", message: "" }, error: "", thumbnail: "", category: "",
-    projects: [], projectList: [], categoryList: [], address: "", time: ""
+    projects: [], projectList: [], categoryList: [], address: "", time: "", listServices: [], services: []
 }
 
 function beforeUpload(file) {
@@ -37,14 +37,18 @@ class Popup extends React.Component {
         this.state = props.type === "add" ? initState : {
             ...props.supplier,
             projects: props.supplier.projects.map(value => value._id),
-            projectList: [], categoryList: [], error: ""
+            projectList: [], categoryList: [], error: "", services: [],
+            listServies: props.supplier.listServies ? props.supplier.listServies.map(value => value._id) : []
         }
     }
     componentDidMount() {
         if (this.props.type === "add" || this.props.type === "edit") {
-            let { token, getAllProject, getCategory } = this.props;
+            let { token, getAllProject, getCategory, getAllService } = this.props;
             getAllProject(token, (err, res) => {
                 if (!err) this.setState({ projectList: res.data })
+            })
+            getAllService(token, (err, res) => {
+                if (!err) this.setState({ services: res.data });
             })
             getCategory(token, (err, res) => {
                 console.log(res)
@@ -80,26 +84,29 @@ class Popup extends React.Component {
         }
     }
     handleOk = () => {
-        let { name, about, contact, contact: { numberphone, message }, thumbnail, projects, category, address, time } = this.state;
+        let { name, about, contact, contact: { numberphone, message }, thumbnail, projects, category, address, time, listServices } = this.state;
+        console.log(listServices)
         let { type, supplier } = this.props;
-        const checkNullState = validateState({ name, about, numberphone, message, thumbnail, projects, category, address, time }, ["name", "about", "numberphone", "message", "thumbnail", "projects", "category", "address", "time"]);
+        const checkNullState = validateState({ name, about, numberphone, message, thumbnail, projects, category, address, time, listServices }, ["name", "about", "numberphone", "message", "thumbnail", "projects", "category", "address", "time", "listServices"]);
         const checkChangedState = type === "edit" ? checkChanged({
             ...supplier, numberphone: supplier.contact.numberphone, message: supplier.contact.message
-        }, { ...this.state, numberphone, message }, ["name", "about", "numberphone", "message", "thumbnail", "projects", "category", "address", "time"]) : { error: false };
+        }, { ...this.state, numberphone, message }, ["name", "about", "numberphone", "message", "thumbnail", "projects", "category", "address", "time", "listServices"]) : { error: false };
         if (checkChangedState.error)
             return this.setState({ error: checkChangedState.error });
         if (checkNullState.error)
             return this.setState({ error: checkNullState.error });
-        this.props.handleOk({ name, about, contact, thumbnail, projects, category, address, time });
+        this.props.handleOk({ name, about, contact, thumbnail, projects, category, address, time, listServices });
     }
     handleCancel = () => {
         this.props.handleCancel();
     }
-    projectChange = (projects) => {
-        this.setState({ projects, error: "" })
+    selectChange = (name) => {
+        return (value) => {
+            this.setState({ [name]: value, error: "" })
+        }
     }
     render() {
-        let { name, about, contact, error, thumbnail, projects, category, categoryList, address, time } = this.state;
+        let { name, about, contact, error, thumbnail, projects, category, categoryList, address, time, listServices } = this.state;
         if (this.props.type === "view") {
             return (
                 <Modal
@@ -136,6 +143,13 @@ class Popup extends React.Component {
                         <Form.Item label="Dự án" {...formItemStyle} className="form-item">
                             <div className="project-list">
                                 {this.props.supplier.projects.map(value => (
+                                    <div key={value._id} className="project-list-item">{value.name}</div>
+                                ))}
+                            </div>
+                        </Form.Item>
+                        <Form.Item label="Dịch vụ" {...formItemStyle} className="form-item">
+                            <div className="project-list">
+                                {this.props.supplier.listServices.map(value => (
                                     <div key={value._id} className="project-list-item">{value.name}</div>
                                 ))}
                             </div>
@@ -204,9 +218,18 @@ class Popup extends React.Component {
                         <Input value={time} onChange={this.onChange("time")} />
                     </Form.Item>
                     <Form.Item label="Dự án" {...formItemStyle} className="form-item" required={true}>
-                        <Select mode="multiple" value={projects} placeholder={"Chọn dự án"} style={{ width: "100%" }} onChange={this.projectChange}>
+                        <Select mode="multiple" value={projects} placeholder={"Chọn dự án"} style={{ width: "100%" }} onChange={this.selectChange("projects")}>
                             {
                                 this.state.projectList.map(value => (
+                                    <Option key={value._id} value={value._id}>{value.name}</Option>
+                                ))
+                            }
+                        </Select>
+                    </Form.Item>
+                    <Form.Item label="Dịch vụ" {...formItemStyle} className="form-item" required={true}>
+                        <Select mode="multiple" value={listServices} placeholder={"Chọn dịch vụ"} style={{ width: "100%" }} onChange={this.selectChange("listServices")}>
+                            {
+                                this.state.services.map(value => (
                                     <Option key={value._id} value={value._id}>{value.name}</Option>
                                 ))
                             }
@@ -223,6 +246,6 @@ export default connect(
     state => ({
         token: state.Auth.token
     }), {
-        getAllProject, getCategory
+        getAllProject, getCategory, getAllService
     }
 )(Popup)
