@@ -10,13 +10,25 @@
     }
   }
 
-  &--1 {
+  &--1:nth-child(1) {
     background-color: transparent;
     border: 1px solid orangered;
     color: orangered;
 
     &:hover {
       background-color: orangered;
+      border: 1px solid transparent;
+      color: white;
+    }
+  }
+
+  &--1:nth-child(2) {
+    background-color: transparent;
+    border: 1px solid green;
+    color: green;
+
+    &:hover {
+      background-color: green;
       border: 1px solid transparent;
       color: white;
     }

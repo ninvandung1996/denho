@@ -15,7 +15,7 @@ export const columns = [
   {
     title: "Mã",
     dataIndex: "code",
-    width: "30vw"
+    width: "25vw"
   },
   {
     title: "Thao tác",
@@ -23,6 +23,6 @@ export const columns = [
     render: (text, record) => {
       return <ButtonGroup value={record.data} />
     },
-    width: "40vw"
+    width: "45vw"
   }
 ];

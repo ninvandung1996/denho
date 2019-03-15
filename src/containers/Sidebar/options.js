@@ -80,6 +80,14 @@ const options = [
       {
         key: "config",
         label: "sidebar.config.config",
+      },
+      {
+        key: "aboutus",
+        label: "sidebar.config.aboutus",
+      },
+      {
+        key: "term",
+        label: "sidebar.config.term",
       }
     ]
   },

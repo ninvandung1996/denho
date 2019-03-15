@@ -60,6 +60,7 @@ class ButtonGroup extends Component {
     return (
       <div className="button-group-contract">
         <button className="button-group-contract--1" onClick={this.showModal("contract", "view")}>Xem</button>
+        <button className="button-group-contract--1" onClick={this.showModal("contract", "edit")}>Sửa</button>
         {
           value.booking ? (
             <button className="button-group-contract--2" onClick={this.showModal("booking", "edit")}>Sửa booking</button>

@@ -28,7 +28,7 @@ class TableSupplier extends Component {
     });
 
     return (
-      <Table columns={columns} dataSource={data} scroll={{ x: 970 }} />
+      <Table columns={columns} dataSource={data} />
     );
   }
 }

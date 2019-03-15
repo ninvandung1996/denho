@@ -5,8 +5,8 @@ import { getAllUser } from '../../redux/actions/Contract';
 import { connect } from 'react-redux';
 
 const formItemStyle = {
-    labelCol: { span: 5 },
-    wrapperCol: { span: 19 }
+    labelCol: { span: 6 },
+    wrapperCol: { span: 18 }
 }
 
 const Option = Select.Option;
@@ -28,11 +28,13 @@ class Popup extends React.Component {
             ...props.dataSource,
             mainEmail: props.dataSource.mainUser.email,
             listEmails: props.dataSource.users.map(value => value.email),
-            error: ""
+            error: "",
+            userList: []
         }
     }
     componentDidMount() {
-        if (this.props.type === "add") {
+        console.log(this.props.type);
+        if (this.props.type === "add" || this.props.type === "edit") {
             let { token, getAllUser } = this.props;
             getAllUser(token, (err, res) => {
                 if (!err) this.setState({ userList: res.data })
@@ -81,10 +83,10 @@ class Popup extends React.Component {
                     onCancel={this.handleCancel}
                 >
                     <Form>
-                        <Form.Item label="Main Email" {...formItemStyle} className="form-item">
+                        <Form.Item label="Chủ hợp đồng" {...formItemStyle} className="form-item">
                             <span>{mainEmail}</span>
                         </Form.Item>
-                        <Form.Item label="List Email" {...formItemStyle} className="form-item">
+                        <Form.Item label="Người dùng" {...formItemStyle} className="form-item">
                             <div className="project-list">
                                 {listEmails.map((value, key) => (
                                     <div key={key} className="project-list-item">{value}</div>
@@ -110,18 +112,18 @@ class Popup extends React.Component {
                 okText={`${this.props.type === "add" ? "Thêm" : "Sửa"}`}
             >
                 <Form>
-                    <Form.Item label="List Email" {...formItemStyle} className="form-item" required={true}>
+                    <Form.Item label="Người dùng" {...formItemStyle} className="form-item" required={true}>
                         <Select mode="tags" value={listEmails} placeholder={"Chọn danh sách email"} style={{ width: "100%" }} onChange={this.onChange("listEmails")}>
                             {
                                 userList.map(value => (
-                                    <Option key={value._id} value={value.email}>{value.email}</Option>
+                                    <Option disabled={value.email === mainEmail} key={value._id} value={value.email}>{value.email}</Option>
                                 ))
                             }
                         </Select>
                     </Form.Item>
                     {
                         listEmails.length > 0 && (
-                            <Form.Item label="Main Email" {...formItemStyle} className="form-item" required={true}>
+                            <Form.Item label="Chủ hợp đồng" {...formItemStyle} className="form-item" required={true}>
                                 <AutoComplete
                                     style={{ width: "100%" }}
                                     dataSource={listEmails}
@@ -133,12 +135,13 @@ class Popup extends React.Component {
                                             .indexOf(inputValue.toUpperCase()) !== -1
                                     }
                                     placeholder="Chọn email"
+                                    disabled={this.props.type === "edit"}
                                 />
                             </Form.Item>
                         )
                     }
                     <Form.Item label="Mô tả" {...formItemStyle} className="form-item" required={true}>
-                        <Input value={description} onChange={this.onInputChange} />
+                        <Input.TextArea placeholder="Mô tả" rows={4} value={description} onChange={this.onInputChange} />
                     </Form.Item>
                 </Form>
                 <span className="form__error">{error}</span>

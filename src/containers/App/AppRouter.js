@@ -103,6 +103,14 @@ const routes = [
     path: "ticket",
     component: asyncComponent(() => import("../Ticket"))
   },
+  {
+    path: "aboutUs",
+    component: asyncComponent(() => import("../AboutUs"))
+  },
+  {
+    path: "term",
+    component: asyncComponent(() => import("../AboutUs"))
+  },
 ];
 
 class AppRouter extends Component {
