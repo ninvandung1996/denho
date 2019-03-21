@@ -51,10 +51,12 @@ class Popup extends React.Component {
     handleOk = () => {
         let { mainEmail, listEmails, description } = this.state;
         let { type, dataSource } = this.props;
-        dataSource = {
-            mainEmail: dataSource.mainUser.email,
-            listEmails: dataSource.users.map(value => value.email),
-            description: dataSource.description
+        if (type === "edit") {
+            dataSource = {
+                mainEmail: dataSource.mainUser.email,
+                listEmails: dataSource.users.map(value => value.email),
+                description: dataSource.description
+            }
         }
         const checkNullState = validateState(this.state, ["mainEmail", "listEmails", "description"]);
         const checkChangedState = type === "edit" ? checkChanged(dataSource, this.state, ["mainEmail", "listEmails", "description"]) : { error: false };

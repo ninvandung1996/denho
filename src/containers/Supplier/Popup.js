@@ -38,7 +38,7 @@ class Popup extends React.Component {
             ...props.supplier,
             projects: props.supplier.projects.map(value => value._id),
             projectList: [], categoryList: [], error: "", services: [],
-            listServies: props.supplier.listServies ? props.supplier.listServies.map(value => value._id) : []
+            listServies: props.supplier.listServies ? props.supplier.listServies : []
         }
     }
     componentDidMount() {
@@ -47,9 +47,9 @@ class Popup extends React.Component {
             getAllProject(token, (err, res) => {
                 if (!err) this.setState({ projectList: res.data })
             })
-            getAllService(token, (err, res) => {
-                if (!err) this.setState({ services: res.data });
-            })
+            // getAllService(token, (err, res) => {
+            //     if (!err) this.setState({ services: res.data });
+            // })
             getCategory(token, (err, res) => {
                 console.log(res)
                 if (!err) this.setState({ categoryList: res.data });
@@ -149,8 +149,8 @@ class Popup extends React.Component {
                         </Form.Item>
                         <Form.Item label="Dịch vụ" {...formItemStyle} className="form-item">
                             <div className="project-list">
-                                {this.props.supplier.listServices.map(value => (
-                                    <div key={value._id} className="project-list-item">{value.name}</div>
+                                {this.props.supplier.listServices.map((value, key) => (
+                                    <div key={key} className="project-list-item">{value}</div>
                                 ))}
                             </div>
                         </Form.Item>
@@ -227,12 +227,7 @@ class Popup extends React.Component {
                         </Select>
                     </Form.Item>
                     <Form.Item label="Dịch vụ" {...formItemStyle} className="form-item" required={true}>
-                        <Select mode="multiple" value={listServices} placeholder={"Chọn dịch vụ"} style={{ width: "100%" }} onChange={this.selectChange("listServices")}>
-                            {
-                                this.state.services.map(value => (
-                                    <Option key={value._id} value={value._id}>{value.name}</Option>
-                                ))
-                            }
+                        <Select mode="tags" value={listServices} placeholder={"Chọn dịch vụ"} style={{ width: "100%" }} onChange={this.selectChange("listServices")}>
                         </Select>
                     </Form.Item>
                 </Form>
