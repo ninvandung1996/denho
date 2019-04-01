@@ -44,7 +44,7 @@ export default (state = init, { type, payload }) => {
     case APP_SAVE_REFRESH_TOKEN:
       return { ...state, token: { ...state.token, ...payload } };
     case APP_REMOVE_LOGGED_USER:
-      return { ...state, ...init };
+      return {...init};
 
     default:
       return state;
