@@ -1,64 +1,43 @@
 import React, { Component } from "react";
-import { checkChanged, validateState } from "../../helpers/validateState";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import draftToHtml from "draftjs-to-html";
-import htmlToDraft from "html-to-draftjs";
-import { Editor } from "react-draft-wysiwyg";
-import {
-  EditorState,
-  convertToRaw,
-  ContentState,
-} from "draft-js";
+import { validateState } from "../../helpers/validateState";
+import Editor from "../../components/editor";
 
 class LeftForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { data: props.data }
+    this.state = { data: props.data };
   }
 
-  componentDidMount() {
-    const contentBlock = htmlToDraft(this.state.data);
-    const contentState = ContentState.createFromBlockArray(
-      contentBlock.contentBlocks
-    );
-    this.setState({
-      ...this.state,
-      editorState: EditorState.createWithContent(contentState)
-    });
-  }
-
-  onEditorStateChange = editorState => {
-    this.setState({
-      editorState
-    });
-  };
+  getCustomPropsEditor = () => ({
+    init: {
+      min_height: 500
+    },
+    value: this.state.data,
+    onChange: e => {
+      this.setState({ data: e.target.getContent(), error: "" });
+    }
+  });
 
   onSubmit = async () => {
+    let { data } = this.state;
     let checkNullState = validateState(this.state, ["data"]);
     if (checkNullState.error)
       return this.setState({ error: checkNullState.error });
-    const content = draftToHtml(
-      convertToRaw(this.state.editorState.getCurrentContent())
-    );
-    if (content === this.props.data)
+    if (data === this.props.data)
       return this.setState({ error: "Bạn chưa thay đổi thông tin trường nào" });
-    this.props.update(content);
+    this.props.update(data);
   };
 
   render() {
-    const { error, editorState } = this.state;
+    const { error } = this.state;
     return (
       <div className="left-form">
-        <div className="form-title">{this.props.att === "aboutUs" ? "Về chúng tôi" : "Điều khoản"}</div>
+        <div className="form-title">
+          {this.props.att === "aboutUs" ? "Về chúng tôi" : "Điều khoản"}
+        </div>
         <div className="left-form__input">
           <div className="notify-edit__editor">
-            <Editor
-              editorState={editorState}
-              wrapperClassName="wrapper-class"
-              editorClassName="editor-class"
-              toolbarClassName="toolbar-class"
-              onEditorStateChange={this.onEditorStateChange}
-            />
+            <Editor customProps={this.getCustomPropsEditor()} />
           </div>
           <span className="form__error">{error}</span>
           <button

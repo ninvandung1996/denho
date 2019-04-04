@@ -33,7 +33,7 @@ const routes = [
   },
   {
     path: "promotion/edit/:idPromotion",
-    component: asyncComponent(() => import("../Promotion/EditPage"))
+    component: asyncComponent(() => import("../Promotion/CreateNewPage"))
   },
   {
     path: "promotion/view/:idPromotion",
@@ -81,7 +81,7 @@ const routes = [
   },
   {
     path: "news/edit/:idNews",
-    component: asyncComponent(() => import("../News/EditPage"))
+    component: asyncComponent(() => import("../News/CreateNewPage"))
   },
   {
     path: "news/view/:idNews",

@@ -8,9 +8,22 @@ export const columns = [
     width: "10vw"
   },
   {
+    title: "Avatar",
+    dataIndex: "avatar",
+    render: (text, record) => {
+      return <img style={{ width: "75px", height: "100px", objectFit: "cover" }} src={record.avatar} alt="" />
+    },
+    width: "15vw"
+  },
+  {
     title: "Email",
     dataIndex: "email",
-    width: "35vw"
+    width: "25vw"
+  },
+  {
+    title: "Tên",
+    dataIndex: "name",
+    width: "15vw"
   },
   {
     title: "Điện thoại",
@@ -23,6 +36,6 @@ export const columns = [
     render: (text, record) => {
       return <ButtonGroup selectedData={record} />
     },
-    width: "35vw"
+    width: "15vw"
   }
 ];
