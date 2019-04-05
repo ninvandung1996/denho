@@ -49,17 +49,17 @@ class Apartment extends React.Component {
                 <div className="single-aparment">
                     <span className="single-aparment-img"></span>
                     <div className="button-group">
-                        <Tooltip placement="top" title="Chỉnh sửa căn hộ">
+                        <Tooltip placement="bottom" title="Chỉnh sửa căn hộ">
                             <Button className="button-group__single single-apartment-btn" icon="form" onClick={this.showModal("edit")} />
                         </Tooltip>
                         {
                             data.bookings.length > 0 ? (
-                                <Tooltip placement="top" title="Xóa căn hộ">
+                                <Tooltip placement="bottom" title="Xóa căn hộ">
                                     <Button className="button-group__single single-apartment-btn" icon="close" onClick={this.toggleDelete} />
                                 </Tooltip>
                             ) : (
                                     <Popconfirm placement="top" title="Bạn có chắc chắn muốn xóa?" onConfirm={this.onConfirmDelete} okText="Có" cancelText="Không">
-                                        <Tooltip placement="top" title="Xóa căn hộ">
+                                        <Tooltip placement="bottom" title="Xóa căn hộ">
                                             <Button className="button-group__single single-apartment-btn" icon="close" />
                                         </Tooltip>
                                     </Popconfirm>

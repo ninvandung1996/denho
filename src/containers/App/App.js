@@ -50,7 +50,7 @@ export class App extends Component {
   }
   // hỏi quyền và lấy token cho firebase
   getPushToken = () => {
-    // const { auth, savePushToken } = this.props;
+    const { auth, savePushToken } = this.props;
     // request notification
     messaging.requestPermission()
       .then(() => {
@@ -58,10 +58,10 @@ export class App extends Component {
       })
       .then(deviceToken => {
         console.log(deviceToken);
-        // const token = auth.token;
-        // const deviceId = navigator.userAgent;
-        // const deviceType = 'web';
-        // savePushToken(token, { deviceId, deviceToken, deviceType });
+        const token = auth.token;
+        const deviceId = navigator.userAgent;
+        const deviceType = 'web';
+        savePushToken(token, { deviceId, deviceToken, deviceType });
       })
       .catch(() => {
         console.log("Notification permission denied!")

@@ -29,9 +29,6 @@ export const columns = [
   {
     title: "Thời gian",
     dataIndex: "dateAndTime",
-    render: (text, record) => {
-      return moment(record.dateAndTime).format("DD/MM/YYYY hh:mm")
-    },
     width: "15vw"
   },
   {

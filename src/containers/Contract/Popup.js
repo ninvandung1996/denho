@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Form, AutoComplete, Select, Input } from "antd";
+import { Modal, Form, AutoComplete, Select } from "antd";
 import {
   checkChanged,
   validateState,

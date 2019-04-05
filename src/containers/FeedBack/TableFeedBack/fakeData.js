@@ -7,11 +7,16 @@ export const columns = [
   {
     title: "Tiêu đề",
     dataIndex: "title",
-    width: "35vw"
+    width: "20vw"
   },
   {
     title: "Nội dung",
     dataIndex: "content",
-    width: "60vw"
+    width: "50vw"
+  },
+  {
+    title: "Thời gian tạo",
+    dataIndex: "createdAt",
+    width: "25vw"
   }
 ];

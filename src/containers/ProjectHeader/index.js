@@ -69,13 +69,13 @@ class ProjectHeader extends Component {
           )
         }
         <div className="projectHeader-btns" span={4}>
-          <Tooltip placement="top" title="Thêm dự án mới">
+          <Tooltip placement="bottom" title="Thêm dự án mới">
             <Button icon="plus" className="button-group__single" onClick={this.showModal("add")} />
           </Tooltip>
           {
             selectedProject && (
               <React.Fragment>
-                <Tooltip placement="top" title="Chỉnh sửa thông tin dự án">
+                <Tooltip placement="bottom" title="Chỉnh sửa thông tin dự án">
                   <Button
                     className="button-group__single"
                     icon="edit"
@@ -84,12 +84,12 @@ class ProjectHeader extends Component {
                 </Tooltip>
                 {
                   selectedProject.apartments.length > 0 ? (
-                    <Tooltip placement="top" title="Xóa dự án hiện tại">
+                    <Tooltip placement="bottom" title="Xóa dự án hiện tại">
                       <Button className="button-group__single" icon="close" onClick={this.toggleDelete} />
                     </Tooltip>
                   ) : (
                       <Popconfirm placement="top" title="Bạn có chắc chắn muốn xóa?" onConfirm={deleteProject} okText="Có" cancelText="Không">
-                        <Tooltip placement="top" title="Xóa dự án hiện tại">
+                        <Tooltip placement="bottom" title="Xóa dự án hiện tại">
                           <Button className="button-group__single" icon="close" />
                         </Tooltip>
                       </Popconfirm>

@@ -1,11 +1,9 @@
 import React from 'react';
-import { Modal, Form, Input, Select, DatePicker, Upload, Icon, message } from 'antd';
-import moment from 'moment';
+import { Modal, Form, Input, Select, Upload, Icon, message, Switch } from 'antd';
 import { connect } from 'react-redux';
 import { getAllProject } from '../../redux/actions/Service';
 import configs from '../../redux/constants/configs';
 import { checkChanged, validateState } from "../../helpers/validateState";
-const timeFormat = "DD/MM/YYYY MM:HH";
 
 const formItemStyle = {
     labelCol: { span: 5 },
@@ -21,8 +19,8 @@ const title = {
 const Option = Select.Option;
 
 const initState = {
-    thumbnail: "", name: "", detail: "", dateAndTime: moment(), projects: [], projectList: [], loading: false, error: "",
-    createBy: ""
+    thumbnail: "", name: "", detail: "", dateAndTime: "", projects: [], projectList: [], loading: false, error: "",
+    createBy: "", status: true
 }
 
 function beforeUpload(file) {
@@ -73,24 +71,30 @@ class Popup extends React.Component {
             })
         }
     }
+    onSwitchChange = (name) => {
+        return value => {
+            this.setState({ [name]: value });
+        }
+    }
     handleOk = () => {
-        let { thumbnail, detail, dateAndTime, projects, name, createBy } = this.state;
+        let { thumbnail, detail, dateAndTime, projects, name, createBy,status } = this.state;
         let { type, data } = this.props;
         const checkNullState = validateState(this.state, ["thumbnail", "detail", "dateAndTime", "projects", "name", "createBy"]);
-        const checkChangedState = type === "edit" ? checkChanged({ ...data }, this.state, ["thumbnail", "detail", "dateAndTime", "projects", "name", "createBy"]) : { error: false };
+        const checkChangedState = type === "edit" ? checkChanged({ ...data }, this.state, ["thumbnail", "detail", "dateAndTime", "projects", "name", "createBy", "status"]) : { error: false };
         if (checkChangedState.error)
             return this.setState({ error: checkChangedState.error });
         if (checkNullState.error)
             return this.setState({ error: checkNullState.error });
-        this.props.handleOk({ thumbnail, detail, dateAndTime, projects, name, createBy });
+        if(type === "add"){
+            return this.props.handleOk({ thumbnail, detail, dateAndTime, projects, name, createBy });
+        }
+        this.props.handleOk({ thumbnail, detail, dateAndTime, projects, name, createBy, status });
     }
     handleCancel = () => {
         this.props.handleCancel();
     }
     render() {
-        let { thumbnail, name, detail, dateAndTime, projects, projectList, createBy, error } = this.state;
-        console.log(this.props);
-        console.log(this.state);
+        let { thumbnail, name, detail, dateAndTime, projects, projectList, createBy, error, status } = this.state;
         if (this.props.type === "view") {
             return (
                 <Modal
@@ -110,10 +114,13 @@ class Popup extends React.Component {
                             <span>{detail}</span>
                         </Form.Item>
                         <Form.Item label="Thời gian" {...formItemStyle} className="form-item">
-                            <span>{moment(dateAndTime).format(timeFormat)}</span>
+                            <span>{dateAndTime}</span>
                         </Form.Item>
                         <Form.Item label="Người tạo" {...formItemStyle} className="form-item">
                             <span>{createBy}</span>
+                        </Form.Item>
+                        <Form.Item label="Trạng thái" {...formItemStyle} className="form-item">
+                            <Switch disabled={true} defaultChecked={status} checkedChildren="Hoạt động" unCheckedChildren="Ngừng hoạt động" />
                         </Form.Item>
                         <Form.Item label="Dự án" {...formItemStyle} className="form-item">
                             <div className="project-list">
@@ -162,12 +169,15 @@ class Popup extends React.Component {
                         <Input.TextArea autosize={{ minRows: 2 }} value={detail} onChange={this.onChange("detail")} />
                     </Form.Item>
                     <Form.Item label="Thời gian" {...formItemStyle} className="form-item" required={true}>
-                        <DatePicker
-                            showTime
-                            value={moment(dateAndTime)}
-                            format={timeFormat} placeholder="Chọn thời gian" onChange={this.timeChange} onOk={this.timeChange}
-                        />
+                        <Input.TextArea rows={4} value={dateAndTime} onChange={this.onChange("dateAndTime")} />
                     </Form.Item>
+                    {
+                        this.props.type === "edit" && (
+                            <Form.Item label="Trạng thái" {...formItemStyle} className="form-item" required={true}>
+                                <Switch checked={status} onChange={this.onSwitchChange('status')} checkedChildren="Hoạt động" unCheckedChildren="Ngừng hoạt động" />
+                            </Form.Item>
+                        )
+                    }
                     <Form.Item label="Người tạo" {...formItemStyle} className="form-item" required={true}>
                         <Input value={createBy} onChange={this.onChange("createBy")} />
                     </Form.Item>

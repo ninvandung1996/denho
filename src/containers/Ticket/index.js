@@ -53,7 +53,7 @@ class Ticket extends React.Component {
                             </div>
                             <div>
                                 <Button icon="plus" className="notify__button" onClick={this.showModal}>
-                                    Tạo ticket mới
+                                    Tạo phiếu đăng ký dịch vụ
                                 </Button>
                             </div>
                         </div>

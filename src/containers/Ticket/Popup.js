@@ -13,9 +13,9 @@ const formItemStyle = {
 const Option = Select.Option;
 
 const title = {
-    view: "Thông tin ticket",
-    add: "Thêm ticket",
-    edit: "Sửa thông tin ticket",
+    view: "Thông tin Phiếu đăng ký dịch vụ",
+    add: "Thêm Phiếu đăng ký dịch vụ",
+    edit: "Sửa thông tin Phiếu đăng ký dịch vụ",
 }
 
 const initState = {

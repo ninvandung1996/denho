@@ -1,10 +1,11 @@
 import React from 'react';
-import { Modal, Form, Select, DatePicker, Switch } from 'antd';
+import { Modal, Form, Select, DatePicker, Switch, Button } from 'antd';
 import "moment/locale/vi";
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { getAllApartment, getAllUser, getAllContract, getApartment } from '../../redux/actions/Booking';
 import { checkChanged, validateState } from "../../helpers/validateState";
+import GuestPopup from "./GuestPopup";
 
 const formItemStyle = {
     labelCol: { span: 5 },
@@ -37,7 +38,8 @@ class Popup extends React.Component {
                 dateStart: moment(props.selectedBooking.dateStart),
                 dateEnd: moment(props.selectedBooking.dateEnd)
             },
-            error: "", timeBookedList: []
+            error: "", timeBookedList: [],
+            visible: false
         };
     }
     componentDidMount() {
@@ -150,15 +152,20 @@ class Popup extends React.Component {
             timeBooked.map(value => moment(value).format(dateFormat)).indexOf(current.format(dateFormat)) !== -1
         )
     }
+    toggleModal = () => {
+        this.setState(({ visible }) => {
+          return { visible: !visible };
+        });
+      };
     render() {
         let { type, selectedBooking } = this.props;
         let { add, edit, error } = this.state;
         if (type === "view") {
-            console.log(selectedBooking);
             return (
+                <React.Fragment>
                 <Modal
                     title={title[this.props.type]}
-                    visible={true}
+                    visible={!this.state.visible}
                     footer={null}
                     onCancel={this.handleCancel}
                 >
@@ -184,8 +191,15 @@ class Popup extends React.Component {
                         <Form.Item label="Check out" {...formItemStyle} className="form-item">
                             <Switch disabled={true} defaultChecked={selectedBooking.checkout} />
                         </Form.Item>
+                        <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
+                            <Button type="primary" onClick={this.toggleModal}>Xem danh sách đăng ký khách</Button>
+                        </div>
                     </Form>
                 </Modal>
+                {
+                    this.state.visible && <GuestPopup data={selectedBooking.guests} toggle={this.toggleModal} />
+                }
+                </React.Fragment>
             )
         }
         if (type === "edit") {

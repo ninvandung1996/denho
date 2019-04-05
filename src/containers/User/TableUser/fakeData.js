@@ -1,5 +1,6 @@
 import React from "react";
 import ButtonGroup from './ButtonGroup';
+import {Avatar} from "antd";
 
 export const columns = [
   {
@@ -11,7 +12,8 @@ export const columns = [
     title: "Avatar",
     dataIndex: "avatar",
     render: (text, record) => {
-      return <img style={{ width: "75px", height: "100px", objectFit: "cover" }} src={record.avatar} alt="" />
+      return record.avatar !== "" ? <Avatar size="large" shape="square" src={record.avatar} /> :
+      <Avatar size="large" shape="square" icon="user" />
     },
     width: "15vw"
   },

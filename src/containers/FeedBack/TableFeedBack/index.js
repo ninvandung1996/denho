@@ -3,6 +3,7 @@ import { columns } from "./fakeData";
 import { Table } from "antd";
 import { connect } from "react-redux";
 import { getAllFeedBack } from '../../../redux/actions/FeedBack';
+import moment from "moment";
 
 class TableFeedBack extends Component {
   componentDidMount() {
@@ -18,7 +19,8 @@ class TableFeedBack extends Component {
         key: feedback._id,
         id: index + 1,
         title: feedback.title,
-        content: feedback.content
+        content: feedback.content,
+        createdAt: moment(feedback.createdAt).format("DD/MM/YYYY hh:mm")
       });
     });
 

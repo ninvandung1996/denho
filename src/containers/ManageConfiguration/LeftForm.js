@@ -8,6 +8,7 @@ const initialState = {
   phone: "",
   website: "",
   fanpage: "",
+  linkInstagram: "",
   error: ""
 };
 
@@ -37,6 +38,12 @@ const optionInput = [
     required: "required"
   },
   {
+    name: "linkInstagram",
+    label: "Link Instagram *",
+    type: "string",
+    required: "required"
+  },
+  {
     name: "fanpage",
     label: "Fanpage ",
     type: "string"
@@ -56,14 +63,14 @@ class LeftForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { data, update } = this.props;
-    const { address, email, phone, website, fanpage } = this.state;
-    const checkNullState = validateState(this.state, ["address", "email", "phone", "website"]);
-    const checkChangedState = checkChanged(data, this.state, ["address", "email", "phone", "website", "fanpage"]);
+    const { address, email, phone, website, fanpage, linkInstagram } = this.state;
+    const checkNullState = validateState(this.state, ["address", "email", "phone", "website", "linkInstagram"]);
+    const checkChangedState = checkChanged(data, this.state, ["address", "email", "phone", "website", "fanpage", "linkInstagram"]);
     if (checkChangedState.error)
       return this.setState({ error: checkChangedState.error });
     if (checkNullState.error)
       return this.setState({ error: checkNullState.error });
-    update({ address, email, phone, website, fanpage }, (err, data) => {
+    update({ address, email, phone, website, fanpage, linkInstagram }, (err, data) => {
       if (!err) this.setState({ ...initialState, ...data })
     });
   };
