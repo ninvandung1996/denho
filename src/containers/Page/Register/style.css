@@ -1,0 +1,21 @@
+.register {
+  background: #fff;
+  padding: 3rem 1rem;
+}
+
+.register-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.register-form-info {
+  height: 40px !important;
+  font-size: 0.8rem;
+  font-style: italic;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  line-height: 20px;
+}

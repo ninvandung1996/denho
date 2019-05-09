@@ -1,0 +1,38 @@
+.login {
+  width: 100%;
+  height: auto;
+  background: #fff;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.login-wrap {
+  min-height: 100vh;
+  padding: 100px 50px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: white;
+}
+
+.login-title {
+  margin-bottom: 30px;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.login-title img {
+    width: 250px;
+    object-fit: cover;
+}
+
+.login-form {
+  width: 350px;
+}
+.login-form-forgot {
+  float: right;
+}
+.login-form-button {
+  width: 100%;
+  margin-top: 1rem;
+}

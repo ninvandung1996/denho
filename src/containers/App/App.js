@@ -14,22 +14,22 @@ import themes from "../../settings/themes";
 import { themeConfig } from "../../settings";
 import AppHolder from "./commonStyle";
 import "./global.css";
-import firebase from './firebase';
-import 'firebase/messaging';
-import 'firebase/auth';
-import 'firebase/database';
-import 'firebase/functions';
-import { saveIsRequestNotification } from '../../redux/actions/app';
-import { savePushToken } from '../../redux/actions/auth';
+// import firebase from './firebase';
+// import 'firebase/messaging';
+// import 'firebase/auth';
+// import 'firebase/database';
+// import 'firebase/functions';
+// import { saveIsRequestNotification } from '../../redux/actions/app';
+// import { savePushToken } from '../../redux/actions/auth';
 
-let messaging = null;
+// let messaging = null;
 
-if (firebase.messaging.isSupported()) {
-  messaging = firebase.messaging();
-  messaging.usePublicVapidKey(
-    "BE6g3lBd8qnTW7WeygxO_iFko_Kef3WkxjcWk1xIEQF3Px78LgrlRqPMOnZCcENN4Q7CSztvjSq1Uk6HG0Lmd5w"
-  );
-}
+// if (firebase.messaging.isSupported()) {
+//   messaging = firebase.messaging();
+//   messaging.usePublicVapidKey(
+//     "BE6g3lBd8qnTW7WeygxO_iFko_Kef3WkxjcWk1xIEQF3Px78LgrlRqPMOnZCcENN4Q7CSztvjSq1Uk6HG0Lmd5w"
+//   );
+// }
 
 
 const { Content, Footer } = Layout;
@@ -38,7 +38,7 @@ const { Content, Footer } = Layout;
 export class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { visibleModal: firebase.messaging.isSupported() }
+    // this.state = { visibleModal: firebase.messaging.isSupported() }
   }
   componentWillReceiveProps(nextProps) {
     //lưu thông tin người dùng cho phép gửi notification
@@ -49,24 +49,24 @@ export class App extends Component {
     }
   }
   // hỏi quyền và lấy token cho firebase
-  getPushToken = () => {
-    const { auth, savePushToken } = this.props;
-    // request notification
-    messaging.requestPermission()
-      .then(() => {
-        return messaging.getToken();
-      })
-      .then(deviceToken => {
-        console.log(deviceToken);
-        const token = auth.token;
-        const deviceId = navigator.userAgent;
-        const deviceType = 'web';
-        savePushToken(token, { deviceId, deviceToken, deviceType });
-      })
-      .catch(() => {
-        console.log("Notification permission denied!")
-      })
-  }
+  // getPushToken = () => {
+  //   const { auth, savePushToken } = this.props;
+  //   // request notification
+  //   messaging.requestPermission()
+  //     .then(() => {
+  //       return messaging.getToken();
+  //     })
+  //     .then(deviceToken => {
+  //       console.log(deviceToken);
+  //       const token = auth.token;
+  //       const deviceId = navigator.userAgent;
+  //       const deviceType = 'web';
+  //       savePushToken(token, { deviceId, deviceToken, deviceType });
+  //     })
+  //     .catch(() => {
+  //       console.log("Notification permission denied!")
+  //     })
+  // }
   //xử lý nếu người dùng chấp nhận gửi notification
   handleAcceptNotification = () => {
     const { saveIsRequestNotification } = this.props;
@@ -88,7 +88,7 @@ export class App extends Component {
       <ThemeProvider theme={themes[themeConfig.theme]}>
         <AppHolder>
           <Layout style={{ height: appHeight }}>
-            <Modal
+            {/* <Modal
               title="Chấp nhận thông báo"
               style={{ top: "50px" }}
               visible={this.state.visibleModal && isRequestNotification}
@@ -96,7 +96,7 @@ export class App extends Component {
               onCancel={() => this.handleCancelNotification()}
             >
               <p>Bạn có đồng ý nhận thông báo từ trình duyệt này ?</p>
-            </Modal>
+            </Modal> */}
             <Debounce time="1000" handler="onResize">
               <WindowResizeListener
                 onResize={windowSize =>
@@ -151,5 +151,7 @@ export default connect(
     height: state.App.height,
     isRequestNotification: state.App.isRequestNotification
   }),
-  { logout, toggleAll, savePushToken, saveIsRequestNotification }
+  { logout, toggleAll, 
+    // savePushToken, saveIsRequestNotification
+   }
 )(App);
