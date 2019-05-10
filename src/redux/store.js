@@ -17,12 +17,10 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
-  key: "VIN_CITY",
+  key: "SmartLife",
   storage,
-  // debounce: 500,
   blacklist: [
-    "Project", "Promotion", "Supplier", "FeedBack", "FAQ", "Booking", "Calendar", "Service", "News", "Notifications", "Contract", "User",
-    "Ticket"
+    "User"
   ]
 };
 

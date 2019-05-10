@@ -5,21 +5,25 @@ import logo from "../../../image/logo-color.png";
 import background from "../../../image/background-login.jpg";
 import { connect } from "react-redux";
 import { login } from "../../../redux/actions/auth";
+import { Redirect } from "react-router-dom";
 
 class Login extends React.Component {
+  state = {
+    redirectToReferrer: false
+  };
   componentWillReceiveProps(nextProps) {
     if (
       this.props.isLoggedIn !== nextProps.isLoggedIn &&
       nextProps.isLoggedIn === true
     ) {
-      this.props.history.push("/cms");
+      this.setState({ redirectToReferrer: true });
     }
   }
   onSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields((err, { email, password }) => {
       if (!err) {
-        login(values, (err, res) => {
+        this.props.login({ email, password }, (err, res) => {
           if (!err) {
             this.props.history.push("/dashboard");
           }
@@ -28,6 +32,13 @@ class Login extends React.Component {
     });
   };
   render() {
+    const from = { pathname: "/dashboard" };
+    const { redirectToReferrer } = this.state;
+
+    if (redirectToReferrer) {
+      return <Redirect to={from} />;
+    }
+
     const { getFieldDecorator } = this.props.form;
     return (
       <div
@@ -43,16 +54,16 @@ class Login extends React.Component {
           </div>
           <Form className="login-form" onSubmit={this.onSubmit}>
             <Form.Item>
-              {getFieldDecorator("username", {
+              {getFieldDecorator("email", {
                 rules: [
-                  { required: true, message: "Please input your username!" }
+                  { required: true, message: "Please input your email!" }
                 ]
               })(
                 <Input
                   prefix={
                     <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
                   }
-                  placeholder="Username"
+                  placeholder="email"
                 />
               )}
             </Form.Item>
@@ -95,7 +106,7 @@ const LoginWrap = Form.create({})(Login);
 
 export default connect(
   state => ({
-    isLoggedIn: state.Auth.idToken !== null ? true : false
+    isLoggedIn: state.Auth.loggedIn
   }),
   { login }
 )(LoginWrap);

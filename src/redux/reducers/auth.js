@@ -14,13 +14,12 @@
 //   }
 // }
 
-
 import {
   APP_SET_AUTH_STATE,
   APP_REMOVE_LOGGED_USER,
   APP_SAVE_LOGGED_USER,
   APP_SAVE_REFRESH_TOKEN
-} from '../actions/types';
+} from "../actions/types";
 
 const init = {
   loggedIn: false,
@@ -36,15 +35,15 @@ export default (state = init, { type, payload }) => {
     case APP_SAVE_LOGGED_USER: {
       return {
         ...state,
-        user: payload.user,
-        token: payload.data.token,
-        refreshToken: payload.data.refreshToken
+        user: payload,
+        token: payload.token,
+        refreshToken: null
       };
     }
     case APP_SAVE_REFRESH_TOKEN:
       return { ...state, token: { ...state.token, ...payload } };
     case APP_REMOVE_LOGGED_USER:
-      return {...init};
+      return { ...init };
 
     default:
       return state;

@@ -5,7 +5,19 @@ import asyncComponent from "../../helpers/AsyncFunc";
 const routes = [
   {
     path: "",
-    component: asyncComponent(() => import("../dashboard"))
+    component: asyncComponent(() => import("../User"))
+  },
+  {
+    path: "user",
+    component: asyncComponent(() => import("../User"))
+  },
+  {
+    path: "business",
+    component: asyncComponent(() => import("../Business"))
+  },
+  {
+    path: "module",
+    component: asyncComponent(() => import("../Module"))
   },
 ];
 

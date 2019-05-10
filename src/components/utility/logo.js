@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import VinhomesLogo from '../../image/Vinhomes.png';
+import VinhomesLogo from '../../image/logo.png';
 
 export default ({ collapsed }) => {
   return (

@@ -3,9 +3,9 @@ export default {
 };
 
 const siteConfig = {
-  siteName: 'Vinhomes Leasing',
+  siteName: 'SmartLife',
   siteIcon: 'ion-flash',
-  footerText: 'Vinhomes Leasing ©2019',
+  footerText: 'SmartLife',
 };
 const themeConfig = {
   topbar: 'themedefault',

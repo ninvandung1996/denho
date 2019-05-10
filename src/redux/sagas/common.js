@@ -20,7 +20,7 @@ export const rejectErrors = res => {
   }
   // we can get message from Promise but no need, just use statusText instead of
   // server return errors
-  if (data && data.code >= 200 && data.code < 300) {
+  if (data && status >= 200 && status < 300) {
     return res;
   }
   // we can get message from Promise but no need, just use statusText instead of
@@ -28,7 +28,7 @@ export const rejectErrors = res => {
   // const subData = JSON.parse(data);
   // console.log('subData', subData);
   return Promise.reject({
-    code: data.code,
+    code: status,
     message: data.message,
     error: data.error,
     //subData.message !== 'There is missing customer email.' ? data.errors[0] : subData.message,
@@ -128,10 +128,10 @@ export const createRequestSaga = ({
         const response = await chainRequest;
         if (
           response.ok &&
-          response.data.code >= 200 &&
-          response.data.code < 300
+          response.status >= 200 &&
+          response.status < 300
         ) {
-          return response.data;
+          return response;
         }
         return rejectErrors(response);
       };
@@ -148,7 +148,7 @@ export const createRequestSaga = ({
       }
       //chay race để thực hiện việc gọi request, timeout và cancel cái nào xong trước thì dừng lại
       const { data, isTimeout, cancelRet } = yield race(raceOptions);
-      console.log("Response", data);
+      console.log("Response", data.data);
       if (isTimeout) {
         throw new Error(`Api method is timeout after ${timeout} ms!!!`);
       } else if (cancelRet) {
